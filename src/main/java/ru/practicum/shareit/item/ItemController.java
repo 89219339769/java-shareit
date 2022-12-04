@@ -21,4 +21,12 @@ public class ItemController {
                     @RequestBody Item item) {
         return itemService.save(userId, item);
     }
+
+    @GetMapping("/{id}")
+    public Item findUserById(@PathVariable Long id) {
+        return itemService.findItemById(id);
+    }
+
+
+
 }

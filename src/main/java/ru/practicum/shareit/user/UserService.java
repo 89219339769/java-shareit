@@ -2,6 +2,7 @@ package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.exceptions.EmailWrongException;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.validation.DublicateEmail;
@@ -14,27 +15,34 @@ import java.util.List;
 public class UserService {
     private final UserRepository repository;
     private final List<Validation> validations;
-
     public List<User> getAllUsers() {
         return repository.getAll();
     }
-
     public User saveUser(User user) {
-
         validations.stream().
                 forEach(validator -> validator.validate(user));
         return repository.create(user);
     }
 
     public User updateUser(Long id, User user) {
-       user.setId(id);
+        user.setId(id);
+        String userEmail = user.getEmail();
+        for (int j = 0; j < repository.getUsers().size(); j++) {
+            if (repository.getUsers().get(j).getEmail().equals(userEmail))
+                throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
+        }
         for (int i = 0; i < repository.getUsers().size(); i++) {
-            if(repository.getUsers().get(i).getId()==id){
-       validations.stream().
-               forEach(validator -> validator.validate(user));
-                 return repository.update(user);
+            if (repository.getUsers().get(i).getId() == id) {
+                User updateUser = repository.getUsers().get(i);
+                if (user.getEmail() != null&user.getEmail()!=updateUser.getEmail()) {
+                    updateUser.setEmail(user.getEmail());
+                }
+                if (user.getName() != null&user.getName()!=updateUser.getName()) {
+                    updateUser.setName(user.getName());
+                }
+                return repository.update(updateUser);
             }
         }
-            throw new NotFoundException("пользователя с этим номером не существует");
+        throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }
 }

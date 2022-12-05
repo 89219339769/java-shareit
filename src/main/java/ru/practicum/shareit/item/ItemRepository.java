@@ -12,7 +12,7 @@ public class ItemRepository {
 
 
     public Item save(Item item) {
-        item.setItemId(getId());
+        item.setId(getId());
         items.compute(item.getUserId(), (userId, userItems) -> {
             if (userItems == null) {
                 userItems = new ArrayList<>();
@@ -36,7 +36,7 @@ public class ItemRepository {
 
             for (long j = 0; j < temp2.size(); j++) {
 
-                if (temp2.get((int) j).getItemId().equals(id)) {
+                if (temp2.get((int) j).getId().equals(id)) {
                     Item item = temp2.get(Math.toIntExact(id-1));
                     return item;
                 }
@@ -50,7 +50,7 @@ public class ItemRepository {
         long lastId = items.values()
                 .stream()
                 .flatMap(Collection::stream)
-                .mapToLong(Item::getItemId)
+                .mapToLong(Item::getId)
                 .max()
                 .orElse(0);
         return lastId + 1;

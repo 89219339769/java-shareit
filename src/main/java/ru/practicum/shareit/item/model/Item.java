@@ -8,10 +8,10 @@ import lombok.Data;
 
 @Data
 public class Item {
-    private Long itemId;
-    private Long userId;
+    private Long Id;
+   private Long userId;
     private String name;
-    private String descroption;
+    private String description;
     private boolean available;
 
 }

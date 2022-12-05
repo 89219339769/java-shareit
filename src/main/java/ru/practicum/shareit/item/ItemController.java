@@ -3,9 +3,6 @@ package ru.practicum.shareit.item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.model.ItemService;
-
-import java.util.List;
 
 /**
  * TODO Sprint add-controllers.

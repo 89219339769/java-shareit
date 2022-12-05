@@ -25,4 +25,11 @@ public class UserController {
     public User create(@RequestBody User user) {
         return userService.saveUser(user);
     }
+
+    @PatchMapping("/{id}")
+    public User update(@PathVariable long id, @RequestBody User user) {
+        return userService.updateUser(id,user);
+    }
+
+
 }

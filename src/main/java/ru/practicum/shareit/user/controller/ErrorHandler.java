@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.shareit.exceptions.EmailWrongException;
 import ru.practicum.shareit.exceptions.IncorrectEmailException;
 import ru.practicum.shareit.exceptions.NoEmailException;
+import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.user.model.ErrorResponse;
 
 @RestControllerAdvice
@@ -27,6 +28,12 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse ObjectWrongEnterExeption(final IncorrectEmailException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus. NOT_FOUND)
+    public ErrorResponse ObjectWrongEnterExeption(final NotFoundException e) {
         return new ErrorResponse(e.getMessage());
     }
 }

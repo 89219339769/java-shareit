@@ -25,6 +25,15 @@ public class UserRepository{
         return user;
     }
 
+    public User update(User user) {
+        users.add(user);
+        return user;
+    }
+
+
+
+
+
     private long getId() {
         long lastId = users.stream()
                 .mapToLong(User::getId)

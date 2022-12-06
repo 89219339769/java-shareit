@@ -14,8 +14,9 @@ import java.util.List;
 @Component
 @Data
 @RequiredArgsConstructor
-public class UserRepository{
+public class UserRepository {
     private final List<User> users = new ArrayList<>();
+    private  Integer userId = 1;
 
     public List<User> getAll() {
         return users;
@@ -23,22 +24,18 @@ public class UserRepository{
 
 
     public User create(User user) {
-        user.setId(getId());
+        user.setId(Long.valueOf(userId++));
         users.add(user);
         return user;
     }
 
-    public User update(User user) {
-        users.add(user);
-        return user;
-    }
 
     public User get(Long id) {
         for (int i = 0; i < users.size(); i++) {
-          if(users.get(i).getId()==id){
-              User user = users.get(i);
-              return user;
-          }
+            if (users.get(i).getId() == id) {
+                User user = users.get(i);
+                return user;
+            }
         }
         throw new NotFoundException("юзера с этим номером не найдено");
     }
@@ -47,26 +44,25 @@ public class UserRepository{
     public void delete(Long id) {
         boolean userExist = false;
         for (int i = 0; i < users.size(); i++) {
-            if(users.get(i).getId()==id){
+            if (users.get(i).getId() == id) {
                 userExist = true;
                 users.remove(i);
                 log.info("пользователь {id} удален");
             }
         }
-        if ( userExist == false){
+        if (userExist == false) {
             throw new NotFoundException("юзера с этим номером не найдено");
         }
     }
 
 
+//    private long getId() {
+////        long lastId = users.stream()
+////                .mapToLong(User::getId)
+////                .max()
+////                .orElse(0);
+//       return userId + 1;
 
 
-
-    private long getId() {
-        long lastId = users.stream()
-                .mapToLong(User::getId)
-                .max()
-                .orElse(0);
-        return lastId + 1;
-    }
+   // }
 }

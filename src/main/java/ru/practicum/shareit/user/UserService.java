@@ -8,6 +8,7 @@ import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.validation.DublicateEmail;
 import ru.practicum.shareit.user.validation.Validation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +19,7 @@ public class UserService {
     public List<User> getAllUsers() {
         return repository.getAll();
     }
+
     public User saveUser(User user) {
         validations.stream().
                 forEach(validator -> validator.validate(user));
@@ -34,13 +36,14 @@ public class UserService {
         for (int i = 0; i < repository.getUsers().size(); i++) {
             if (repository.getUsers().get(i).getId() == id) {
                 User updateUser = repository.getUsers().get(i);
+
                 if (user.getEmail() != null&user.getEmail()!=updateUser.getEmail()) {
                     updateUser.setEmail(user.getEmail());
                 }
                 if (user.getName() != null&user.getName()!=updateUser.getName()) {
                     updateUser.setName(user.getName());
                 }
-                return repository.update(updateUser);
+                return updateUser;
             }
         }
         throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");

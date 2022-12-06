@@ -45,4 +45,12 @@ public class UserService {
         }
         throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }
+
+    public User get(Long id) {
+        return repository.get(id);
+    }
+
+    public void delete(Long id) {
+        repository.delete(id);
+    }
 }

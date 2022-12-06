@@ -32,4 +32,16 @@ public class UserController {
     }
 
 
+    @GetMapping("/{id}")
+    public User findUserById(@PathVariable Long id) {
+        return userService.get(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+         userService.delete(id);
+    }
+
+
+
 }

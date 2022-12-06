@@ -1,8 +1,10 @@
 package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exceptions.EmailWrongException;
+import ru.practicum.shareit.exceptions.IncorrectEmailException;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.validation.DublicateEmail;
@@ -28,16 +30,16 @@ public class UserService {
 
     public User updateUser(Long id, User user) {
         user.setId(id);
-        String userEmail = user.getEmail();
         for (int j = 0; j < repository.getUsers().size(); j++) {
-            if (repository.getUsers().get(j).getEmail().equals(userEmail))
+            if (repository.getUsers().get(j).getEmail().equals(user.getEmail()))
                 throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
         }
         for (int i = 0; i < repository.getUsers().size(); i++) {
             if (repository.getUsers().get(i).getId() == id) {
                 User updateUser = repository.getUsers().get(i);
-
                 if (user.getEmail() != null&user.getEmail()!=updateUser.getEmail()) {
+                    validations.stream().
+                            forEach(validator -> validator.validate(user));
                     updateUser.setEmail(user.getEmail());
                 }
                 if (user.getName() != null&user.getName()!=updateUser.getName()) {

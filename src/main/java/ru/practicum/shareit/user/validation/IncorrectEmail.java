@@ -11,8 +11,6 @@ public class IncorrectEmail implements Validation{
     @Override
     public void validate(User user) {
         EmailValidator validator = EmailValidator.getInstance();
-
-        // Проверить указанную строку, содержащую адрес электронной почты
         if (!validator.isValid(user.getEmail())) {
            throw new IncorrectEmailException("ошибка в написании электронной поты") ;
         }

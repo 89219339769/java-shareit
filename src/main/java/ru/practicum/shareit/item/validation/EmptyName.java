@@ -5,7 +5,7 @@ import ru.practicum.shareit.exceptions.NoAvailableException;
 import ru.practicum.shareit.exceptions.NoItemNameException;
 import ru.practicum.shareit.item.model.Item;
 @Component
-public class EmptyName {
+public class EmptyName implements ItemValidation{
 
     public void validate(Item item) {
         if (item.getName().isBlank()) {

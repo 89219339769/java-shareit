@@ -7,7 +7,7 @@ import ru.practicum.shareit.item.model.Item;
 
 
 @Component
-    public class EmptyDescription {
+    public class EmptyDescription implements ItemValidation {
 
         public void validate(Item item) {
             if (item.getDescription() == null) {

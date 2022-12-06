@@ -5,7 +5,7 @@ import ru.practicum.shareit.exceptions.NoAvailableException;
 import ru.practicum.shareit.item.model.Item;
 
 @Component
-public class ItemWithoutAvailable {
+public class ItemWithoutAvailable implements ItemValidation {
 
 
     public void validate(Item item) {

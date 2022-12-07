@@ -1,16 +1,11 @@
 package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exceptions.EmailWrongException;
-import ru.practicum.shareit.exceptions.IncorrectEmailException;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.validation.DublicateEmail;
 import ru.practicum.shareit.user.validation.Validation;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

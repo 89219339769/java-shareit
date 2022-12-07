@@ -28,7 +28,6 @@ public class ItemService {
     }
 
     public Item updateItem(Long itemId, Long userId, Item item) {
-
         item.setUserId(userId);
         item.setId(itemId);
 
@@ -56,9 +55,12 @@ public class ItemService {
         throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }
 
-
     public Item findItemById(Long id) {
         return itemRepository.findItemById(id);
+    }
+
+    public List<Item> findItemsByUserId(Long userId){
+  return  itemRepository.findItemsByUser(userId);
     }
 }
 

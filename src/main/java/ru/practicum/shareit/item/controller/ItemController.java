@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.ItemService;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.user.model.User;
+
+import java.util.List;
 
 /**
  * TODO Sprint add-controllers.
@@ -32,6 +35,9 @@ public class ItemController {
         return itemService.updateItem(itemId, userId, item);
     }
 
-
+    @GetMapping
+    public List<Item> getItemsByUser( @RequestHeader("X-Sharer-User-Id") Long userId) {
+        return itemService.findItemsByUserId(userId);
+    }
 
 }

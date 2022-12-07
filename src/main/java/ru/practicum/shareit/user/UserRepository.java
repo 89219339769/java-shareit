@@ -17,18 +17,15 @@ import java.util.List;
 public class UserRepository {
     private final List<User> users = new ArrayList<>();
     private  Integer userId = 1;
-
     public List<User> getAll() {
         return users;
     }
-
 
     public User create(User user) {
         user.setId(Long.valueOf(userId++));
         users.add(user);
         return user;
     }
-
 
     public User get(Long id) {
         for (int i = 0; i < users.size(); i++) {
@@ -55,14 +52,4 @@ public class UserRepository {
         }
     }
 
-
-//    private long getId() {
-////        long lastId = users.stream()
-////                .mapToLong(User::getId)
-////                .max()
-////                .orElse(0);
-//       return userId + 1;
-
-
-   // }
 }

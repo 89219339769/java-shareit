@@ -1,15 +1,23 @@
 package ru.practicum.shareit.item;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.practicum.shareit.exceptions.EmailWrongException;
+import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.user.UserRepository;
+import ru.practicum.shareit.user.model.User;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Data
 @Component
+@RequiredArgsConstructor
 public class ItemRepository {
     private final Map<Long, List<Item>> items = new HashMap<>();
-
+    private final UserRepository repository;
 
     public Item save(Item item) {
         item.setId(getId());
@@ -25,6 +33,8 @@ public class ItemRepository {
     }
 
 
+
+
     public Item findItemById(Long id) {
 
         //сначала взять все значения из мапы  в список
@@ -37,13 +47,15 @@ public class ItemRepository {
             for (long j = 0; j < temp2.size(); j++) {
 
                 if (temp2.get((int) j).getId().equals(id)) {
-                    Item item = temp2.get(Math.toIntExact(id-1));
+                    Item item = temp2.get(Math.toIntExact(id - 1));
                     return item;
                 }
             }
         }
         return null;
     }
+
+
 
 
     private long getId() {

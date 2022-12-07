@@ -11,11 +11,11 @@ import ru.practicum.shareit.user.validation.Validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ItemService {
-
     private final ItemRepository itemRepository;
     private final UserNotFound userNotFound;
     private final List<ItemValidation> validations;
@@ -23,12 +23,35 @@ public class ItemService {
     public Item save(long userId, Item item) {
         item.setUserId(userId);
         userNotFound.validate(userId);
-        validations.stream().
-                forEach(validator -> validator.validate(item));
+        validations.stream().forEach(validator -> validator.validate(item));
         return itemRepository.save(item);
     }
 
-    public Item findItemById(Long id) {
-        return itemRepository.findItemById(id);
+    public Item updateItem(Long userId, Item item) {
+        item.setUserId(userId);
+        List<Item> clientItems =itemRepository.getItems().get(userId);
+                        for (int k = 0; k < clientItems.size(); k++) {
+                            if (clientItems.get(k).getId() == item.getId()) {
+                                Item uptadeItem = clientItems.get(k);
+                                if (item.getName() != null || item.getName() != uptadeItem.getName()) {
+                                    uptadeItem.setName(item.getName());
+                                }
+                                if (item.getAvailable() != null || item.getAvailable() != uptadeItem.getAvailable()) {
+                                    uptadeItem.setAvailable(item.getAvailable());
+                                    if (item.getDescription() != null || item.getDescription() != uptadeItem.getDescription()) {
+                                        uptadeItem.setDescription(item.getDescription());
+                                    }
+                                    return uptadeItem;
+                                }
+                            }
+                        }
+
+        throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }
-}
+    }
+
+
+//                    public Item findItemById (Long id){
+//                        return itemRepository.findItemById(id);
+//                    }
+

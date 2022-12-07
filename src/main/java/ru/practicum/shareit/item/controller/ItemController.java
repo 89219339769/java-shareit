@@ -20,9 +20,15 @@ public class ItemController {
         return itemService.save(userId, item);
     }
 
-    @GetMapping("/{id}")
-    public Item findUserById(@PathVariable Long id) {
-        return itemService.findItemById(id);
+//    @GetMapping("/{id}")
+//    public Item findUserById(@PathVariable Long id) {
+//        return itemService.findItemById(id);
+//    }
+
+    @PatchMapping("/{userId}")
+    public Item put(@RequestHeader("X-Sharer-User-Id") Long userId,
+                    @RequestBody Item item) {
+        return itemService.updateItem(userId, item);
     }
 
 

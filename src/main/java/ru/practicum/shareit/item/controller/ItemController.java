@@ -25,10 +25,11 @@ public class ItemController {
 //        return itemService.findItemById(id);
 //    }
 
-    @PatchMapping("/{userId}")
-    public Item put(@RequestHeader("X-Sharer-User-Id") Long userId,
+    @PatchMapping("/{itemId}")
+    public Item put(@PathVariable long itemId,
+            @RequestHeader("X-Sharer-User-Id") Long userId,
                     @RequestBody Item item) {
-        return itemService.updateItem(userId, item);
+        return itemService.updateItem(itemId, userId, item);
     }
 
 

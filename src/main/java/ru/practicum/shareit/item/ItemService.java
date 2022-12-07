@@ -44,21 +44,21 @@ public class ItemService {
                         uptadeItem.setAvailable(item.getAvailable());
                     }
                     if (item.getDescription() != null & item.getDescription() != uptadeItem.getDescription()) {
-                            uptadeItem.setDescription(item.getDescription());
+                        uptadeItem.setDescription(item.getDescription());
                     }
-                        return uptadeItem;
-                    }
+                    return uptadeItem;
                 }
+            }
 
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new NotFoundException("невозможно обновить, пользователя с этим номером не существует ");
         }
         throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }
+
+
+    public Item findItemById(Long id) {
+        return itemRepository.findItemById(id);
     }
-
-
-//                    public Item findItemById (Long id){
-//                        return itemRepository.findItemById(id);
-//                    }
+}
 

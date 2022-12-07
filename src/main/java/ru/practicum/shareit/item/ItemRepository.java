@@ -35,25 +35,59 @@ public class ItemRepository {
 
 
 
-    public Item findItemById(Long id) {
+    public Item findItemById(Long itemId) {
+//
 
-        //сначала взять все значения из мапы  в список
-        List<List<Item>> temp = items.values().parallelStream().collect(Collectors.toList());
 
-        for (long i = 0; i < temp.size(); i++) {
+        List<List<Item>> list = new ArrayList<List<Item>>(items.values());
 
-            List<Item> temp2 = temp.get((int) i);
 
-            for (long j = 0; j < temp2.size(); j++) {
-
-                if (temp2.get((int) j).getId().equals(id)) {
-                    Item item = temp2.get(Math.toIntExact(id - 1));
+        for (int i = 0; i < list.size(); i++) {
+            List<Item> listItem = new ArrayList<>();
+            listItem = list.get(i);
+            for (int j = 0; j < listItem.size(); j++) {
+                if (listItem.get(i).getId() == itemId) {
+                    Item item = listItem.get(i);
                     return item;
                 }
             }
         }
-        return null;
+        throw new NotFoundException("предмета  с этим номером не существует ");
+
     }
+//            try {
+//                List<Item> clientItems =  items.get(userId);
+//                for (int k = 0; k < clientItems.size(); k++) {
+//                    if (clientItems.get(k).getId() == itemId) {
+//
+//                        Item item = clientItems.get(k);
+//                        return item;
+//                    }
+//                }
+//
+//            } catch (RuntimeException e) {
+//                throw new NotFoundException("пользователя с  номером"+ userId+" не найдено ");
+//            }
+//            throw new NotFoundException("итема с номером "+itemId+ "не найдено");
+
+
+//        //сначала взять все значения из мапы  в список
+//        List<List<Item>> temp = items.values().parallelStream().collect(Collectors.toList());
+//
+//        for (long i = 0; i < temp.size(); i++) {
+//
+//            List<Item> temp2 = temp.get((int) i);
+//
+//            for (long j = 0; j < temp2.size(); j++) {
+//
+//                if (temp2.get((int) j).getId().equals(id)) {
+//                    Item item = temp2.get(Math.toIntExact(id - 1));
+//                    return item;
+//                }
+//            }
+//        }
+//        return null;
+
 
 
 

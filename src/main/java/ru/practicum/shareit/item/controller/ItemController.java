@@ -20,10 +20,10 @@ public class ItemController {
         return itemService.save(userId, item);
     }
 
-//    @GetMapping("/{id}")
-//    public Item findUserById(@PathVariable Long id) {
-//        return itemService.findItemById(id);
-//    }
+   @GetMapping("/{id}")
+   public Item findUserById(@PathVariable Long id) {
+       return itemService.findItemById(id);
+   }
 
     @PatchMapping("/{itemId}")
     public Item put(@PathVariable long itemId,

@@ -27,14 +27,12 @@ public class ItemService {
         return itemRepository.save(item);
     }
 
-    public Item updateItem(Long userId, Long itemId, Item item) {
+    public Item updateItem(Long itemId, Long userId, Item item) {
 
         item.setUserId(userId);
         item.setId(itemId);
 
         try {
-
-
             List<Item> clientItems = itemRepository.getItems().get(userId);
             for (int k = 0; k < clientItems.size(); k++) {
                 if (clientItems.get(k).getId() == item.getId()) {
@@ -44,15 +42,16 @@ public class ItemService {
                     }
                     if (item.getAvailable() != null & item.getAvailable() != uptadeItem.getAvailable()) {
                         uptadeItem.setAvailable(item.getAvailable());
-                        if (item.getDescription() != null & item.getDescription() != uptadeItem.getDescription()) {
+                    }
+                    if (item.getDescription() != null & item.getDescription() != uptadeItem.getDescription()) {
                             uptadeItem.setDescription(item.getDescription());
-                        }
+                    }
                         return uptadeItem;
                     }
                 }
-            }
-        } catch (NotFoundException e){
-            throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
+
+        } catch (RuntimeException e){
+            throw new NotFoundException("невозможно обновить, пользователя с этим номером не существует ");
         }
         throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }

@@ -1,5 +1,4 @@
 package ru.practicum.shareit.user.validation;
-
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exceptions.IncorrectEmailException;

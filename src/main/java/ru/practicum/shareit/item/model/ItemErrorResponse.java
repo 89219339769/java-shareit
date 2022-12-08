@@ -1,6 +1,5 @@
 package ru.practicum.shareit.item.model;
-
-    public class  ItemErrorResponse  {
+    public class ItemErrorResponse  {
         private final String error;
         public ItemErrorResponse(String error) {
             this.error = error;

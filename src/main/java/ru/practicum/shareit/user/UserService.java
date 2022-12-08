@@ -1,5 +1,4 @@
 package ru.practicum.shareit.user;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exceptions.EmailWrongException;
@@ -13,13 +12,12 @@ import java.util.List;
 public class UserService {
     private final UserRepository repository;
     private final List<Validation> validations;
-    public List<User> getAllUsers() {
-        return repository.getAll();
+    public List<User> getAllUsers() {return repository.getAll();
     }
 
     public User saveUser(User user) {
-        validations.stream().
-                forEach(validator -> validator.validate(user));
+        validations.stream()
+                .forEach(validator -> validator.validate(user));
         return repository.create(user);
     }
 
@@ -32,12 +30,12 @@ public class UserService {
         for (int i = 0; i < repository.getUsers().size(); i++) {
             if (repository.getUsers().get(i).getId() == id) {
                 User updateUser = repository.getUsers().get(i);
-                if (user.getEmail() != null&user.getEmail()!=updateUser.getEmail()) {
+                if (user.getEmail() != null & user.getEmail()!=updateUser.getEmail()) {
                     validations.stream().
                             forEach(validator -> validator.validate(user));
                     updateUser.setEmail(user.getEmail());
                 }
-                if (user.getName() != null&user.getName()!=updateUser.getName()) {
+                if (user.getName()!= null & user.getName()!=updateUser.getName()){
                     updateUser.setName(user.getName());
                 }
                 return updateUser;

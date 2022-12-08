@@ -15,25 +15,25 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse ObjectWrongEnterExeption(final NoEmailException e) {
+    public ErrorResponse objectWrongEnterExeption(final NoEmailException e) {
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse ObjectWrongEnterExeption(final EmailWrongException e) {
+    public ErrorResponse objectWrongEnterExeption(final EmailWrongException e) {
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse ObjectWrongEnterExeption(final IncorrectEmailException e) {
+    public ErrorResponse objectWrongEnterExeption(final IncorrectEmailException e) {
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus. NOT_FOUND)
-    public ErrorResponse ObjectWrongEnterExeption(final NotFoundException e) {
+    public ErrorResponse objectWrongEnterExeption(final NotFoundException e) {
         return new ErrorResponse(e.getMessage());
     }
 }

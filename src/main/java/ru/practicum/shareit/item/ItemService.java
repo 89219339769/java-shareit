@@ -24,7 +24,6 @@ public class ItemService {
     public Item updateItem(Long itemId, Long userId, Item item) {
         item.setUserId(userId);
         item.setId(itemId);
-
         try {
             List<Item> clientItems = itemRepository.getItems().get(userId);
             for (int k = 0; k < clientItems.size(); k++) {

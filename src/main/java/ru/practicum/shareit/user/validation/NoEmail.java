@@ -7,7 +7,7 @@ public class NoEmail implements Validation {
 
     @Override
     public void validate(User user) {
-        if(user.getEmail()==null || user.getEmail().isBlank()){
+        if(user.getEmail() == null || user.getEmail().isBlank()){
             throw new NoEmailException("адресс электронной почты не может быть пустым");
         }
     }

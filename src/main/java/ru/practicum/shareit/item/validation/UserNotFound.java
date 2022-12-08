@@ -14,6 +14,6 @@ public class UserNotFound {
             if (repository.getUsers().get(i).getId() == userId)
             userExist = true;
         }
-        if(userExist==false)throw  new NotFoundException("юзера с таким номером нет");
+        if(userExist == false)throw  new NotFoundException("юзера с таким номером нет");
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
+
 import java.util.*;
 
 
@@ -43,15 +44,48 @@ public class ItemRepository {
         throw new NotFoundException("предмета  с этим номером не существует ");
     }
 
-    public List<Item> findItemsByUser(Long userId){
-       try {
-           List<Item> item = items.get(userId);
-           return item;
-       }
-       catch (RuntimeException e){
-           throw new NotFoundException(" Пользователь не найден");
-       }
+    public List<Item> findItemsByUser(Long userId) {
+        try {
+            List<Item> item = items.get(userId);
+            return item;
+        } catch (RuntimeException e) {
+            throw new NotFoundException(" Пользователь не найден");
+        }
     }
+
+
+    public List<Item> findItemByName(String query) {
+
+        List<Item> findItems = new ArrayList<>();
+        List<List<Item>> list = new ArrayList<>(items.values());
+        for (int i = 0; i < list.size(); i++) {
+            List<Item> listItem = list.get(i);
+
+            for (int j = 0; j < listItem.size(); j++) {
+                Boolean itemFind = false;
+                Item item = listItem.get(j);
+                String name = item.getName();
+                String[] names = name.split("\\s");
+                for (int k = 0; k < names.length; k++) {
+                    if (names[k].equalsIgnoreCase(query)&item.getAvailable()==true) {
+                        findItems.add(item);
+                        itemFind = true;
+                    }
+                }
+                if (itemFind == false) {
+                    String description = item.getDescription();
+                    String[] words = description.split("\\s");
+                    for (int k = 0; k < words.length; k++) {
+                        if (words[k].equalsIgnoreCase(query)&item.getAvailable()==true) {
+                            findItems.add(item);
+                        }
+                    }
+                }
+            }
+        }
+        return findItems;
+    }
+
 
     private long getId() {
         long lastId = items.values()

@@ -2,6 +2,7 @@ package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
@@ -62,5 +63,15 @@ public class ItemService {
     public List<Item> findItemsByUserId(Long userId){
   return  itemRepository.findItemsByUser(userId);
     }
+
+
+
+    public List<Item> findItemByName( String query) {
+
+        return itemRepository.findItemByName(query);
+    }
+
+
+
 }
 

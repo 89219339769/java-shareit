@@ -10,8 +10,8 @@ public class UserNotFound {
     public void validate(long userId){
         boolean userExist = false;
 
-        for (int i = 0; i < repository.getUsers().size(); i++) {
-            if (repository.getUsers().get(i).getId() == userId)
+        for(int i = 0; i < repository.getUsers().size(); i++){
+            if (repository.getUsers().get(i).getId()==userId)
             userExist = true;
         }
         if(userExist==false)throw  new NotFoundException("юзера с таким номером нет");

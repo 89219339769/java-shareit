@@ -67,7 +67,7 @@ public class ItemRepository {
                 String name = item.getName();
                 String[] names = name.split("\\s");
                 for (int k = 0; k < names.length; k++) {
-                    if (names[k].equalsIgnoreCase(query)&item.getAvailable()==true) {
+                    if (names[k].equalsIgnoreCase(query) & item.getAvailable() == true) {
                         findItems.add(item);
                         itemFind = true;
                     }
@@ -76,15 +76,28 @@ public class ItemRepository {
                     String description = item.getDescription();
                     String[] words = description.split("\\s");
                     for (int k = 0; k < words.length; k++) {
-                        if (words[k].equalsIgnoreCase(query)&item.getAvailable()==true) {
+                        if (words[k].equalsIgnoreCase(query) & item.getAvailable() == true) {
                             findItems.add(item);
+                            itemFind = true;
                         }
                     }
+                }
+                if (itemFind == false) {
+                  //  (string.toLowerCase().contains(substring.toLowerCase()));
+
+
+                    if ((name.toLowerCase().contains(query.toLowerCase()))&(!query.isBlank())
+                            & item.getAvailable() == true) {
+                        findItems.add(item);
+                    }
+
                 }
             }
         }
         return findItems;
     }
+
+
 
 
     private long getId() {

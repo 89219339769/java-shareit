@@ -12,7 +12,6 @@ import ru.practicum.shareit.user.model.User;
 public class DublicateEmail implements Validation {
     private final UserRepository userRepository;
 
-
     public void validate(User user) {
         String temp = user.getEmail();
         for (int i = 0; i < userRepository.getUsers().size(); i++) {

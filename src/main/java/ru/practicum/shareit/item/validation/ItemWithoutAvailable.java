@@ -7,7 +7,6 @@ import ru.practicum.shareit.item.model.Item;
 @Component
 public class ItemWithoutAvailable implements ItemValidation {
 
-
     public void validate(Item item) {
         if (item.getAvailable() == null) {
             throw new NoAvailableException("нужно указать состояние");

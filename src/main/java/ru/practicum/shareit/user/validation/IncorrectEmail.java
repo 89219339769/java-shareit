@@ -7,7 +7,6 @@ import ru.practicum.shareit.user.model.User;
 @Component
 public class IncorrectEmail implements Validation{
 
-
     @Override
     public void validate(User user) {
         EmailValidator validator = EmailValidator.getInstance();

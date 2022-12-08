@@ -9,7 +9,6 @@ import ru.practicum.shareit.user.UserRepository;
 @RequiredArgsConstructor
 public class UserNotFound {
     private final UserRepository repository;
-
     public void validate(long userId){
         boolean userExist = false;
 

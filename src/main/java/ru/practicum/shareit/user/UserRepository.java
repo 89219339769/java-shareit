@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.user.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +36,6 @@ public class UserRepository {
         throw new NotFoundException("юзера с этим номером не найдено");
     }
 
-
     public void delete(Long id) {
         boolean userExist = false;
         for (int i = 0; i < users.size(); i++) {
@@ -51,5 +49,4 @@ public class UserRepository {
             throw new NotFoundException("юзера с этим номером не найдено");
         }
     }
-
 }

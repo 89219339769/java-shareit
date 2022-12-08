@@ -9,7 +9,6 @@ import ru.practicum.shareit.user.UserRepository;
 
 import java.util.*;
 
-
 @Data
 @Component
 @RequiredArgsConstructor
@@ -53,7 +52,6 @@ public class ItemRepository {
         }
     }
 
-
     public List<Item> findItemByName(String query) {
 
         List<Item> findItems = new ArrayList<>();
@@ -64,41 +62,23 @@ public class ItemRepository {
             for (int j = 0; j < listItem.size(); j++) {
                 Boolean itemFind = false;
                 Item item = listItem.get(j);
-                String name = item.getName();
-                String[] names = name.split("\\s");
-                for (int k = 0; k < names.length; k++) {
-                    if (names[k].equalsIgnoreCase(query) & item.getAvailable() == true) {
-                        findItems.add(item);
-                        itemFind = true;
-                    }
+                if ((item.getName().toLowerCase().contains(query.toLowerCase()))
+                        & (!query.isBlank())
+                        & item.getAvailable() == true) {
+                    findItems.add(item);
+                    itemFind = true;
                 }
                 if (itemFind == false) {
-                    String description = item.getDescription();
-                    String[] words = description.split("\\s");
-                    for (int k = 0; k < words.length; k++) {
-                        if (words[k].equalsIgnoreCase(query) & item.getAvailable() == true) {
-                            findItems.add(item);
-                            itemFind = true;
-                        }
-                    }
-                }
-                if (itemFind == false) {
-                  //  (string.toLowerCase().contains(substring.toLowerCase()));
-
-
-                    if ((name.toLowerCase().contains(query.toLowerCase()))&(!query.isBlank())
+                    if ((item.getDescription().toLowerCase().contains(query.toLowerCase()))
+                            & (!query.isBlank())
                             & item.getAvailable() == true) {
                         findItems.add(item);
                     }
-
                 }
             }
         }
         return findItems;
     }
-
-
-
 
     private long getId() {
         long lastId = items.values()

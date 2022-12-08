@@ -9,7 +9,6 @@ import ru.practicum.shareit.user.model.User;
 @Component
 public class NoEmail implements Validation {
 
-
     @Override
     public void validate(User user) {
         if(user.getEmail()==null||user.getEmail().isBlank()){

@@ -1,11 +1,6 @@
 package ru.practicum.shareit.item.model;
 
 import lombok.Data;
-import lombok.Getter;
-
-/**
- * TODO Sprint add-controllers.
- */
 
 @Data
 public class Item {
@@ -14,5 +9,4 @@ public class Item {
     private String name;
     private String description;
     private Boolean available;
-
 }

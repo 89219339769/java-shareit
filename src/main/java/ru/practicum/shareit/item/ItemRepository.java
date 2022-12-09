@@ -60,12 +60,12 @@ public class ItemRepository {
             for (int j = 0; j < listItem.size(); j++) {
                 Boolean itemFind = false;
                 Item item = listItem.get(j);
-                if ((item.getName().toLowerCase().contains(query.toLowerCase())) & (!query.isBlank()) & item.getAvailable() == true) {
+                if ((item.getName().toLowerCase().contains(query.toLowerCase())) && (!query.isBlank()) && item.getAvailable() == true) {
                     findItems.add(item);
                     itemFind = true;
                 }
                 if (itemFind == false) {
-                    if ((item.getDescription().toLowerCase().contains(query.toLowerCase())) & (!query.isBlank()) & item.getAvailable() == true) {
+                    if ((item.getDescription().toLowerCase().contains(query.toLowerCase())) && (!query.isBlank()) && item.getAvailable() == true) {
                         findItems.add(item);
                     }
                 }

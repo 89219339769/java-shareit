@@ -34,12 +34,12 @@ public class UserService {
         for (int i = 0; i < repository.getUsers().size(); i++) {
             if (repository.getUsers().get(i).getId() == id) {
                 User updateUser = repository.getUsers().get(i);
-                if (user.getEmail() != null & user.getEmail() != updateUser.getEmail()) {
+                if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
                     validations.stream()
                                     .forEach(validator -> validator.validate(user));
                     updateUser.setEmail(user.getEmail());
                 }
-                if (user.getName() != null & user.getName() != updateUser.getName()) {
+                if (user.getName() != null && user.getName() != updateUser.getName()) {
                     updateUser.setName(user.getName());
                 }
                 return updateUser;

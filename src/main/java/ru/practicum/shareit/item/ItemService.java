@@ -30,13 +30,13 @@ public class ItemService {
             for (int k = 0; k < clientItems.size(); k++) {
                 if (clientItems.get(k).getId() == item.getId()) {
                     Item uptadeItem = clientItems.get(k);
-                    if (item.getName() != null & item.getName() != uptadeItem.getName()) {
+                    if (item.getName() != null && item.getName() != uptadeItem.getName()) {
                         uptadeItem.setName(item.getName());
                     }
-                    if (item.getAvailable() != null & item.getAvailable() != uptadeItem.getAvailable()) {
+                    if (item.getAvailable() != null && item.getAvailable() != uptadeItem.getAvailable()) {
                         uptadeItem.setAvailable(item.getAvailable());
                     }
-                    if (item.getDescription() != null & item.getDescription() != uptadeItem.getDescription()) {
+                    if (item.getDescription() != null && item.getDescription() != uptadeItem.getDescription()) {
                         uptadeItem.setDescription(item.getDescription());
                     }
                     return uptadeItem;

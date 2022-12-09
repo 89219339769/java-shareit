@@ -32,10 +32,10 @@ public class ItemRepository {
         List<List<Item>> list = new ArrayList<>(items.values());
         for (int i = 0; i < list.size(); i++) {
             List<Item> listItem = list.get(i);
-            if(listItem.contains(itemId)) {
+            if (listItem.contains(itemId)) {
                 Item item = listItem.get(Math.toIntExact(itemId));
-                    return item;
-                }
+                return item;
+            }
         }
         throw new NotFoundException("предмета  с этим номером не существует ");
     }

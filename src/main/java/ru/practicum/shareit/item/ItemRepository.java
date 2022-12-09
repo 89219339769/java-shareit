@@ -33,7 +33,7 @@ public class ItemRepository {
         for (int i = 0; i < list.size(); i++) {
             List<Item> listItem = list.get(i);
             Integer intItemId = Math.toIntExact(itemId);
-            if (listItem.contains(intItemId)) {
+            if (listItem.indexOf(intItemId) != -1) {
                 Item item = listItem.get(intItemId);
                 return item;
             }

@@ -30,7 +30,7 @@ public class UserRepository {
 
     public User get(Long id) {
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == id) {
+            if (users.get(i).getId().equals(id)) {
                 User user = users.get(i);
                 return user;
             }
@@ -41,7 +41,7 @@ public class UserRepository {
     public void delete(Long id) {
         boolean userExist = false;
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == id) {
+            if (users.get(i).getId().equals(id)) {
                 userExist = true;
                 users.remove(i);
                 log.info("пользователь {id} удален");

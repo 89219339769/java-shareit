@@ -32,7 +32,7 @@ public class UserService {
                 throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
         }
         for (int i = 0; i < repository.getUsers().size(); i++) {
-            if (repository.getUsers().get(i).getId() == id) {
+            if (repository.getUsers().get(i).getId().equals(id)) {
                 User updateUser = repository.getUsers().get(i);
                 if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
                     validations.stream()

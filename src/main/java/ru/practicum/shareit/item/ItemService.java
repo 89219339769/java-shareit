@@ -28,7 +28,7 @@ public class ItemService {
         try {
             List<Item> clientItems = itemRepository.getItems().get(userId);
             for (int k = 0; k < clientItems.size(); k++) {
-                if (clientItems.get(k).getId() == item.getId()) {
+                if (clientItems.get(k).getId().equals(item.getId())) {
                     Item uptadeItem = clientItems.get(k);
                     if (item.getName() != null && item.getName() != uptadeItem.getName()) {
                         uptadeItem.setName(item.getName());

@@ -28,13 +28,12 @@ public class ItemRepository {
         return item;
     }
 
-    public Item findItemById(Integer itemId) {
+    public Item findItemById(int itemId) {
         List<List<Item>> list = new ArrayList<>(items.values());
         for (int i = 0; i < list.size(); i++) {
             List<Item> listItem = list.get(i);
-            Integer intItemId = Math.toIntExact(itemId);
-            if (listItem.indexOf(intItemId) != -1) {
-                Item item = listItem.get(intItemId);
+            if (listItem.indexOf(itemId) != -1) {
+                Item item = listItem.get(itemId);
                 return item;
             }
         }

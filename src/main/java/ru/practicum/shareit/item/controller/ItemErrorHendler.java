@@ -13,22 +13,21 @@ public class ItemErrorHendler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse  objectWrongEnterExeption(final NoAvailableException e) {
+    public ErrorResponse objectWrongEnterExeption(final NoAvailableException e) {
         return new ErrorResponse(e.getMessage());
     }
 
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse  objectWrongEnterExeption(final NoItemNameException e) {
+    public ErrorResponse objectWrongEnterExeption(final NoItemNameException e) {
         return new ErrorResponse(e.getMessage());
     }
 
 
-
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse  objectWrongEnterExeption(final EmptyItemDescriptionException e) {
+    public ErrorResponse objectWrongEnterExeption(final EmptyItemDescriptionException e) {
         return new ErrorResponse(e.getMessage());
     }
 }

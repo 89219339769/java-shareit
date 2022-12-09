@@ -1,10 +1,12 @@
 package ru.practicum.shareit.item;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
+
 import java.util.*;
 
 @Data
@@ -27,7 +29,6 @@ public class ItemRepository {
     }
 
     public Item findItemById(Long itemId) {
-
         List<List<Item>> list = new ArrayList<>(items.values());
         for (int i = 0; i < list.size(); i++) {
             List<Item> listItem = list.get(i);
@@ -51,7 +52,6 @@ public class ItemRepository {
     }
 
     public List<Item> findItemByName(String query) {
-
         List<Item> findItems = new ArrayList<>();
         List<List<Item>> list = new ArrayList<>(items.values());
         for (int i = 0; i < list.size(); i++) {

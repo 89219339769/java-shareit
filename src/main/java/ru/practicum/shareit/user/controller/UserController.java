@@ -28,7 +28,7 @@ public class UserController {
 
     @PatchMapping("/{id}")
     public User update(@PathVariable long id, @RequestBody User user) {
-        return userService.updateUser(id,user);
+        return userService.updateUser(id, user);
     }
 
 
@@ -39,9 +39,8 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
-         userService.delete(id);
+        userService.delete(id);
     }
-
 
 
 }

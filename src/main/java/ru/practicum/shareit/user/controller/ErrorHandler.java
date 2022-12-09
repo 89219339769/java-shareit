@@ -32,7 +32,7 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus. NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse objectWrongEnterExeption(final NotFoundException e) {
         return new ErrorResponse(e.getMessage());
     }

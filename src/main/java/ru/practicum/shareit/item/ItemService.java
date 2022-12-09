@@ -1,9 +1,11 @@
 package ru.practicum.shareit.item;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.validation.*;
+
 import java.util.List;
 
 @Service
@@ -51,11 +53,11 @@ public class ItemService {
         return itemRepository.findItemById(id);
     }
 
-    public List<Item> findItemsByUserId(Long userId){
-        return  itemRepository.findItemsByUser(userId);
+    public List<Item> findItemsByUserId(Long userId) {
+        return itemRepository.findItemsByUser(userId);
     }
 
-    public List<Item> findItemByName( String query) {
+    public List<Item> findItemByName(String query) {
         return itemRepository.findItemByName(query);
     }
 }

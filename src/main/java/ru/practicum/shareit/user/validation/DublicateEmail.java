@@ -1,4 +1,5 @@
 package ru.practicum.shareit.user.validation;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exceptions.EmailWrongException;

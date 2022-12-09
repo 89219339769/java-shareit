@@ -1,10 +1,12 @@
 package ru.practicum.shareit.user;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.user.model.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserRepository {
     private final List<User> users = new ArrayList<>();
-    private  Integer userId = 1;
+    private Integer userId = 1;
+
     public List<User> getAll() {
         return users;
     }

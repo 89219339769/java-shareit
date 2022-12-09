@@ -22,7 +22,7 @@ public class ItemService {
         return itemRepository.save(item);
     }
 
-    public Item updateItem(Long itemId, Long userId, Item item) {
+    public Item updateItem(Integer itemId, Long userId, Item item) {
         item.setUserId(userId);
         item.setId(itemId);
         try {
@@ -49,7 +49,7 @@ public class ItemService {
         throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }
 
-    public Item findItemById(int id) {
+    public Item findItemById(Integer id) {
         return itemRepository.findItemById(id);
     }
 

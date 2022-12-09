@@ -28,7 +28,7 @@ public class ItemRepository {
         return item;
     }
 
-    public Item findItemById(int itemId) {
+    public Item findItemById(Integer itemId) {
         List<List<Item>> list = new ArrayList<>(items.values());
         for (int i = 0; i < list.size(); i++) {
             List<Item> listItem = list.get(i);
@@ -72,11 +72,11 @@ public class ItemRepository {
         return findItems;
     }
 
-    private long getId() {
-        long lastId = items.values()
+    private Integer getId() {
+        Integer lastId = items.values()
                 .stream()
                 .flatMap(Collection::stream)
-                .mapToLong(Item::getId)
+                .mapToInt(Item::getId)
                 .max()
                 .orElse(0);
         return lastId + 1;

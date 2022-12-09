@@ -33,7 +33,8 @@ public class ItemRepository {
         for (int i = 0; i < list.size(); i++) {
             List<Item> listItem = list.get(i);
             for (int j = 0; j < listItem.size(); j++) {
-                if (listItem.get(i).getId() == itemId) {
+                Long tempId = listItem.get(i).getId();
+                if (tempId == itemId) {
                     Item item = listItem.get(i);
                     return item;
                 }

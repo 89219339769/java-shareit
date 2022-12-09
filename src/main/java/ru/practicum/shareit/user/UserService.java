@@ -35,8 +35,8 @@ public class UserService {
             if (repository.getUsers().get(i).getId() == id) {
                 User updateUser = repository.getUsers().get(i);
                 if (user.getEmail() != null & user.getEmail() != updateUser.getEmail()) {
-                    validations.stream().
-                            forEach(validator -> validator.validate(user));
+                    validations.stream()
+                                    .forEach(validator -> validator.validate(user));
                     updateUser.setEmail(user.getEmail());
                 }
                 if (user.getName() != null & user.getName() != updateUser.getName()) {

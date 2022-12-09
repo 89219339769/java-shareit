@@ -49,7 +49,7 @@ public class ItemService {
         throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }
 
-    public Item findItemById(Long id) {
+    public Item findItemById(Integer id) {
         return itemRepository.findItemById(id);
     }
 

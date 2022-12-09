@@ -23,7 +23,7 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public Item findUserById(@PathVariable Long id) {
+    public Item findUserById(@PathVariable Integer id) {
         return itemService.findItemById(id);
     }
 

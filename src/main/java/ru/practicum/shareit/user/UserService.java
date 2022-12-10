@@ -2,26 +2,29 @@ package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.Validator;
 import ru.practicum.shareit.exceptions.EmailWrongException;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.validation.Validation;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private final
+    Validator validator;
     private final UserRepository repository;
-    private final List<Validation> validations;
 
     public List<User> getAllUsers() {
         return repository.getAll();
     }
 
     public User saveUser(User user) {
-        validations.stream()
-                .forEach(validator -> validator.validate(user));
+        validator.validateNoEmail(user);
+        validator.validateDublicateEmail(user);
+        validator.validateIncorrectEmail(user);
+
         return repository.create(user);
     }
 
@@ -32,14 +35,16 @@ public class UserService {
                 throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
         }
         try {
-            repository.getUsers().get(Math.toIntExact(id)-1);
+            repository.getUsers().get(Math.toIntExact(id) - 1);
         } catch (IndexOutOfBoundsException e) {
             throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
         }
-        User updateUser = repository.getUsers().get(Math.toIntExact(id)-1);
+        User updateUser = repository.getUsers().get(Math.toIntExact(id) - 1);
         if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
-            validations.stream()
-                    .forEach(validator -> validator.validate(user));
+            validator.validateNoEmail(user);
+            validator.validateDublicateEmail(user);
+            validator.validateIncorrectEmail(user);
+
             updateUser.setEmail(user.getEmail());
         }
         if (user.getName() != null && user.getName() != updateUser.getName()) {

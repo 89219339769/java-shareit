@@ -2,23 +2,26 @@ package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.Validator;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.validation.*;
-
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
-    private final UserNotFound userNotFound;
-    private final List<ItemValidation> validations;
+
+    private final
+    Validator validator;
+
 
     public Item save(long userId, Item item) {
         item.setUserId(userId);
-        userNotFound.validate(userId);
-        validations.stream().forEach(validator -> validator.validate(item));
+        validator.validateItemEmptyDescription(item);
+        validator.validateUserNotFound(userId);
+        validator.validateItemEmptyName(item);
+        validator.validateItemWithOutEvailable(item);
         return itemRepository.save(item);
     }
 

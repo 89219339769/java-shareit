@@ -57,8 +57,8 @@ public class ItemService {
         return itemRepository.findItemsByUser(userId);
     }
 
-    public List<Item> findItemByName(String query) {
-        return itemRepository.findItemByName(query);
+    public List<Item> findItemByNameOrDescription(String query) {
+        return itemRepository.findItemByNameOrDescription(query);
     }
 }
 

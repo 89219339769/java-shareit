@@ -35,8 +35,7 @@ public class ItemRepository {
             for (int j = 0; j < listItem.size(); j++) {
                 Long tempId = listItem.get(i).getId();
                 if (tempId.equals(itemId)) {
-                    Item item = listItem.get(i);
-                    return item;
+                    return listItem.get(i);
                 }
             }
         }
@@ -44,15 +43,13 @@ public class ItemRepository {
     }
 
     public List<Item> findItemsByUser(Long userId) {
-        try {
-            List<Item> item = items.get(userId);
-            return item;
-        } catch (RuntimeException e) {
+        if (!items.containsKey(userId)) {
             throw new NotFoundException(" Пользователь не найден");
         }
+        return items.get(userId);
     }
 
-    public List<Item> findItemByName(String query) {
+    public List<Item> findItemByNameOrDescription(String query) {
         List<Item> findItems = new ArrayList<>();
         List<List<Item>> list = new ArrayList<>(items.values());
         for (int i = 0; i < list.size(); i++) {

@@ -31,21 +31,21 @@ public class UserService {
             if (repository.getUsers().get(j).getEmail().equals(user.getEmail()))
                 throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
         }
-        for (int i = 0; i < repository.getUsers().size(); i++) {
-            if (repository.getUsers().get(i).getId().equals(id)) {
-                User updateUser = repository.getUsers().get(i);
-                if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
-                    validations.stream()
-                                    .forEach(validator -> validator.validate(user));
-                    updateUser.setEmail(user.getEmail());
-                }
-                if (user.getName() != null && user.getName() != updateUser.getName()) {
-                    updateUser.setName(user.getName());
-                }
-                return updateUser;
-            }
+        try {
+            repository.getUsers().get(Math.toIntExact(id)-1);
+        } catch (IndexOutOfBoundsException e) {
+            throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
         }
-        throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
+        User updateUser = repository.getUsers().get(Math.toIntExact(id)-1);
+        if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
+            validations.stream()
+                    .forEach(validator -> validator.validate(user));
+            updateUser.setEmail(user.getEmail());
+        }
+        if (user.getName() != null && user.getName() != updateUser.getName()) {
+            updateUser.setName(user.getName());
+        }
+        return updateUser;
     }
 
     public User get(Long id) {

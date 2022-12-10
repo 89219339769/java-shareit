@@ -31,8 +31,7 @@ public class UserRepository {
     public User get(Long id) {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getId().equals(id)) {
-                User user = users.get(i);
-                return user;
+                return users.get(i);
             }
         }
         throw new NotFoundException("юзера с этим номером не найдено");
@@ -47,7 +46,7 @@ public class UserRepository {
                 log.info("пользователь {id} удален");
             }
         }
-        if (userExist == false) {
+        if (!userExist) {
             throw new NotFoundException("юзера с этим номером не найдено");
         }
     }

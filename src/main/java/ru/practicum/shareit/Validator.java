@@ -8,6 +8,8 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
+import java.util.List;
+
 
 @Component
 @RequiredArgsConstructor
@@ -16,10 +18,9 @@ public class Validator {
     private final UserRepository userRepository;
 
 
-    public void validateDublicateEmail(User user) {
-        String temp = user.getEmail();
-        for (int i = 0; i < userRepository.getUsers().size(); i++) {
-            if (userRepository.getUsers().get(i).getEmail().equals(temp))
+    public void validateDublicateEmail(List<User> users, String eMail) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getEmail().equals(eMail))
                 throw new EmailWrongException("адрес указанной электронной почты уже сущетсвует ");
         }
     }

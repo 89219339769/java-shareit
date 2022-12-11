@@ -21,8 +21,13 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        List<User> users = repository.getUsers();
+        String userEmail = user.getEmail();
+        validator.validateDublicateEmail(users, userEmail);
+       //по аналогии остальные методы сделать (обращение к базе тут обработка там)
+       //Сделать 2 класса validator (один для user один для item)
+
         validator.validateNoEmail(user);
-        validator.validateDublicateEmail(user);
         validator.validateIncorrectEmail(user);
 
         return repository.create(user);
@@ -42,7 +47,7 @@ public class UserService {
         User updateUser = repository.getUsers().get(Math.toIntExact(id) - 1);
         if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
             validator.validateNoEmail(user);
-            validator.validateDublicateEmail(user);
+            validator.validateDublicateEmail( repository.getUsers(),user.getEmail());
             validator.validateIncorrectEmail(user);
 
             updateUser.setEmail(user.getEmail());

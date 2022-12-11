@@ -39,11 +39,10 @@ public class UserService {
             if (repository.getUsers().get(j).getEmail().equals(user.getEmail()))
                 throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
         }
-        try {
-            repository.getUsers().get(Math.toIntExact(id) - 1);
-        } catch (IndexOutOfBoundsException e) {
-            throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
-        }
+
+        if (repository.getUsers().get((int) (id-1)) == null) {
+            throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");}
+
         User updateUser = repository.getUsers().get(Math.toIntExact(id) - 1);
         if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
             validator.validateNoEmail(user);

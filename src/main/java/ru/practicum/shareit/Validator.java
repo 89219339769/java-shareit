@@ -5,7 +5,6 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exceptions.*;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Validator {
 
-    private final UserRepository userRepository;
+ //   private final InMemoryUserRepository userRepository;
 
 
     public void validateDublicateEmail(List<User> users, String eMail) {
@@ -59,14 +58,14 @@ public class Validator {
 
 
     public void validateUserNotFound(long userId) {
-        boolean userExist = false;
-
-        for (int i = 0; i < userRepository.getUsers().size(); i++) {
-            if (userRepository.getUsers().get(i).getId() == userId)
-                userExist = true;
-        }
-        if (userExist == false) throw new NotFoundException("юзера с таким номером нет");
-    }
+//        boolean userExist = false;
+//
+//        for (int i = 0; i < userRepository.getUsers().size(); i++) {
+//            if (userRepository.getUsers().get(i).getId() == userId)
+//                userExist = true;
+//        }
+//        if (userExist == false) throw new NotFoundException("юзера с таким номером нет");
+   }
 
 
 

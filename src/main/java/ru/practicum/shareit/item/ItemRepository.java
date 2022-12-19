@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.UserRepository;
 
 import java.util.*;
 
@@ -14,7 +13,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ItemRepository {
     private final Map<Long, List<Item>> items = new HashMap<>();
-    private final UserRepository repository;
+    // private final InMemoryUserRepository repository;
 
     public Item save(Item item) {
         item.setId(getId());

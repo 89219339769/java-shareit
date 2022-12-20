@@ -2,8 +2,9 @@ package ru.practicum.shareit.item.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.shareit.item.ItemService;
+import ru.practicum.shareit.item.ItemServiceImpl;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.item.model.ItemDtoShort;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("/items")
 @RequiredArgsConstructor
 public class ItemController {
-    private final ItemService itemService;
+    private final ItemServiceImpl itemService;
 
     @PostMapping
     public Item add(@RequestHeader("X-Sharer-User-Id") Long userId,
@@ -24,26 +25,30 @@ public class ItemController {
 
     @GetMapping("/{id}")
     public Item findUserById(@PathVariable Long id) {
-        return itemService.findItemById(id);
+       // return itemService.findItemById(id);
+        return null;
     }
 
     @PatchMapping("/{itemId}")
     public Item put(@PathVariable long itemId,
                     @RequestHeader("X-Sharer-User-Id") Long userId,
                     @RequestBody Item item) {
-        return itemService.updateItem(itemId, userId, item);
+      //  return itemService.updateItem(itemId, userId, item);
+        return null;
     }
 
     @GetMapping
     public List<Item> getItemsByUser(@RequestHeader("X-Sharer-User-Id") Long userId) {
-        return itemService.findItemsByUserId(userId);
+//        return itemService.findItemsByUserId(userId);
+        return null;
     }
 
 
     @GetMapping("search")
     public List<Item> findFilmsBySearch(@RequestParam(name = "text") String query) {
 
-        return itemService.findItemByNameOrDescription(query);
+      //  return itemService.findItemByNameOrDescription(query);
+        return null;
     }
 
 

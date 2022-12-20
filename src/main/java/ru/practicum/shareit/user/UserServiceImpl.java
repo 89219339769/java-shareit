@@ -36,8 +36,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public Optional<User> get(Long id) {
-        return repository.findById(id);
+    //не работает нужно научится по номеру брать из userrepository
+    public User get(Long id) {
+        User user =repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Не найден пользователь с id: " + id));
+        return user;
     }
 
 

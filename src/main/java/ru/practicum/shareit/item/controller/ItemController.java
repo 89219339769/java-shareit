@@ -18,9 +18,10 @@ public class ItemController {
     private final ItemServiceImpl itemService;
 
     @PostMapping
-    public Item add(@RequestHeader("X-Sharer-User-Id") Long userId,
+    public ItemDtoShort add(@RequestHeader("X-Sharer-User-Id") Long userId,
                     @RequestBody Item item) {
-        return itemService.save(userId, item);
+     return     itemService.save(userId, item);
+
     }
 
     @GetMapping("/{id}")

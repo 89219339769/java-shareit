@@ -8,12 +8,12 @@ import ru.practicum.shareit.item.model.ItemDtoShort;
 public class ItemMapper {
 
 
-    public Item ItemShortToItem(ItemDtoShort itemDtoShort){
-        return Item.builder()
-                .id(itemDtoShort.getId())
-                .name(itemDtoShort.getName())
-                .description(itemDtoShort.getDescription())
-                .available(itemDtoShort.getAvailable())
+    public ItemDtoShort itemToItemShort(Item item){
+        return ItemDtoShort.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .description(item.getDescription())
+                .available(item.getAvailable())
                 .build();
     }
 

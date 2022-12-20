@@ -20,7 +20,7 @@ public class ItemServiceImpl implements ItemService {
     Validator validator;
 
 
-    public Item save(long userId, Item item ) {
+    public ItemDtoShort save(long userId, Item item ) {
 
      User user = repository.findById(userId)
         .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
@@ -32,7 +32,10 @@ public class ItemServiceImpl implements ItemService {
         validator.validateUserNotFound(userId);
         validator.validateItemEmptyName(item);
         validator.validateItemWithOutEvailable(item);
-        return itemRepository.save(item);
+         itemRepository.save(item);
+        ItemDtoShort temDtoShort  = itemMapper.itemToItemShort(item);
+         return temDtoShort;
+
     }
 }
 //

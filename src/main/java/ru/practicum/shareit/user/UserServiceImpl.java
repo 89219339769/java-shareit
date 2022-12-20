@@ -1,22 +1,31 @@
 package ru.practicum.shareit.user;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.exceptions.EmailWrongException;
+import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.Validator;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 
 public class UserServiceImpl implements UserService {
-
+    private Validator validator;
     private final UserRepository repository;
 
 
     @Override
     public User saveUser(User user) {
+        List<User> users = repository.findAll();
+        String userEmail = user.getEmail();
+        validator.validateDublicateEmail(users, userEmail);
+        validator.validateNoEmail(user);
+        validator.validateIncorrectEmail(user);
         repository.save(user);
         return user;
     }
@@ -27,64 +36,41 @@ public class UserServiceImpl implements UserService {
 
     }
 
-       public Optional<User> get(Long id) {
+    public Optional<User> get(Long id) {
         return repository.findById(id);
-   }
+    }
 
 
-   public void delete(Long id) {
+    public void delete(Long id) {
         repository.deleteById(id);
 
     }
 
 
+    public User updateUser(Long id, User user) {
+        user.setId(id);
+        for (int j = 0; j < repository.findAll().size(); j++) {
+            if (repository.findAll().get(j).getEmail().equals(user.getEmail()))
+                throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
+        }
 
-
+        List<User> users = repository.findAll();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId().equals(id)) {
+                User updateUser = users.get(i);
+                if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
+                    validator.validateNoEmail(user);
+                    validator.validateDublicateEmail(repository.findAll(), user.getEmail());
+                    validator.validateIncorrectEmail(user);
+                    updateUser.setEmail(user.getEmail());
+                }
+                if (user.getName() != null && user.getName() != updateUser.getName()) {
+                    updateUser.setName(user.getName());
+                }
+                repository.save(user);
+                return updateUser;
+            }
+        }
+        throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
+    }
 }
-//
-//    public User saveUser(User user) {
-////        List<User> users = repository.getUsers();
-////        String userEmail = user.getEmail();
-////        validator.validateDublicateEmail(users, userEmail);
-////       //по аналогии остальные методы сделать (обращение к базе тут обработка там)
-////       //Сделать 2 класса validator (один для user один для item)
-////
-////        validator.validateNoEmail(user);
-////        validator.validateIncorrectEmail(user);
-////
-////        return repository.create(user);
-//        return  null;
-//    }
-//
-//    public User updateUser(Long id, User user) {
-////        user.setId(id);
-////        for (int j = 0; j < repository.getUsers().size(); j++) {
-////            if (repository.getUsers().get(j).getEmail().equals(user.getEmail()))
-////                throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
-////        }
-////
-////        if (repository.getUsers().get((int) (id-1)) == null) {
-////            throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");}
-////
-////        User updateUser = repository.getUsers().get(Math.toIntExact(id) - 1);
-////        if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
-////            validator.validateNoEmail(user);
-////            validator.validateDublicateEmail( repository.getUsers(),user.getEmail());
-////            validator.validateIncorrectEmail(user);
-////
-////            updateUser.setEmail(user.getEmail());
-////        }
-////        if (user.getName() != null && user.getName() != updateUser.getName()) {
-////            updateUser.setName(user.getName());
-////        }
-////        return updateUser;
-//        return null;
-//    }
-//
-
-//
-//    public void delete(Long id) {
-//
-////        repository.delete(id);
-//
-//    }

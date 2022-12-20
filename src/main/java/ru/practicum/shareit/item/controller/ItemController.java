@@ -25,9 +25,8 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public Item findUserById(@PathVariable Long id) {
-       // return itemService.findItemById(id);
-        return null;
+    public ItemDtoShort findItemById(@PathVariable Long id) {
+        return itemService.findItemById(id);
     }
 
     @PatchMapping("/{itemId}")

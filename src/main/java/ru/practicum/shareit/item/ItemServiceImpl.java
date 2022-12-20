@@ -20,25 +20,23 @@ public class ItemServiceImpl implements ItemService {
     Validator validator;
 
 
-    public ItemDtoShort save(long userId, Item item ) {
+    public ItemDtoShort save(long userId, Item item) {
 
-     User user = repository.findById(userId)
-        .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
-                "не найден пользователь с id: " + userId));
-      //  itemDtoShort.setOwnerId(userId);
-   //  Item item =  itemMapper.ItemShortToItem(itemDtoShort);
+        repository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
+                        "не найден пользователь с id: " + userId));
         item.setOwnerId(userId);
         validator.validateItemEmptyDescription(item);
         validator.validateUserNotFound(userId);
         validator.validateItemEmptyName(item);
         validator.validateItemWithOutEvailable(item);
-         itemRepository.save(item);
-        ItemDtoShort temDtoShort  = itemMapper.itemToItemShort(item);
-         return temDtoShort;
+        itemRepository.save(item);
+        ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
+        return temDtoShort;
 
     }
-}
-//
+
+    //
 //    public Item updateItem(Long itemId, Long userId, Item item) {
 //        item.setUserId(userId);
 //        item.setId(itemId);
@@ -66,9 +64,13 @@ public class ItemServiceImpl implements ItemService {
 //        throw new NotFoundException("невозможно обновить, т.к. итема с этим номером не существует ");
 //    }
 //
-//    public Item findItemById(Long id) {
-//        return itemRepository.findItemById(id);
-//    }
+    public ItemDtoShort findItemById(Long id) {
+       Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещи с номером - " + id +
+                " не существует"));
+        ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
+        return temDtoShort;
+    }
+}
 //
 //    public List<Item> findItemsByUserId(Long userId) {
 //        return itemRepository.findItemsByUser(userId);

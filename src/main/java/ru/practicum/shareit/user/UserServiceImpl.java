@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.user.model.User;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 
@@ -19,13 +22,25 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    public List<User> getAllUsers() {
+        return repository.findAll();
+
+    }
+
+       public Optional<User> get(Long id) {
+        return repository.findById(id);
+   }
+
+
+   public void delete(Long id) {
+        repository.deleteById(id);
+
+    }
+
+
+
+
 }
-
-
-//    public List<User> getAllUsers() {
-//      //  return repository.getAll();
-//        return  null;
-//    }
 //
 //    public User saveUser(User user) {
 ////        List<User> users = repository.getUsers();
@@ -66,12 +81,7 @@ public class UserServiceImpl implements UserService {
 //        return null;
 //    }
 //
-//    public User get(Long id) {
-//
-//
-////        return repository.get(id);
-//        return null;
-//    }
+
 //
 //    public void delete(Long id) {
 //

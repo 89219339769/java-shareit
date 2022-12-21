@@ -22,10 +22,11 @@ public class ItemServiceImpl implements ItemService {
 
     public ItemDtoShort save(long userId, Item item) {
 
-        repository.findById(userId)
+      User user =  repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
                         "не найден пользователь с id: " + userId));
-        item.setOwnerId(userId);
+
+        item.setOwner(user);
         validator.validateItemEmptyDescription(item);
         validator.validateUserNotFound(userId);
         validator.validateItemEmptyName(item);

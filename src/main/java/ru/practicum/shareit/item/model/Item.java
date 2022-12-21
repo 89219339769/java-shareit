@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.itemRequest.ItemRequest;
+import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
 
@@ -29,8 +30,9 @@ public class Item {
     private Boolean available;
 
 
-    @Column(name = "id_owner")
-    private Long ownerId;
+    @ManyToOne
+    @JoinColumn(name = "id_owner", referencedColumnName = "id", nullable = false)
+    private User owner;
 
     @ManyToOne
     @JoinColumn(name = "request_id", referencedColumnName = "id")

@@ -62,19 +62,21 @@ public class UserServiceImpl implements UserService {
                 User updateUser = users.get(i);
                 if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
                     validator.validateNoEmail(user);
-                    validator.validateDublicateEmail(repository.findAll(), user.getEmail());
+
                     validator.validateIncorrectEmail(user);
                     updateUser.setEmail(user.getEmail());
                 }
                 if (user.getName() != null && user.getName() != updateUser.getName()) {
                     updateUser.setName(user.getName());
                 }
-                repository.save(user);
+                repository.save(updateUser);
                 return updateUser;
             }
         }
         throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }
+
+
 
     private long getId() {
         List<User> users = repository.findAll();

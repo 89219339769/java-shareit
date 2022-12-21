@@ -8,6 +8,8 @@ import ru.practicum.shareit.booking.BookingService;
 import ru.practicum.shareit.booking.model.BookingDtoShort;
 import ru.practicum.shareit.item.model.ItemDtoShort;
 
+import java.util.List;
+
 
 @RestController
     @RequestMapping("/bookings")
@@ -36,6 +38,14 @@ import ru.practicum.shareit.item.model.ItemDtoShort;
     public BookingDtoShort approve(@PathVariable Long bookingId, @RequestHeader("X-Sharer-User-Id") Long userId,
                               @RequestParam Boolean approved) {
         return bookingService.approve(bookingId, userId, approved);
+    }
+
+
+
+    @GetMapping
+    public List<Booking> getAllByUser(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                      @RequestParam(defaultValue = "ALL") String state) {
+        return bookingService.getAllBokingsSortByState(userId, state);
     }
 
 

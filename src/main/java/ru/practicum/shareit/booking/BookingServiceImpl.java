@@ -3,7 +3,9 @@ package ru.practicum.shareit.booking;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.booking.model.BookingDtoShort;
 import ru.practicum.shareit.exceptions.NotFoundException;
+import ru.practicum.shareit.item.ItemMapper;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
@@ -18,19 +20,37 @@ public class BookingServiceImpl implements BookingService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
+    private  final ItemMapper itemMapper;
+
+    private  final BookingMapper bookingMapper;
+
     @Override
-    public Booking save(long userId, Booking booking) {
+    public BookingDtoShort saveBooking(long userId, Booking booking) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Не найден бронирующий с id: " + userId));
+                .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
 
         Item item = itemRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Невозможно найьт вещь с номером " + booking.getItem()));
+                .orElseThrow(() -> new NotFoundException("Невозможно найти вещь с номером " + booking.getItem()));
         booking.setBooker(user);
+
+
         booking.setItem(item);
         booking.setStatus(WAITING);
-        return bookingRepository.save(booking);
+        bookingRepository.save(booking);
+
+        return bookingMapper.bookingToBookingDtoShort(booking);
+//return  itemMapper.itemToItemVeryShort(item);
+    }
+
+    @Override
+    public BookingDtoShort getById(long bookingId) {
+      Booking booking = bookingRepository.findById(bookingId)
+         .orElseThrow(() -> new NotFoundException("Не найдена бронь с номером: " + bookingId));
+        return bookingMapper.bookingToBookingDtoShort(booking);
 
     }
+
+
 
 
 }

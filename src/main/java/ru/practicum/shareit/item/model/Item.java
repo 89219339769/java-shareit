@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.itemRequest.ItemRequest;
-import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
 

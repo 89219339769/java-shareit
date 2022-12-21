@@ -31,4 +31,12 @@ import ru.practicum.shareit.item.model.ItemDtoShort;
 
 
 
+
+    @PatchMapping("/{bookingId}")
+    public BookingDtoShort approve(@PathVariable Long bookingId, @RequestHeader("X-Sharer-User-Id") Long userId,
+                              @RequestParam Boolean approved) {
+        return bookingService.approve(bookingId, userId, approved);
+    }
+
+
 }

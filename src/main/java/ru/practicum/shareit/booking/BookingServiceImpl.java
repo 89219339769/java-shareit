@@ -11,7 +11,7 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
-import static ru.practicum.shareit.booking.BookingStatus.WAITING;
+import static ru.practicum.shareit.booking.BookingStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -20,9 +20,9 @@ public class BookingServiceImpl implements BookingService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
-    private  final ItemMapper itemMapper;
+    private final ItemMapper itemMapper;
 
-    private  final BookingMapper bookingMapper;
+    private final BookingMapper bookingMapper;
 
     @Override
     public BookingDtoShort saveBooking(long userId, Booking booking) {
@@ -44,13 +44,31 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDtoShort getById(long bookingId) {
-      Booking booking = bookingRepository.findById(bookingId)
-         .orElseThrow(() -> new NotFoundException("Не найдена бронь с номером: " + bookingId));
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new NotFoundException("Не найдена бронь с номером: " + bookingId));
         return bookingMapper.bookingToBookingDtoShort(booking);
 
     }
 
 
+    @Override
+    public BookingDtoShort approve(Long bookingId, Long userId, Boolean approved) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new NotFoundException("Не найдена бронь с номером: " + bookingId));
+        Item item = booking.getItem();
+        User owner = item.getOwner();
+        Long ownerId = owner.getId();
+        if (!ownerId.equals(userId)) {
+            throw new NotFoundException("не найдено вещи владельца с номером " + userId);
+        }
+        if (approved = true)
+            booking.setStatus(APPROVED);
+        if (approved = false)
+            booking.setStatus(REJECTED);
+        bookingRepository.save(booking);
+
+        return bookingMapper.bookingToBookingDtoShort(booking);
+    }
 
 
 }

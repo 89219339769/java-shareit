@@ -11,4 +11,7 @@ public interface BookingService  {
     BookingDtoShort saveBooking(long userId, Booking booking);
 
     BookingDtoShort getById(long bookingId);
+
+
+    BookingDtoShort approve(Long bookingId, Long userId, Boolean approved);
 }

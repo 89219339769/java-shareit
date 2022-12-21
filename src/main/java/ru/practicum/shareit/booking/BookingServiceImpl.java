@@ -114,7 +114,7 @@ public class BookingServiceImpl implements BookingService {
 
         switch (state) {
             case "ALL":
-            //    allBookings.addAll(userBookings);
+                allBookings.addAll(bookingRepository.findAllByBooker(user));
                 break;
             case "CURRENT":
                 allBookings.addAll(bookingRepository.findAllByBookerAndStartBeforeAndEndAfter(user,

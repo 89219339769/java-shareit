@@ -20,19 +20,15 @@ public class BookingDtoShort {
 
         private Long id;
 
-
         private LocalDateTime start;
-
 
         private LocalDateTime end;
 
         private BookingStatus status;
 
+        private User booker;
 
-        private ItemDtoVeryShort item;
-
-
-        private Long bookingId;
+        private Item item;
 
     }
 

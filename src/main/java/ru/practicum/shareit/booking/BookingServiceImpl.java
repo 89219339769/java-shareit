@@ -33,13 +33,13 @@ public class BookingServiceImpl implements BookingService {
     private final BookingMapper bookingMapper;
 
     @Override
-    public BookingDtoShort saveBooking(long userId, BookingShortDtoWithItemId bookingShortDto) {
+    public BookingDtoShort saveBooking(long userId, BookingShortDtoWithItemId bookingShortDtoWithItemId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
         //  booking.setBooker(user);
 
 
-        Item item = itemRepository.findById(bookingShortDto.getItemId())
+        Item item = itemRepository.findById(bookingShortDtoWithItemId.getItemId())
                 .orElseThrow(() -> new NotFoundException("Невозможно найти вещь с номером "));
 
         //  booking.setBooker(user);
@@ -66,7 +66,11 @@ public class BookingServiceImpl implements BookingService {
 //                    "бронирование уже подтверждено или отклонено");
 //        }
 
-        Booking booking = bookingMapper.toBooking(bookingShortDto);
+
+
+        Booking booking = bookingMapper.toBooking(bookingShortDtoWithItemId);
+        booking.setBooker(user);
+        booking.setItem(item);
 
         if(booking.getStart().isAfter(booking.getEnd())){
             throw new WrongTimeException("ошибка с датами бронирования");

@@ -25,11 +25,9 @@ public class ItemServiceImpl implements ItemService {
 
 
     public ItemDtoShort save(long userId, Item item) {
-
         User user = repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
                         "не найден пользователь с id: " + userId));
-
         item.setOwner(user);
         validator.validateItemEmptyDescription(item);
         validator.validateUserNotFound(userId);
@@ -38,9 +36,7 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.save(item);
         ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
         return temDtoShort;
-
     }
-
 
     public Item updateItem(Long itemId, Long userId, Item item) {
         boolean ItemExist = false;
@@ -55,29 +51,9 @@ public class ItemServiceImpl implements ItemService {
                     "у пользователя с id: " + userId + "нет такой вещи");
         }
 
-//        User user = repository.findById(userId)
-//                .orElseThrow(() -> new NotFoundException("Невозможно обновить вещь - " +
-//                        "не найден пользователь с id: " + userId));
-//        Item itemInDb = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Вещи с номером - " + itemId +
-//                " не существует"));
-//        User userItem = itemInDb.getOwner();
-//
-//
-//        if(itemInDb.getOwner()!=(user)){
-//            new NotFoundException("Невозможно обновить вещь - " +
-//                    "у пользователя с id: " + userId + "нет такой вещи");
-
-        //вещь 1 нету у пользователя 4 нужно проверить
-
-        //  item.setOwner(user);
-        //  item.setId(itemId);
         Item uptadeItem = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Вещи с номером - " + itemId +
                 " не существует"));
-//        List<Item> clientItems = itemRepository.findAll();
-//        for (int k = 0; k < clientItems.size(); k++) {
-//
-        //           if (clientItems.get(k).equals(item)) {
-//                Item uptadeItem = clientItems.get(k);
+
         if (item.getName() != null && item.getName() != uptadeItem.getName()) {
             uptadeItem.setName(item.getName());
         }
@@ -92,9 +68,7 @@ public class ItemServiceImpl implements ItemService {
         return uptadeItem;
     }
 
-//        throw new NotFoundException("невозможно обновить, т.к. итема с этим номером не существует ");
-//    }
-//
+
 
 
     public ItemDtoShort findItemById(Long id) {

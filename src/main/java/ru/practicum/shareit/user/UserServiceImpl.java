@@ -62,13 +62,14 @@ public class UserServiceImpl implements UserService {
                 User updateUser = users.get(i);
                 if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
                     validator.validateNoEmail(user);
-
                     validator.validateIncorrectEmail(user);
                     updateUser.setEmail(user.getEmail());
                 }
                 if (user.getName() != null && user.getName() != updateUser.getName()) {
                     updateUser.setName(user.getName());
                 }
+
+
                 repository.save(updateUser);
                 return updateUser;
             }
@@ -78,14 +79,14 @@ public class UserServiceImpl implements UserService {
 
 
 
-    private long getId() {
-        List<User> users = repository.findAll();
-        long lastId = users.stream()
-                .mapToLong(User::getId)
-                .max()
-                .orElse(0);
-        return lastId + 1;
-    }
+//    private long getId() {
+//        List<User> users = repository.findAll();
+//        long lastId = users.stream()
+//                .mapToLong(User::getId)
+//                .max()
+//                .orElse(0);
+//        return lastId + 1;
+//    }
 
 
 }

@@ -12,11 +12,8 @@ public class ItemDtoShort {
 
     private String name;
 
-  //  private Long ownerId;
-
     private String description;
 
     private Boolean available;
 
-  //  private Long requestId;
 }

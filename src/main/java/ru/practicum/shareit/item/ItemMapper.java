@@ -9,7 +9,7 @@ import ru.practicum.shareit.item.model.ItemDtoVeryShort;
 public class ItemMapper {
 
 
-    public ItemDtoShort itemToItemShort(Item item){
+    public static ItemDtoShort itemToItemShort(Item item){
         return ItemDtoShort.builder()
                 .id(item.getId())
                 .name(item.getName())

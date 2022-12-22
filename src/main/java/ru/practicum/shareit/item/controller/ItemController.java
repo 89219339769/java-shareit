@@ -33,14 +33,13 @@ public class ItemController {
     public Item put(@PathVariable long itemId,
                     @RequestHeader("X-Sharer-User-Id") Long userId,
                     @RequestBody Item item) {
-      //  return itemService.updateItem(itemId, userId, item);
-        return null;
+        return itemService.updateItem(itemId, userId, item);
+
     }
 
     @GetMapping
-    public List<Item> getItemsByUser(@RequestHeader("X-Sharer-User-Id") Long userId) {
-//        return itemService.findItemsByUserId(userId);
-        return null;
+    public List<ItemDtoShort> getItemsByUser(@RequestHeader("X-Sharer-User-Id") Long userId) {
+      return itemService.findItemsByUserId(userId);
     }
 
 

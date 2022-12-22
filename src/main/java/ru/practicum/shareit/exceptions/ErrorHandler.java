@@ -1,4 +1,4 @@
-package ru.practicum.shareit.user.controller;
+package ru.practicum.shareit.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,7 +18,13 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse objectWrongEnterExeption(final UserCantBookOwnerItemException e) {
+    public ErrorResponse objectWrongEnterExeption(final ItemUnvailableException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse objectWrongEnterExeption(final WrongTimeException e) {
         return new ErrorResponse(e.getMessage());
     }
 

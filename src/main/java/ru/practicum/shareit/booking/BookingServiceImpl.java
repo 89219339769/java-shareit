@@ -7,7 +7,8 @@ import ru.practicum.shareit.booking.model.BookingDtoShort;
 import ru.practicum.shareit.booking.model.BookingMapper;
 import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
 import ru.practicum.shareit.exceptions.NotFoundException;
-import ru.practicum.shareit.exceptions.UserCantBookOwnerItemException;
+import ru.practicum.shareit.exceptions.ItemUnvailableException;
+import ru.practicum.shareit.exceptions.WrongTimeException;
 import ru.practicum.shareit.item.ItemMapper;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
@@ -51,12 +52,12 @@ public class BookingServiceImpl implements BookingService {
 
 
         if (item.getOwner().getId().equals(userId)) {
-            throw new UserCantBookOwnerItemException("Невозможно создать бронирование - " +
+            throw new ItemUnvailableException("Невозможно создать бронирование - " +
                     "пользователь не может забронировать принадлежащую ему вещь");
         }
 
         if (item.getAvailable()==false){
-            throw new UserCantBookOwnerItemException("Вещь недоступна");
+            throw new ItemUnvailableException("Вещь недоступна");
         }
 
 
@@ -66,6 +67,21 @@ public class BookingServiceImpl implements BookingService {
 //        }
 
         Booking booking = bookingMapper.toBooking(bookingShortDto);
+
+        if(booking.getStart().isAfter(booking.getEnd())){
+            throw new WrongTimeException("ошибка с датами бронирования");
+        }
+
+
+        if(booking.getEnd().isBefore(LocalDateTime.now())){
+            throw new WrongTimeException("ошибка с датами бронирования");
+        }
+
+        if(booking.getStart().isBefore(LocalDateTime.now())){
+            throw new WrongTimeException("ошибка с датами бронирования");
+        }
+
+
         booking.setStatus(WAITING);
         bookingRepository.save(booking);
 

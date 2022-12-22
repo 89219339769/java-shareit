@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingDtoShort;
+import ru.practicum.shareit.booking.model.BookingMapper;
+import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
 import ru.practicum.shareit.exceptions.NotFoundException;
+import ru.practicum.shareit.exceptions.UserCantBookOwnerItemException;
 import ru.practicum.shareit.item.ItemMapper;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
@@ -14,7 +17,6 @@ import ru.practicum.shareit.user.model.User;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ru.practicum.shareit.booking.BookingStatus.*;
 
@@ -30,18 +32,31 @@ public class BookingServiceImpl implements BookingService {
     private final BookingMapper bookingMapper;
 
     @Override
-    public BookingDtoShort saveBooking(long userId, Booking booking) {
+    public BookingDtoShort saveBooking(long userId, BookingShortDtoWithItemId bookingShortDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
+        //  booking.setBooker(user);
 
-        Item item = itemRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Невозможно найти вещь с номером " + booking.getItem()));
-        booking.setBooker(user);
+
+        Item item = itemRepository.findById(bookingShortDto.getItemId())
+                .orElseThrow(() -> new NotFoundException("Невозможно найти вещь с номером "));
+
+        //  booking.setBooker(user);
+        //  booking.setItem(item);
+
+//        long itemId = item.getId();
+//        List<Item>listItems = itemRepository.findAll();
+//
+//        if(!listItems.contains(item)){new NotFoundException("Невозможно найти вещь с номером " + booking.getItem());}
 
 
         if (item.getOwner().getId().equals(userId)) {
-            throw new NotFoundException("Невозможно создать бронирование - " +
+            throw new UserCantBookOwnerItemException("Невозможно создать бронирование - " +
                     "пользователь не может забронировать принадлежащую ему вещь");
+        }
+
+        if (item.getAvailable()==false){
+            throw new UserCantBookOwnerItemException("Вещь недоступна");
         }
 
 
@@ -50,8 +65,7 @@ public class BookingServiceImpl implements BookingService {
 //                    "бронирование уже подтверждено или отклонено");
 //        }
 
-
-        booking.setItem(item);
+        Booking booking = bookingMapper.toBooking(bookingShortDto);
         booking.setStatus(WAITING);
         bookingRepository.save(booking);
 
@@ -92,7 +106,7 @@ public class BookingServiceImpl implements BookingService {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
-       List<Booking> allBookings = new ArrayList<>();
+        List<Booking> allBookings = new ArrayList<>();
 //             if(!bookingRepository.findAll().contains(user)){
 //                 throw new NotFoundException(" Пользователь не найден");}
 //
@@ -101,15 +115,14 @@ public class BookingServiceImpl implements BookingService {
 //                .filter(id -> id.getId().equals(userId))
 //                .collect(Collectors.toList());
 
-    //    allBookings.addAll(bookingRepository.findAll().(user))
-               //bookingRepository.findAll();
+        //    allBookings.addAll(bookingRepository.findAll().(user))
+        //bookingRepository.findAll();
 //        List<Booking> userBookings = new ArrayList<>();
 //        for (int i = 0; i < bookingRepository.findAll().size(); i++) {
 //            if(bookingRepository.findAll().get(i).getBooker().equals(user)){
 //                userBookings.add(allBookings.get(i));
 //            }
- //       }
-
+        //       }
 
 
         switch (state) {
@@ -141,11 +154,6 @@ public class BookingServiceImpl implements BookingService {
 //                .collect(Collectors.toList());
         return allBookings;
     }
-
-
-
-
-
 
 
 }

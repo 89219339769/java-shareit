@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.BookingService;
 import ru.practicum.shareit.booking.model.BookingDtoShort;
+import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
 import ru.practicum.shareit.item.model.ItemDtoShort;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 
         @PostMapping
         public BookingDtoShort add(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                   @RequestBody Booking booking) {
+                                   @RequestBody BookingShortDtoWithItemId booking) {
 
             return     bookingService.saveBooking(userId, booking);
         }

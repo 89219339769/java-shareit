@@ -101,7 +101,7 @@ public class ItemServiceImpl implements ItemService {
         }
         List<Item> items = itemRepository.search(query);
         return items.stream()
-                .map(ItemMapper::itemToItemShort)
+                .map(element->itemMapper.itemToItemShort(element))
                 .collect(Collectors.toList());
     }
 }

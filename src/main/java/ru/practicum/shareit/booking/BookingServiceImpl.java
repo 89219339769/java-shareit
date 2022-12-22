@@ -36,19 +36,9 @@ public class BookingServiceImpl implements BookingService {
     public BookingDtoShort saveBooking(long userId, BookingShortDtoWithItemId bookingShortDtoWithItemId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
-        //  booking.setBooker(user);
-
 
         Item item = itemRepository.findById(bookingShortDtoWithItemId.getItemId())
                 .orElseThrow(() -> new NotFoundException("Невозможно найти вещь с номером "));
-
-        //  booking.setBooker(user);
-        //  booking.setItem(item);
-
-//        long itemId = item.getId();
-//        List<Item>listItems = itemRepository.findAll();
-//
-//        if(!listItems.contains(item)){new NotFoundException("Невозможно найти вещь с номером " + booking.getItem());}
 
 
         if (item.getOwner().getId().equals(userId)) {
@@ -59,13 +49,6 @@ public class BookingServiceImpl implements BookingService {
         if (item.getAvailable()==false){
             throw new ItemUnvailableException("Вещь недоступна");
         }
-
-
-//        if (!booking.getStatus().equals(BookingStatus.WAITING)) {
-//            throw new BadRequestException("Невозможно подтвердить бронирование - " +
-//                    "бронирование уже подтверждено или отклонено");
-//        }
-
 
 
         Booking booking = bookingMapper.toBooking(bookingShortDtoWithItemId);

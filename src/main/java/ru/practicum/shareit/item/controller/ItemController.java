@@ -44,10 +44,10 @@ public class ItemController {
 
 
     @GetMapping("search")
-    public List<Item> findFilmsBySearch(@RequestParam(name = "text") String query) {
+    public List<ItemDtoShort> findFilmsBySearch(@RequestParam(name = "text") String query) {
 
-      //  return itemService.findItemByNameOrDescription(query);
-        return null;
+        return itemService.findItemByNameOrDescription(query);
+
     }
 
 

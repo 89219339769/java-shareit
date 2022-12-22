@@ -46,7 +46,7 @@ public class ItemServiceImpl implements ItemService {
                 ItemExist = true;
             }
         }
-        if (ItemExist == false) {
+        if (!ItemExist) {
             throw new NotFoundException("Невозможно обновить вещь - " +
                     "у пользователя с id: " + userId + "нет такой вещи");
         }
@@ -69,8 +69,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-
-
     public ItemDtoShort findItemById(Long id) {
         Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещи с номером - " + id +
                 " не существует"));
@@ -89,15 +87,23 @@ public class ItemServiceImpl implements ItemService {
                 itemExist = true;
             }
         }
-        if (itemExist == true) return itemsByUserId;
+        if (itemExist) return itemsByUserId;
         else {
             throw new NotFoundException(" Не найдены вещи у пользователя с номером " + userId);
         }
     }
+
+
+    public List<ItemDtoShort> findItemByNameOrDescription(String query) {
+        if (query.isBlank()) {
+            List<ItemDtoShort>itemsShort = new ArrayList<>();
+            return itemsShort;
+        }
+        List<Item> items = itemRepository.search(query);
+        return items.stream()
+                .map(ItemMapper::itemToItemShort)
+                .collect(Collectors.toList());
+    }
 }
-//
-//    public List<Item> findItemByNameOrDescription(String query) {
-//        return itemRepository.findItemByNameOrDescription(query);
-//    }
 
 

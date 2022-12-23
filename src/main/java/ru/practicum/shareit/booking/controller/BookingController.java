@@ -7,8 +7,6 @@ import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.BookingService;
 import ru.practicum.shareit.booking.model.BookingDtoShort;
 import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
-import ru.practicum.shareit.item.model.ItemDtoShort;
-
 import java.util.List;
 
 

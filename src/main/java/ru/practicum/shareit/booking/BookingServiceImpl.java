@@ -46,7 +46,7 @@ public class BookingServiceImpl implements BookingService {
                     "пользователь не может забронировать принадлежащую ему вещь");
         }
 
-        if (item.getAvailable()==false){
+        if (item.getAvailable() == false) {
             throw new ItemUnvailableException("Вещь недоступна");
         }
 
@@ -55,16 +55,16 @@ public class BookingServiceImpl implements BookingService {
         booking.setBooker(user);
         booking.setItem(item);
 
-        if(booking.getStart().isAfter(booking.getEnd())){
+        if (booking.getStart().isAfter(booking.getEnd())) {
             throw new WrongTimeException("ошибка с датами бронирования");
         }
 
 
-        if(booking.getEnd().isBefore(LocalDateTime.now())){
+        if (booking.getEnd().isBefore(LocalDateTime.now())) {
             throw new WrongTimeException("ошибка с датами бронирования");
         }
 
-        if(booking.getStart().isBefore(LocalDateTime.now())){
+        if (booking.getStart().isBefore(LocalDateTime.now())) {
             throw new WrongTimeException("ошибка с датами бронирования");
         }
 
@@ -127,6 +127,22 @@ public class BookingServiceImpl implements BookingService {
 //            }
         //       }
 
+//        List<String> states = new ArrayList<>();
+//        states.add("ALL");
+//        states.add("PAST");
+//        states.add("FUTURE");
+//        states.add("REJECTED");
+//        states.add("CURRENT");
+//        boolean statet=false;
+//        for (int i = 0; i < states.size(); i++) {
+//            if(states.get(i).equals(state)){
+//                statet=true;
+//            }
+//        }
+//        if (statet==false){
+//            throw new WrongTimeException("Unknown state: UNSUPPORTED_STATUS");
+//
+//        }
 
         switch (state) {
             case "ALL":
@@ -149,6 +165,12 @@ public class BookingServiceImpl implements BookingService {
             case "REJECTED":
                 allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED));
                 break;
+
+            case "UNSUPPORTED_STATUS":
+               // allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED));
+                throw new WrongTimeException("Unknown state: UNSUPPORTED_STATUS");
+
+
         }
 
 //        return bookingDtoList

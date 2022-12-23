@@ -32,7 +32,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
 
     //future
-    List<Booking> findAllByBookerAndStartAfter(User booker, LocalDateTime start);
+    List<Booking> findAllByBookerIdAndStartIsAfterOrderByStartDesc(Long userId, LocalDateTime start);
 
     //status
     List<Booking> findAllByBookerAndStatusEquals(User booker, BookingStatus status);

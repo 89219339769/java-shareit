@@ -24,9 +24,9 @@ import java.util.List;
         }
 
 
-    @GetMapping("/{id}")
-    public BookingDtoShort findBookingById(@PathVariable Long id) {
-        return bookingService.getById(id);
+    @GetMapping("/{bookingId}")
+    public BookingDtoShort findBookingById(@PathVariable Long bookingId, @RequestHeader("X-Sharer-User-Id") Long userId) {
+        return bookingService.getById(userId, bookingId );
     }
 
 

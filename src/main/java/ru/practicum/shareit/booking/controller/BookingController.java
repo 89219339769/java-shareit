@@ -48,4 +48,13 @@ import java.util.List;
     }
 
 
+
+
+    @GetMapping("/owner")
+    public List<Booking> getAllByUserOwner(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                      @RequestParam(defaultValue = "ALL") String state) {
+        return bookingService.getAllBokingsByOwnerSortByState(userId, state);
+    }
+
+
 }

@@ -138,4 +138,48 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
+    @Override
+    public List<Booking> getAllBokingsByOwnerSortByState(Long userId, String state) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
+        List<Booking> allBookings = new ArrayList<>();
+        switch (state) {
+            case "ALL":
+                allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId));
+                break;
+//            case "CURRENT":
+//                allBookings.addAll(bookingRepository.findAllByBookerAndStartBeforeAndEndAfter(user,
+//                        LocalDateTime.now(), LocalDateTime.now()));
+//                break;
+//            case "PAST":
+//                allBookings.addAll(bookingRepository.findAllByBookerAndEndBefore(user,
+//                        LocalDateTime.now()));
+//                break;
+//            case "FUTURE":
+//                allBookings.addAll(bookingRepository.findAllByBookerIdAndStartIsAfterOrderByStartDesc(userId, LocalDateTime.now()));
+//                break;
+//            case "WAITING":
+//                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.WAITING));
+//                break;
+//            case "REJECTED":
+//                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED));
+//                break;
+            default:  throw new WrongTimeException("Unknown state: UNSUPPORTED_STATUS");
+        }
+
+        return allBookings;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }

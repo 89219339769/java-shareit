@@ -105,6 +105,12 @@ public class BookingServiceImpl implements BookingService {
         if (!ownerId.equals(userId)) {
             throw new NotFoundException("не найдено вещи владельца с номером " + userId);
         }
+        if (!booking.getStatus().equals(BookingStatus.WAITING)) {
+            throw new  WrongTimeException("Невозможно подтвердить бронирование - " +
+                    "бронирование уже подтверждено или отклонено");
+        }
+
+
         if (approved = true)
             booking.setStatus(APPROVED);
         if (approved = false)

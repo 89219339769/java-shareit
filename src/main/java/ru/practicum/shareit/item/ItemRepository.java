@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
@@ -14,5 +15,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "or  i.available = true and upper(i.description) like upper(concat('%', ?1, '%')) " +
             "order by i.id asc ")
     List<Item> search(String text);
+
+
+    Collection<Item> findAllByOwnerIdIsOrderById(Long userId);
 
 }

@@ -8,6 +8,7 @@ import ru.practicum.shareit.item.model.ItemDtoAbstract;
 import ru.practicum.shareit.item.model.ItemDtoForOwner;
 import ru.practicum.shareit.item.model.ItemDtoShort;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,8 +42,8 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDtoShort> getItemsByUser(@RequestHeader("X-Sharer-User-Id") Long userId) {
-      return itemService.findItemsByUserId(userId);
+    public Collection<ItemDtoForOwner> getItemsByUser(@RequestHeader("X-Sharer-User-Id") Long userId) {
+      return itemService.getAllItems(userId);
     }
 
 

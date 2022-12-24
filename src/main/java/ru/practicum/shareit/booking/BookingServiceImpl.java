@@ -158,23 +158,23 @@ public class BookingServiceImpl implements BookingService {
             case "ALL":
                 allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId));
                 break;
-//            case "CURRENT":
-//                allBookings.addAll(bookingRepository.findAllByBookerAndStartBeforeAndEndAfter(user,
-//                        LocalDateTime.now(), LocalDateTime.now()));
-//                break;
-//            case "PAST":
-//                allBookings.addAll(bookingRepository.findAllByBookerAndEndBefore(user,
-//                        LocalDateTime.now()));
-//                break;
-           case "FUTURE":
-               allBookings.addAll(bookingRepository.getFutureUsersItemsBookings(userId, LocalDateTime.now(),APPROVED));
+            case "CURRENT":
+                allBookings.addAll(bookingRepository.findAllByItemOwnerAndStartBeforeAndEndAfter(user,
+                        LocalDateTime.now(), LocalDateTime.now()));
+               break;
+            case "PAST":
+                allBookings.addAll(bookingRepository.findAllByItemOwnerAndEndBefore(user,
+                        LocalDateTime.now()));
                 break;
-//            case "WAITING":
-//                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.WAITING));
-//                break;
-//            case "REJECTED":
-//                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED));
-//                break;
+           case "FUTURE":
+               allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId));
+                break;
+            case "WAITING":
+                allBookings.addAll(bookingRepository.findAllByItemOwnerAndStatusEquals(user, BookingStatus.WAITING));
+                break;
+            case "REJECTED":
+                allBookings.addAll(bookingRepository.findAllByItemOwnerAndStatusEquals(user, BookingStatus.REJECTED));
+                break;
             default:  throw new WrongTimeException("Unknown state: UNSUPPORTED_STATUS");
         }
 

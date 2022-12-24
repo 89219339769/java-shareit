@@ -10,7 +10,7 @@ import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ItemUnvailableException;
 import ru.practicum.shareit.exceptions.WrongTimeException;
-import ru.practicum.shareit.item.ItemMapper;
+import ru.practicum.shareit.item.model.ItemMapper;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;

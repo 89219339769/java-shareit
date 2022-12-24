@@ -3,14 +3,20 @@ package ru.practicum.shareit.item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.Validator;
+import ru.practicum.shareit.booking.BookingRepository;
+import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.item.model.ItemDtoForOwner;
 import ru.practicum.shareit.item.model.ItemDtoShort;
+import ru.practicum.shareit.item.model.ItemMapper;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,7 +24,7 @@ import java.util.stream.Collectors;
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository repository;
-
+    private final BookingRepository bookingRepository;
     private final ItemMapper itemMapper;
     private final
     Validator validator;
@@ -69,13 +75,57 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-    public ItemDtoShort findItemById(Long id) {
-        Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещи с номером - " + id +
-                " не существует"));
-        ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
-        return temDtoShort;
-    }
+//    public ItemDtoShort findItemById(Long id) {
+//        Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещи с номером - " + id +
+//                " не существует"));
+//        ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
+//        return temDtoShort;
+//    }
 
+
+    @Override
+    public ItemDtoForOwner findItemById(Long id, Long ownerId) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Не найдена вещь с id: " + id));
+        //       ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
+//        temDtoShort.setComments(commentRepository.findAllByItemId(id)
+//                .stream()
+//                .map(CommentMapper::toCommentDto)
+//                .collect(Collectors.toList()));
+//        if (item.getOwner().getId().equals(ownerId)) {
+//            setFieldsToItemDto(itemDto);
+//        }
+        Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem(id, LocalDateTime.now());
+        Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem(id, LocalDateTime.now());
+        Booking last;
+        Booking next;
+        if (lastBooking.isEmpty()) {
+            last = null;
+        } else {
+            last = lastBooking.get();
+        }
+        if (nextBooking.isEmpty()) {
+            next = null;
+        } else {
+            next = nextBooking.get();
+        }
+        if (item.getOwner().getId() == ownerId) {
+            ItemDtoForOwner itemToItemDtoForOwner = itemMapper.itemToItemDtoForOwner(item);
+
+            if (last != null) {
+                itemToItemDtoForOwner.setStartFuture(last.getStart());
+                itemToItemDtoForOwner.setEndFuture(last.getEnd());
+            }
+
+            if (next != null) {
+                itemToItemDtoForOwner.setStartFuture(next.getStart());
+                itemToItemDtoForOwner.setEndFuture(next.getEnd());
+            }
+            return itemToItemDtoForOwner;
+        }
+        ItemDtoForOwner itemToItemDtoForOwner = itemMapper.itemToItemDtoForOwner(item);
+        return itemToItemDtoForOwner;
+    }
 
     public List<ItemDtoShort> findItemsByUserId(Long userId) {
         List<Item> allItems = itemRepository.findAll();
@@ -96,12 +146,12 @@ public class ItemServiceImpl implements ItemService {
 
     public List<ItemDtoShort> findItemByNameOrDescription(String query) {
         if (query.isBlank()) {
-            List<ItemDtoShort>itemsShort = new ArrayList<>();
+            List<ItemDtoShort> itemsShort = new ArrayList<>();
             return itemsShort;
         }
         List<Item> items = itemRepository.search(query);
         return items.stream()
-                .map(element->itemMapper.itemToItemShort(element))
+                .map(element -> itemMapper.itemToItemShort(element))
                 .collect(Collectors.toList());
     }
 }

@@ -6,10 +6,7 @@ import ru.practicum.shareit.Validator;
 import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.exceptions.NotFoundException;
-import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.model.ItemDtoForOwner;
-import ru.practicum.shareit.item.model.ItemDtoShort;
-import ru.practicum.shareit.item.model.ItemMapper;
+import ru.practicum.shareit.item.model.*;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
@@ -84,9 +81,11 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public ItemDtoForOwner findItemById(Long id, Long ownerId) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Не найдена вещь с id: " + id));
+    public ItemDtoAbstract findItemById(Long id, Long ownerId) {
+        Optional<Item> itemFromDb = itemRepository.findById(id);
+        if (itemFromDb.isEmpty()) {
+            throw new NotFoundException("Вещи с ID = " + id + " не существует.");
+        }
         //       ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
 //        temDtoShort.setComments(commentRepository.findAllByItemId(id)
 //                .stream()
@@ -94,9 +93,40 @@ public class ItemServiceImpl implements ItemService {
 //                .collect(Collectors.toList()));
 //        if (item.getOwner().getId().equals(ownerId)) {
 //            setFieldsToItemDto(itemDto);
+////        }
+//        Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem(id, LocalDateTime.now());
+//        Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem(id, LocalDateTime.now());
+//        Booking last;
+//        Booking next;
+//        if (lastBooking.isEmpty()) {
+//            last = null;
+//        } else {
+//            last = lastBooking.get();
 //        }
-        Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem(id, LocalDateTime.now());
-        Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem(id, LocalDateTime.now());
+//        if (nextBooking.isEmpty()) {
+//            next = null;
+//        } else {
+//            next = nextBooking.get();
+//        }
+//        if (item.getOwner().getId() == ownerId) {
+//            ItemDtoForOwner itemToItemDtoForOwner = itemMapper.itemToItemDtoForOwner(item);
+//
+//            if (last != null) {
+//                itemToItemDtoForOwner.setStartFuture(last.getStart());
+//                itemToItemDtoForOwner.setEndFuture(last.getEnd());
+//            }
+//
+//            if (next != null) {
+//                itemToItemDtoForOwner.setStartFuture(next.getStart());
+//                itemToItemDtoForOwner.setEndFuture(next.getEnd());
+//            }
+//            return itemToItemDtoForOwner;
+//        }
+//        ItemDtoForOwner itemToItemDtoForOwner = itemMapper.itemToItemDtoForOwner(item);
+//        return itemToItemDtoForOwner;
+
+        Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem( id, LocalDateTime.now());
+        Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem( id, LocalDateTime.now());
         Booking last;
         Booking next;
         if (lastBooking.isEmpty()) {
@@ -109,22 +139,25 @@ public class ItemServiceImpl implements ItemService {
         } else {
             next = nextBooking.get();
         }
-        if (item.getOwner().getId() == ownerId) {
-            ItemDtoForOwner itemToItemDtoForOwner = itemMapper.itemToItemDtoForOwner(item);
-
-            if (last != null) {
-                itemToItemDtoForOwner.setStartFuture(last.getStart());
-                itemToItemDtoForOwner.setEndFuture(last.getEnd());
-            }
-
-            if (next != null) {
-                itemToItemDtoForOwner.setStartFuture(next.getStart());
-                itemToItemDtoForOwner.setEndFuture(next.getEnd());
-            }
-            return itemToItemDtoForOwner;
+        if (itemFromDb.get().getOwner().getId() == ownerId) {
+            return itemMapper.toItemDtoForOwner(itemFromDb.get(), last, next);
+        } else {
+          //  return itemMapper.itemToItemDtoForOwner(itemFromDb.get());
+            return null;
         }
-        ItemDtoForOwner itemToItemDtoForOwner = itemMapper.itemToItemDtoForOwner(item);
-        return itemToItemDtoForOwner;
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     public List<ItemDtoShort> findItemsByUserId(Long userId) {

@@ -13,30 +13,28 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ItemDtoForOwner  {
+
+public class ItemDtoForOwner extends ItemDtoAbstract {
     private long id;
     private String name;
     private String description;
     private Boolean available;
     private long ownerId;
     private long requestId;
-    private LocalDateTime startFuture;
-    private LocalDateTime endFuture;
-    private LocalDateTime startPast;
-    private LocalDateTime endPast;
+    private BookingInfo lastBooking;
+    private BookingInfo nextBooking;
+   // private Collection<CommentDtoOut> comments;
 
- //   private Collection<CommentDtoOut> comments;
-
-//    @ToString
-//    @Setter
-//    @Getter
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class BookingInfo {
-//        private long id;
-//        private long bookerId;
-//        private LocalDateTime start;
-//        private LocalDateTime end;
-//    }
+    @ToString
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class BookingInfo {
+        private long id;
+        private long bookerId;
+        private LocalDateTime start;
+        private LocalDateTime end;
+    }
 
 }

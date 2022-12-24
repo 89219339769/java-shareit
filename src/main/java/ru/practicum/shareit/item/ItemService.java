@@ -1,10 +1,11 @@
 package ru.practicum.shareit.item;
 
+import ru.practicum.shareit.item.model.ItemDtoAbstract;
 import ru.practicum.shareit.item.model.ItemDtoForOwner;
 import ru.practicum.shareit.item.model.ItemDtoShort;
 
 public interface ItemService {
 
 
-    ItemDtoForOwner findItemById(Long id, Long ownerId);
+    ItemDtoAbstract findItemById(Long id, Long ownerId);
 }

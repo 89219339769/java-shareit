@@ -143,7 +143,8 @@ public class ItemServiceImpl implements ItemService {
             return itemMapper.toItemDtoForOwner(itemFromDb.get(), last, next);
         } else {
           //  return itemMapper.itemToItemDtoForOwner(itemFromDb.get());
-            return null;
+           // return  itemMapper.itemToItemShort(itemFromDb.get());
+            return ItemMapper.toItemDtoForBooker(itemFromDb.get());
         }
 
 

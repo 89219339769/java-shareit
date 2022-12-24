@@ -68,4 +68,21 @@ public class ItemMapper {
         }
         return itemDtoForOwner;
     }
+
+
+    public static ItemDtoForBooker toItemDtoForBooker(Item item) {
+        ItemDtoForBooker itemDtoForBooker = new ItemDtoForBooker();
+        itemDtoForBooker.setId(item.getId());
+        itemDtoForBooker.setName(item.getName());
+        itemDtoForBooker.setDescription(item.getDescription());
+        itemDtoForBooker.setAvailable(item.getAvailable());
+        itemDtoForBooker.setOwnerId(item.getOwner().getId());
+      //  itemDtoForBooker.setComments(comments);
+        return itemDtoForBooker;
+    }
+
+
+
+
+
 }

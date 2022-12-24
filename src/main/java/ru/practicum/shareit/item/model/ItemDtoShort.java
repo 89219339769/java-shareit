@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ItemDtoShort {
+public class ItemDtoShort extends ItemDtoAbstract{
     private Long id;
 
     private String name;

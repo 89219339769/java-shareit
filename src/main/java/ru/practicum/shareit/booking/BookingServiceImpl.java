@@ -1,6 +1,7 @@
 package ru.practicum.shareit.booking;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingDtoShort;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import static ru.practicum.shareit.booking.BookingStatus.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
@@ -42,7 +44,7 @@ public class BookingServiceImpl implements BookingService {
 
 
         if (item.getOwner().getId().equals(userId)) {
-            throw new ItemUnvailableException("Невозможно создать бронирование - " +
+            throw new NotFoundException("Невозможно создать бронирование - " +
                     "пользователь не может забронировать принадлежащую ему вещь");
         }
 
@@ -173,7 +175,12 @@ public class BookingServiceImpl implements BookingService {
                         LocalDateTime.now()));
                 break;
            case "FUTURE":
+               log.info(LocalDateTime.now().toString()+"время создания запроса!!!!!!!!!");
+               log.info(bookingRepository.findAll().toString());
+               List<Booking> allBookingsNaw = bookingRepository.findAll();
                allBookings.addAll(bookingRepository.getFutureUsersItemsBookings(userId, LocalDateTime.now()));
+
+               log.info(LocalDateTime.now().toString());
                 break;
             case "WAITING":
                 allBookings.addAll(bookingRepository.findAllByItemOwnerAndStatusEquals(user, BookingStatus.WAITING));

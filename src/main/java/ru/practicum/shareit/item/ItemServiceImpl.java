@@ -75,13 +75,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-//    public ItemDtoShort findItemById(Long id) {
-//        Item item = itemRepository.findById(id).orElseThrow(() -> new NotFoundException("Вещи с номером - " + id +
-//                " не существует"));
-//        ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
-//        return temDtoShort;
-//    }
-
 
     @Override
     public ItemDtoAbstract findItemById(Long id, Long ownerId) {
@@ -89,45 +82,6 @@ public class ItemServiceImpl implements ItemService {
         if (itemFromDb.isEmpty()) {
             throw new NotFoundException("Вещи с ID = " + id + " не существует.");
         }
-        //       ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
-//        temDtoShort.setComments(commentRepository.findAllByItemId(id)
-//                .stream()
-//                .map(CommentMapper::toCommentDto)
-//                .collect(Collectors.toList()));
-//        if (item.getOwner().getId().equals(ownerId)) {
-//            setFieldsToItemDto(itemDto);
-////        }
-//        Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem(id, LocalDateTime.now());
-//        Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem(id, LocalDateTime.now());
-//        Booking last;
-//        Booking next;
-//        if (lastBooking.isEmpty()) {
-//            last = null;
-//        } else {
-//            last = lastBooking.get();
-//        }
-//        if (nextBooking.isEmpty()) {
-//            next = null;
-//        } else {
-//            next = nextBooking.get();
-//        }
-//        if (item.getOwner().getId() == ownerId) {
-//            ItemDtoForOwner itemToItemDtoForOwner = itemMapper.itemToItemDtoForOwner(item);
-//
-//            if (last != null) {
-//                itemToItemDtoForOwner.setStartFuture(last.getStart());
-//                itemToItemDtoForOwner.setEndFuture(last.getEnd());
-//            }
-//
-//            if (next != null) {
-//                itemToItemDtoForOwner.setStartFuture(next.getStart());
-//                itemToItemDtoForOwner.setEndFuture(next.getEnd());
-//            }
-//            return itemToItemDtoForOwner;
-//        }
-//        ItemDtoForOwner itemToItemDtoForOwner = itemMapper.itemToItemDtoForOwner(item);
-//        return itemToItemDtoForOwner;
-
         Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem( id, LocalDateTime.now());
         Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem( id, LocalDateTime.now());
         Booking last;
@@ -145,43 +99,9 @@ public class ItemServiceImpl implements ItemService {
         if (itemFromDb.get().getOwner().getId() == ownerId) {
             return itemMapper.toItemDtoForOwner(itemFromDb.get(), last, next);
         } else {
-          //  return itemMapper.itemToItemDtoForOwner(itemFromDb.get());
-           // return  itemMapper.itemToItemShort(itemFromDb.get());
             return ItemMapper.toItemDtoForBooker(itemFromDb.get());
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-//    public List<ItemDtoShort> findItemsByUserId(Long userId) {
-//        List<Item> allItems = itemRepository.findAll();
-//        List<ItemDtoShort> itemsByUserId = new ArrayList<>();
-//        boolean itemExist = false;
-//        for (int i = 0; i < allItems.size(); i++) {
-//            if (allItems.get(i).getOwner().getId().equals(userId)) {
-//                itemsByUserId.add(itemMapper.itemToItemShort(allItems.get(i)));
-//                itemExist = true;
-//            }
-//        }
-//        if (itemExist) return itemsByUserId;
-//        else {
-//            throw new NotFoundException(" Не найдены вещи у пользователя с номером " + userId);
-//        }
-//    }
-
-
-
 
 
     public Collection<ItemDtoForOwner> getAllItems(long ownerId) {
@@ -193,12 +113,6 @@ public class ItemServiceImpl implements ItemService {
         Collection<ItemDtoForOwner> itemDtoForOwnersList = new ArrayList<>();
         Collection<Item> itemsList = itemRepository.findAllByOwnerIdIsOrderById(ownerId);
        for (Item item : itemsList) {
-//            Collection<Comment> commentList = commentRepository.findAllByItemIdIs(item.getId());
-//            Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
-//            for (Comment comment : commentList) {
-//                User author = validateUser(comment.getAuthorID());
-//                commentDtoOutList.add(ItemMapper.toCommentDt0FromComment(comment, author));
-//            }
             lastBooking = bookingRepository.findLastBookingByItem(item.getId(), LocalDateTime.now());
             nextBooking = bookingRepository.findNextBookingByItem(item.getId(), LocalDateTime.now());
             Booking last;
@@ -217,14 +131,6 @@ public class ItemServiceImpl implements ItemService {
         }
         return itemDtoForOwnersList;
     }
-
-
-
-
-
-
-
-
 
 
     public List<ItemDtoShort> findItemByNameOrDescription(String query) {
@@ -255,18 +161,6 @@ public class ItemServiceImpl implements ItemService {
             throw new NotFoundException(" Не найдены вещи у пользователя с номером " + userId);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 

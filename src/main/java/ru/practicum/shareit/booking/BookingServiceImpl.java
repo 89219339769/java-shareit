@@ -93,10 +93,6 @@ public class BookingServiceImpl implements BookingService {
 
 
 
-
-
-
-
     @Override
     public BookingDtoShort approve(Long bookingId, Long userId, Boolean approved) {
         Booking booking = bookingRepository.findById(bookingId)
@@ -194,16 +190,5 @@ public class BookingServiceImpl implements BookingService {
 
         return allBookings;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }

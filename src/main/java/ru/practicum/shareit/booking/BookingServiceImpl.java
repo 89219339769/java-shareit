@@ -113,10 +113,11 @@ public class BookingServiceImpl implements BookingService {
         }
 
 
-        if (approved = true)
-            booking.setStatus(APPROVED);
-        if (approved = false)
-            booking.setStatus(REJECTED);
+        if (approved) {
+            booking.setStatus(BookingStatus.APPROVED);
+        } else {
+            booking.setStatus(BookingStatus.REJECTED);
+        }
         bookingRepository.save(booking);
 
         return bookingMapper.bookingToBookingDtoShort(booking);

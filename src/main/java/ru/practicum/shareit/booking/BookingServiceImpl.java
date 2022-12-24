@@ -167,7 +167,7 @@ public class BookingServiceImpl implements BookingService {
                         LocalDateTime.now()));
                 break;
            case "FUTURE":
-               allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId));
+               allBookings.addAll(bookingRepository.getFutureUsersItemsBookings(userId, LocalDateTime.now()));
                 break;
             case "WAITING":
                 allBookings.addAll(bookingRepository.findAllByItemOwnerAndStatusEquals(user, BookingStatus.WAITING));

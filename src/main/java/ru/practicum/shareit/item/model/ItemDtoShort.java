@@ -3,6 +3,9 @@ package ru.practicum.shareit.item.model;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import ru.practicum.shareit.comment.Comment;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,5 +18,7 @@ public class ItemDtoShort extends ItemDtoAbstract{
     private String description;
 
     private Boolean available;
+
+
 
 }

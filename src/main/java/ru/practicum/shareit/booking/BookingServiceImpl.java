@@ -121,7 +121,6 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> getAllBokingsSortByState(Long userId, String state) {
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
         List<Booking> allBookings = new ArrayList<>();

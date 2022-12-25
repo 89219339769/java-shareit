@@ -7,8 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import ru.practicum.shareit.comment.Comment;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @ToString
 @Setter
@@ -25,7 +28,7 @@ public class ItemDtoForBooker extends ItemDtoAbstract {
     private long requestId;
     private BookingForBooker lastBooking;
     private BookingForBooker nextBooking;
-  //  private Collection<CommentDtoOut> comments;
+    private Collection<Comment> comments;
 
     public static class BookingForBooker {
     }

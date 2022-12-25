@@ -7,6 +7,7 @@ import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.comment.Comment;
 import ru.practicum.shareit.comment.CommentRepository;
+import ru.practicum.shareit.comment.CommentService;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.*;
 import ru.practicum.shareit.user.UserRepository;
@@ -26,7 +27,8 @@ public class ItemServiceImpl implements ItemService  {
     private final UserRepository repository;
     private final BookingRepository bookingRepository;
     private final ItemMapper itemMapper;
-
+    private final CommentService commentService;
+    private final CommentRepository commentRepository;
     private final Validator validator;
 
 
@@ -41,6 +43,11 @@ public class ItemServiceImpl implements ItemService  {
         validator.validateItemWithOutEvailable(item);
         itemRepository.save(item);
         ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
+
+
+
+
+
         return temDtoShort;
     }
 
@@ -73,6 +80,8 @@ public class ItemServiceImpl implements ItemService  {
             uptadeItem.setDescription(item.getDescription());
         }
         itemRepository.save(uptadeItem);
+
+
         return uptadeItem;
     }
 
@@ -80,9 +89,25 @@ public class ItemServiceImpl implements ItemService  {
     @Override
     public ItemDtoAbstract findItemById(Long id, Long ownerId) {
         Optional<Item> itemFromDb = itemRepository.findById(id);
+      //  List<Comment>coments = commentRepository.findAll();
         if (itemFromDb.isEmpty()) {
             throw new NotFoundException("Вещи с ID = " + id + " не существует.");
         }
+
+        Collection<Comment> commentList = commentRepository.findAllByItemIdIs(id);
+        Collection<Comment> commentDtoOutList = new ArrayList<>();
+        for (Comment comment : commentList) {
+           // User author = validateUser(comment.getAuthorID());
+            commentDtoOutList.add(comment);
+        }
+
+
+
+
+
+
+
+
         Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem(id, LocalDateTime.now());
         Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem(id, LocalDateTime.now());
         Booking last;
@@ -98,9 +123,31 @@ public class ItemServiceImpl implements ItemService  {
             next = nextBooking.get();
         }
         if (itemFromDb.get().getOwner().getId() == ownerId) {
-            return itemMapper.toItemDtoForOwner(itemFromDb.get(), last, next);
+
+           Item itemFromDb1 = itemFromDb.get();
+
+
+            ItemDtoForOwner itemDtoForOwner = itemMapper.toItemDtoForOwner(itemFromDb1, last, next, commentDtoOutList);
+
+
+//            for (int i = 0; i < coments.size(); i++) {
+//              if(coments.get(i).getItemId()==(id)) {
+//                  itemDtoForOwner.setComents(commentService.getCommentsByIetmId(coments.get(i).getAuthorID()));
+//
+//              }
+//            }
+            return itemDtoForOwner;
         } else {
-            return ItemMapper.toItemDtoForBooker(itemFromDb.get());
+
+            ItemDtoForBooker itemDtoForBooker = ItemMapper.toItemDtoForBooker(itemFromDb.get(), commentDtoOutList);
+
+//            for (int i = 0; i < coments.size(); i++) {
+//                if(coments.get(i).getItemId()==(id)) {
+//                    itemDtoForBooker.setComents(commentService.getCommentsByIetmId(coments.get(i).getAuthorID()));
+//                }
+//            }
+
+            return itemDtoForBooker;
         }
     }
 
@@ -128,7 +175,7 @@ public class ItemServiceImpl implements ItemService  {
             } else {
                 next = nextBooking.get();
             }
-            itemDtoForOwnersList.add(ItemMapper.toItemDtoForOwner(item, last, next));
+          //  itemDtoForOwnersList.add(ItemMapper.toItemDtoForOwner(item, last, next));
         }
         return itemDtoForOwnersList;
     }

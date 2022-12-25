@@ -2,9 +2,12 @@ package ru.practicum.shareit.item.model;
 
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.comment.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.model.ItemDtoShort;
 import ru.practicum.shareit.item.model.ItemDtoVeryShort;
+
+import java.util.Collection;
 
 @Component
 public class ItemMapper {
@@ -37,7 +40,7 @@ public class ItemMapper {
 
 
 
-    public static ItemDtoForOwner toItemDtoForOwner(Item item, Booking last, Booking next) {
+    public static ItemDtoForOwner toItemDtoForOwner(Item item, Booking last, Booking next, Collection<Comment>comments) {
         ItemDtoForOwner itemDtoForOwner = new ItemDtoForOwner();
         itemDtoForOwner.setId(item.getId());
         itemDtoForOwner.setName(item.getName());
@@ -45,7 +48,7 @@ public class ItemMapper {
         itemDtoForOwner.setAvailable(item.getAvailable());
         itemDtoForOwner.setOwnerId(item.getOwner().getId());
        // itemDtoForOwner.setRequestId(item.getRequestId());
-     //   itemDtoForOwner.setComments(comments);
+        itemDtoForOwner.setComments(comments);
         if (last != null) {
             itemDtoForOwner.setLastBooking(
                     new ItemDtoForOwner.BookingInfo(
@@ -70,14 +73,14 @@ public class ItemMapper {
     }
 
 
-    public static ItemDtoForBooker toItemDtoForBooker(Item item) {
+    public static ItemDtoForBooker toItemDtoForBooker(Item item, Collection<Comment>comments) {
         ItemDtoForBooker itemDtoForBooker = new ItemDtoForBooker();
         itemDtoForBooker.setId(item.getId());
         itemDtoForBooker.setName(item.getName());
         itemDtoForBooker.setDescription(item.getDescription());
         itemDtoForBooker.setAvailable(item.getAvailable());
         itemDtoForBooker.setOwnerId(item.getOwner().getId());
-      //  itemDtoForBooker.setComments(comments);
+        itemDtoForBooker.setComments(comments);
         return itemDtoForBooker;
     }
 

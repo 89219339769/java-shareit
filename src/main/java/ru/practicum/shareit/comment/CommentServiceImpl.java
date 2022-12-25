@@ -9,6 +9,8 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +28,11 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("не найден пользователь с id: " + userId));
 
-        comment.setAuthor(user);
-        comment.setItem(item);
+        comment.setAuthorID(userId);
+        comment.setItemId(itemId);
 
-//        if(item.getOwner().equals(user.getId())){
-//
-//            throw new BadRequestException("Пользователь не может комментировать собственную вещь");
-//        }
+        if(item.getOwner().equals(user.getId())){throw new BadRequestException("Пользователь не может комментировать собственную вещь");
+       }
 
         if (comment.getText().isBlank()) {
             throw new BadRequestException("Коментарий не может быть пустым");
@@ -42,6 +42,16 @@ public class CommentServiceImpl implements CommentService {
         return comment;
 
     }
+
+
+
+    @Override
+    public Optional<Comment> getCommentsByIetmId(Long itemId){
+
+      return   commentRepository.findById(itemId);
+
+    }
+
 
 
 }

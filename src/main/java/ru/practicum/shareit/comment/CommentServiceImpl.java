@@ -38,6 +38,11 @@ public class CommentServiceImpl implements CommentService {
             throw new BadRequestException("Коментарий не может быть пустым");
         }
 
+        if(comment.getAuthorID()== userId&&comment.getItemId()== itemId){
+            throw new BadRequestException("на одну вещь можно давать только один комментарий");
+        }
+
+
         commentRepository.save(comment);
         return comment;
 

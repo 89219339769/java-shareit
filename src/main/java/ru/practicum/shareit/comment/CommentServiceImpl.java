@@ -10,7 +10,6 @@ import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -22,7 +21,6 @@ public class CommentServiceImpl implements CommentService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
-
     private final CommentMapper commentMapper;
 
     @Override
@@ -43,12 +41,6 @@ public class CommentServiceImpl implements CommentService {
             throw new BadRequestException("Коментарий не может быть пустым");
         }
 
-//        if(comment.getAuthorID()== userId&&comment.getItemId()== itemId){
-//        if(comment.getItemId()== itemId){
-//            throw new BadRequestException("на одну вещь можно давать только один комментарий");
-//        }
-
-
         Optional<Booking> booking = bookingRepository.findBookingByItemIdAndBookerIdAndEndIsBefore(
                 itemId,
                 userId,
@@ -58,23 +50,14 @@ public class CommentServiceImpl implements CommentService {
             throw new BadRequestException("Комментарии может оставить только пользователь," +
                     " который брал вещи, после завершения оренды");
         }
-
-
-
         commentRepository.save(comment);
         return  commentMapper.toCommentDt0FromComment(comment,user);
-
     }
 
 
 
     @Override
     public Optional<Comment> getCommentsByIetmId(Long itemId){
-
       return   commentRepository.findById(itemId);
-
     }
-
-
-
 }

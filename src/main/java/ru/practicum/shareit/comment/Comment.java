@@ -31,7 +31,4 @@ public class Comment {
     @Column(name = "author_ID", nullable = false)
     private long authorID;
 
-//    @Column(name = "created_time", nullable = false)
-//    private LocalDateTime createdTime;
-
 }

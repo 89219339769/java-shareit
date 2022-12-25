@@ -2,6 +2,8 @@ package ru.practicum.shareit.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.booking.BookingRepository;
+import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.BadRequestException;
 import ru.practicum.shareit.item.ItemRepository;
@@ -9,6 +11,7 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 
@@ -18,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
-
+    private final BookingRepository bookingRepository;
 
     @Override
     public Comment addComment(Long userId, Long itemId, Comment comment) {
@@ -38,9 +41,22 @@ public class CommentServiceImpl implements CommentService {
             throw new BadRequestException("Коментарий не может быть пустым");
         }
 
-        if(comment.getAuthorID()== userId&&comment.getItemId()== itemId){
-            throw new BadRequestException("на одну вещь можно давать только один комментарий");
+//        if(comment.getAuthorID()== userId&&comment.getItemId()== itemId){
+//        if(comment.getItemId()== itemId){
+//            throw new BadRequestException("на одну вещь можно давать только один комментарий");
+//        }
+
+
+        Optional<Booking> booking = bookingRepository.findBookingByItemIdAndBookerIdAndEndIsBefore(
+                itemId,
+                userId,
+                LocalDateTime.now());
+
+        if (booking.isEmpty()) {
+            throw new BadRequestException("Комментарии может оставить только пользователь," +
+                    " который брал вещи, после завершения оренды");
         }
+
 
 
         commentRepository.save(comment);

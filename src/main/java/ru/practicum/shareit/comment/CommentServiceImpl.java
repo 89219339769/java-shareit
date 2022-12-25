@@ -23,8 +23,10 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
 
+    private final CommentMapper commentMapper;
+
     @Override
-    public Comment addComment(Long userId, Long itemId, Comment comment) {
+    public CommentDtoOut addComment(Long userId, Long itemId, Comment comment) {
 
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Невозможно найти вещь с id: " + itemId));
@@ -60,7 +62,7 @@ public class CommentServiceImpl implements CommentService {
 
 
         commentRepository.save(comment);
-        return comment;
+        return  commentMapper.toCommentDt0FromComment(comment,user);
 
     }
 

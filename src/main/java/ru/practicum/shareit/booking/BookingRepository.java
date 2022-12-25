@@ -12,14 +12,6 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
 
-//    List<Booking> findAllByItemIdOrderByStartAsc(Long itemId);
-
-    //   List<Booking> findAllByItemIdOrderByStartDesc(Long itemId);
-
-
-    //   List<Booking> findAllByBookerIdAndItemIdAndStatusEqualsAndEndIsBefore(Long bookerId, Long itemId,
-    //                                                                         BookingStatus status, LocalDateTime end);
-
 
     //all
     List<Booking> findAllByBookerIdOrderByStartDesc(Long userId);
@@ -38,16 +30,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     //status
     List<Booking> findAllByBookerAndStatusEquals(User booker, BookingStatus status);
 
-//    Page<Booking> findAllByItemOwner(User owner, Pageable pageable);
-//
-//    Page<Booking> findAllByItemOwnerAndStartBeforeAndEndAfter(User owner, LocalDateTime start,
-//                                                              LocalDateTime end, Pageable pageable);
-//
-//    Page<Booking> findAllByItemOwnerAndEndBefore(User owner, LocalDateTime end, Pageable pageable);
-//
-//    Page<Booking> findAllByItemOwnerAndStartAfter(User owner, LocalDateTime start, Pageable pageable);
-//
-//    Page<Booking> findAllByItemOwnerAndStatusEquals(User owner, BookingStatus status, Pageable pageable);
 
     @Query("select b from Booking b Inner join Item i on b.item.id = i.id where i.owner.id = ?1 " +
             "order by b.start desc")
@@ -80,14 +62,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(value = "select * " +
             "from bookings as b join items i on i.id = b.item_id " +
             "where i.id = ?1 and b.start_date > ?2 " +
-            "order by b.end_date desc " +
+            "order by b.start_date desc " +
             "limit 1", nativeQuery = true)
     Optional<Booking> findNextBookingByItem(long itemId, LocalDateTime time);
-
-
-
-
-
-
 
 }

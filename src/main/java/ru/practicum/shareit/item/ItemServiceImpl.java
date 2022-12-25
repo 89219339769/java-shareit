@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.Validator;
 import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.comment.Comment;
+import ru.practicum.shareit.comment.CommentRepository;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.*;
 import ru.practicum.shareit.user.UserRepository;
@@ -19,13 +21,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ItemServiceImpl implements ItemService {
+public class ItemServiceImpl implements ItemService  {
     private final ItemRepository itemRepository;
     private final UserRepository repository;
     private final BookingRepository bookingRepository;
     private final ItemMapper itemMapper;
-    private final
-    Validator validator;
+
+    private final Validator validator;
 
 
     public ItemDtoShort save(long userId, Item item) {
@@ -48,7 +50,7 @@ public class ItemServiceImpl implements ItemService {
 
 
         for (int i = 0; i < items.size(); i++) {
-           if (items.get(i).getId().equals(itemId)) {
+            if (items.get(i).getId().equals(itemId)) {
                 ItemExist = true;
             }
         }
@@ -75,15 +77,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-
     @Override
     public ItemDtoAbstract findItemById(Long id, Long ownerId) {
         Optional<Item> itemFromDb = itemRepository.findById(id);
         if (itemFromDb.isEmpty()) {
             throw new NotFoundException("Вещи с ID = " + id + " не существует.");
         }
-        Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem( id, LocalDateTime.now());
-        Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem( id, LocalDateTime.now());
+        Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem(id, LocalDateTime.now());
+        Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem(id, LocalDateTime.now());
         Booking last;
         Booking next;
         if (lastBooking.isEmpty()) {
@@ -112,7 +113,7 @@ public class ItemServiceImpl implements ItemService {
         Optional<Booking> nextBooking;
         Collection<ItemDtoForOwner> itemDtoForOwnersList = new ArrayList<>();
         Collection<Item> itemsList = itemRepository.findAllByOwnerIdIsOrderById(ownerId);
-       for (Item item : itemsList) {
+        for (Item item : itemsList) {
             lastBooking = bookingRepository.findLastBookingByItem(item.getId(), LocalDateTime.now());
             nextBooking = bookingRepository.findNextBookingByItem(item.getId(), LocalDateTime.now());
             Booking last;
@@ -145,7 +146,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-
     public List<ItemDtoShort> findItemsByUserId(Long userId) {
         List<Item> allItems = itemRepository.findAll();
         List<ItemDtoShort> itemsByUserId = new ArrayList<>();
@@ -161,6 +161,11 @@ public class ItemServiceImpl implements ItemService {
             throw new NotFoundException(" Не найдены вещи у пользователя с номером " + userId);
         }
     }
+
+
+
+
+
 }
 
 

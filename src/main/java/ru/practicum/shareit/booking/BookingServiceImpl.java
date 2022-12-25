@@ -9,7 +9,7 @@ import ru.practicum.shareit.booking.model.BookingMapper;
 import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ItemUnvailableException;
-import ru.practicum.shareit.exceptions.WrongTimeException;
+import ru.practicum.shareit.exceptions.BadRequestException;
 import ru.practicum.shareit.item.model.ItemMapper;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
@@ -58,16 +58,16 @@ public class BookingServiceImpl implements BookingService {
         booking.setItem(item);
 
         if (booking.getStart().isAfter(booking.getEnd())) {
-            throw new WrongTimeException("ошибка с датами бронирования");
+            throw new BadRequestException("ошибка с датами бронирования");
         }
 
 
         if (booking.getEnd().isBefore(LocalDateTime.now())) {
-            throw new WrongTimeException("ошибка с датами бронирования");
+            throw new BadRequestException("ошибка с датами бронирования");
         }
 
         if (booking.getStart().isBefore(LocalDateTime.now())) {
-            throw new WrongTimeException("ошибка с датами бронирования");
+            throw new BadRequestException("ошибка с датами бронирования");
         }
 
 
@@ -104,7 +104,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NotFoundException("не найдено вещи владельца с номером " + userId);
         }
         if (!booking.getStatus().equals(BookingStatus.WAITING)) {
-            throw new  WrongTimeException("Невозможно подтвердить бронирование - " +
+            throw new BadRequestException("Невозможно подтвердить бронирование - " +
                     "бронирование уже подтверждено или отклонено");
         }
 
@@ -146,7 +146,7 @@ public class BookingServiceImpl implements BookingService {
             case "REJECTED":
                 allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED));
                 break;
-            default:  throw new WrongTimeException("Unknown state: UNSUPPORTED_STATUS");
+            default:  throw new BadRequestException("Unknown state: UNSUPPORTED_STATUS");
         }
 
         return allBookings;
@@ -185,7 +185,7 @@ public class BookingServiceImpl implements BookingService {
             case "REJECTED":
                 allBookings.addAll(bookingRepository.findAllByItemOwnerAndStatusEquals(user, BookingStatus.REJECTED));
                 break;
-            default:  throw new WrongTimeException("Unknown state: UNSUPPORTED_STATUS");
+            default:  throw new BadRequestException("Unknown state: UNSUPPORTED_STATUS");
         }
 
         return allBookings;

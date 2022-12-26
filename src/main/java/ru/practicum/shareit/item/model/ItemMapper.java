@@ -2,19 +2,12 @@ package ru.practicum.shareit.item.model;
 
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.booking.model.Booking;
-import ru.practicum.shareit.comment.Comment;
 import ru.practicum.shareit.comment.CommentDtoOut;
-import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.model.ItemDtoShort;
-import ru.practicum.shareit.item.model.ItemDtoVeryShort;
-
 import java.util.Collection;
 
 @Component
 public class ItemMapper {
-
-
-    public static ItemDtoShort itemToItemShort(Item item){
+    public static ItemDtoShort itemToItemShort(Item item) {
         return ItemDtoShort.builder()
                 .id(item.getId())
                 .name(item.getName())
@@ -23,32 +16,13 @@ public class ItemMapper {
                 .build();
     }
 
-    public ItemDtoVeryShort itemToItemVeryShort(Item item){
-        return ItemDtoVeryShort.builder()
-                .id(item.getId())
-                .name(item.getName())
-                .build();
-    }
-
-//    public  ItemDtoForOwner  itemToItemDtoForOwner(Item item){
-//        return ItemDtoForOwner.builder()
-//        .id(item.getId())
-//                .name(item.getName())
-//                .description(item.getDescription())
-//                .available(item.getAvailable())
-//                .build();
-//    }
-
-
-
-    public static ItemDtoForOwner toItemDtoForOwner(Item item, Booking last, Booking next, Collection<CommentDtoOut>comments) {
+    public static ItemDtoForOwner toItemDtoForOwner(Item item, Booking last, Booking next, Collection<CommentDtoOut> comments) {
         ItemDtoForOwner itemDtoForOwner = new ItemDtoForOwner();
         itemDtoForOwner.setId(item.getId());
         itemDtoForOwner.setName(item.getName());
         itemDtoForOwner.setDescription(item.getDescription());
         itemDtoForOwner.setAvailable(item.getAvailable());
         itemDtoForOwner.setOwnerId(item.getOwner().getId());
-       // itemDtoForOwner.setRequestId(item.getRequestId());
         itemDtoForOwner.setComments(comments);
         if (last != null) {
             itemDtoForOwner.setLastBooking(
@@ -73,8 +47,7 @@ public class ItemMapper {
         return itemDtoForOwner;
     }
 
-
-    public static ItemDtoForBooker toItemDtoForBooker(Item item, Collection<CommentDtoOut>comments) {
+    public static ItemDtoForBooker toItemDtoForBooker(Item item, Collection<CommentDtoOut> comments) {
         ItemDtoForBooker itemDtoForBooker = new ItemDtoForBooker();
         itemDtoForBooker.setId(item.getId());
         itemDtoForBooker.setName(item.getName());
@@ -84,9 +57,4 @@ public class ItemMapper {
         itemDtoForBooker.setComments(comments);
         return itemDtoForBooker;
     }
-
-
-
-
-
 }

@@ -8,9 +8,6 @@ import ru.practicum.shareit.user.model.User;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * TODO Sprint add-controllers.
- */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -32,7 +29,6 @@ public class UserController {
         return userService.updateUser(id, user);
     }
 
-
     @GetMapping("/{id}")
     public User findUserById(@PathVariable Long id) {
         return userService.get(id);
@@ -43,6 +39,4 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
     }
-
-
 }

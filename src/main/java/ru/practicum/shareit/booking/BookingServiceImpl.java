@@ -10,7 +10,6 @@ import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ItemUnvailableException;
 import ru.practicum.shareit.exceptions.BadRequestException;
-import ru.practicum.shareit.item.model.ItemMapper;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
@@ -29,8 +28,6 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
-
-    private final ItemMapper itemMapper;
 
     private final BookingMapper bookingMapper;
 
@@ -70,12 +67,9 @@ public class BookingServiceImpl implements BookingService {
             throw new BadRequestException("ошибка с датами бронирования");
         }
 
-
         booking.setStatus(WAITING);
         bookingRepository.save(booking);
-
         return bookingMapper.bookingToBookingDtoShort(booking);
-
     }
 
     @Override
@@ -89,9 +83,6 @@ public class BookingServiceImpl implements BookingService {
             throw new NotFoundException("Only owner of the item or booker can view information about booking");
         }
     }
-
-
-
 
     @Override
     public BookingDtoShort approve(Long bookingId, Long userId, Boolean approved) {
@@ -107,7 +98,6 @@ public class BookingServiceImpl implements BookingService {
             throw new BadRequestException("Невозможно подтвердить бронирование - " +
                     "бронирование уже подтверждено или отклонено");
         }
-
 
         if (approved) {
             booking.setStatus(BookingStatus.APPROVED);
@@ -145,12 +135,11 @@ public class BookingServiceImpl implements BookingService {
             case "REJECTED":
                 allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED));
                 break;
-            default:  throw new BadRequestException("Unknown state: UNSUPPORTED_STATUS");
+            default:
+                throw new BadRequestException("Unknown state: UNSUPPORTED_STATUS");
         }
-
         return allBookings;
     }
-
 
     @Override
     public List<Booking> getAllBokingsByOwnerSortByState(Long userId, String state) {
@@ -165,17 +154,17 @@ public class BookingServiceImpl implements BookingService {
             case "CURRENT":
                 allBookings.addAll(bookingRepository.findAllByItemOwnerAndStartBeforeAndEndAfter(user,
                         LocalDateTime.now(), LocalDateTime.now()));
-               break;
+                break;
             case "PAST":
                 allBookings.addAll(bookingRepository.findAllByItemOwnerAndEndBefore(user,
                         LocalDateTime.now()));
                 break;
-           case "FUTURE":
-               log.info(LocalDateTime.now()+"время создания запроса!");
-               log.info(bookingRepository.findAll().toString());
-               allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId));
+            case "FUTURE":
+                log.info(LocalDateTime.now() + "время создания запроса!");
+                log.info(bookingRepository.findAll().toString());
+                allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId));
 
-               log.info(LocalDateTime.now().toString());
+                log.info(LocalDateTime.now().toString());
                 break;
             case "WAITING":
                 allBookings.addAll(bookingRepository.findAllByItemOwnerAndStatusEquals(user, BookingStatus.WAITING));
@@ -183,10 +172,9 @@ public class BookingServiceImpl implements BookingService {
             case "REJECTED":
                 allBookings.addAll(bookingRepository.findAllByItemOwnerAndStatusEquals(user, BookingStatus.REJECTED));
                 break;
-            default:  throw new BadRequestException("Unknown state: UNSUPPORTED_STATUS");
+            default:
+                throw new BadRequestException("Unknown state: UNSUPPORTED_STATUS");
         }
-
         return allBookings;
     }
-
 }

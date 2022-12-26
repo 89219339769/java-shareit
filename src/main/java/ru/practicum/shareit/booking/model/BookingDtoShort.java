@@ -5,12 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.practicum.shareit.booking.BookingStatus;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.model.ItemDtoVeryShort;
 import ru.practicum.shareit.user.model.User;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
-
 
 
 @Getter
@@ -18,19 +15,19 @@ import java.time.LocalDateTime;
 @Builder
 public class BookingDtoShort {
 
-        private Long id;
+    private Long id;
 
-        private LocalDateTime start;
+    private LocalDateTime start;
 
-        private LocalDateTime end;
+    private LocalDateTime end;
 
-        private BookingStatus status;
+    private BookingStatus status;
 
-        private User booker;
+    private User booker;
 
-        private Item item;
+    private Item item;
 
-    }
+}
 
 
 

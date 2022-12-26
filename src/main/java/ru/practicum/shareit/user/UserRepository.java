@@ -5,10 +5,5 @@ import org.springframework.data.jpa.repository.Query;
 import ru.practicum.shareit.user.model.User;
 
 
-
 public interface UserRepository extends JpaRepository<User, Long> {
-
-
-
-
 }

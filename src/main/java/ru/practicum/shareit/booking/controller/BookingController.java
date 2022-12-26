@@ -11,34 +11,30 @@ import java.util.List;
 
 
 @RestController
-    @RequestMapping("/bookings")
-    @RequiredArgsConstructor
-    public class BookingController {
-        private final BookingService bookingService;
+@RequestMapping("/bookings")
+@RequiredArgsConstructor
+public class BookingController {
+    private final BookingService bookingService;
 
-        @PostMapping
-        public BookingDtoShort add(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                   @RequestBody BookingShortDtoWithItemId booking) {
+    @PostMapping
+    public BookingDtoShort add(@RequestHeader("X-Sharer-User-Id") Long userId,
+                               @RequestBody BookingShortDtoWithItemId booking) {
 
-            return     bookingService.saveBooking(userId, booking);
-        }
+        return bookingService.saveBooking(userId, booking);
+    }
 
 
     @GetMapping("/{bookingId}")
     public BookingDtoShort findBookingById(@PathVariable Long bookingId, @RequestHeader("X-Sharer-User-Id") Long userId) {
-        return bookingService.getById(userId, bookingId );
+        return bookingService.getById(userId, bookingId);
     }
-
-
-
 
 
     @PatchMapping("/{bookingId}")
     public BookingDtoShort approve(@PathVariable Long bookingId, @RequestHeader("X-Sharer-User-Id") Long userId,
-                              @RequestParam Boolean approved) {
+                                   @RequestParam Boolean approved) {
         return bookingService.approve(bookingId, userId, approved);
     }
-
 
 
     @GetMapping
@@ -48,11 +44,9 @@ import java.util.List;
     }
 
 
-
-
     @GetMapping("/owner")
     public List<Booking> getAllByUserOwner(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                      @RequestParam(defaultValue = "ALL") String state) {
+                                           @RequestParam(defaultValue = "ALL") String state) {
         return bookingService.getAllBokingsByOwnerSortByState(userId, state);
     }
 

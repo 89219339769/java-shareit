@@ -25,12 +25,9 @@ public class ItemServiceImpl implements ItemService {
     private final UserRepository repository;
     private final BookingRepository bookingRepository;
     private final ItemMapper itemMapper;
-    private final CommentService commentService;
     private final CommentRepository commentRepository;
     private final Validator validator;
-
     private final CommentMapper commentMapper;
-
 
     public ItemDtoShort save(long userId, Item item) {
         User user = repository.findById(userId)
@@ -38,21 +35,16 @@ public class ItemServiceImpl implements ItemService {
                         "не найден пользователь с id: " + userId));
         item.setOwner(user);
         validator.validateItemEmptyDescription(item);
-        validator.validateUserNotFound(userId);
         validator.validateItemEmptyName(item);
         validator.validateItemWithOutEvailable(item);
         itemRepository.save(item);
         ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
-
-
         return temDtoShort;
     }
 
     public Item updateItem(Long itemId, Long userId, Item item) {
         boolean ItemExist = false;
         List<ItemDtoShort> items = findItemsByUserId(userId);
-
-
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getId().equals(itemId)) {
                 ItemExist = true;
@@ -65,11 +57,9 @@ public class ItemServiceImpl implements ItemService {
 
         Item uptadeItem = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Вещи с номером - " + itemId +
                 " не существует"));
-
         if (item.getName() != null && item.getName() != uptadeItem.getName()) {
             uptadeItem.setName(item.getName());
         }
-
         if (item.getAvailable() != null && item.getAvailable() != uptadeItem.getAvailable()) {
             uptadeItem.setAvailable(item.getAvailable());
         }
@@ -77,11 +67,8 @@ public class ItemServiceImpl implements ItemService {
             uptadeItem.setDescription(item.getDescription());
         }
         itemRepository.save(uptadeItem);
-
-
         return uptadeItem;
     }
-
 
     @Override
     public ItemDtoAbstract findItemById(Long id, Long ownerId) {
@@ -89,14 +76,12 @@ public class ItemServiceImpl implements ItemService {
         if (itemFromDb.isEmpty()) {
             throw new NotFoundException("Вещи с ID = " + id + " не существует.");
         }
-
         Collection<Comment> commentList = commentRepository.findAllByItemIdIs(id);
         Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
         for (Comment comment : commentList) {
 
             commentDtoOutList.add(commentMapper.toCommentDt0FromComment(comment));
         }
-
 
         Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem(id, LocalDateTime.now());
         Optional<Booking> nextBooking = bookingRepository.findNextBookingByItem(id, LocalDateTime.now());
@@ -113,27 +98,18 @@ public class ItemServiceImpl implements ItemService {
             next = nextBooking.get();
         }
         if (itemFromDb.get().getOwner().getId() == ownerId) {
-
             Item itemFromDb1 = itemFromDb.get();
-
-
             ItemDtoForOwner itemDtoForOwner = itemMapper.toItemDtoForOwner(itemFromDb1, last, next, commentDtoOutList);
-
-
             return itemDtoForOwner;
         } else {
-
             ItemDtoForBooker itemDtoForBooker = ItemMapper.toItemDtoForBooker(itemFromDb.get(), commentDtoOutList);
-
-
-
             return itemDtoForBooker;
         }
     }
 
 
     public Collection<ItemDtoForOwner> getAllItems(long ownerId) {
-        User user = repository.findById(ownerId)
+        repository.findById(ownerId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
                         "не найден пользователь с id: " + ownerId));
         Optional<Booking> lastBooking;
@@ -144,7 +120,6 @@ public class ItemServiceImpl implements ItemService {
             Collection<Comment> commentList = commentRepository.findAllByItemIdIs(item.getId());
             Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
             for (Comment comment : commentList) {
-              //  User author = validateUser(comment.getAuthorID());
                 commentDtoOutList.add(commentMapper.toCommentDt0FromComment(comment));
             }
             lastBooking = bookingRepository.findLastBookingByItem(item.getId(), LocalDateTime.now());
@@ -164,11 +139,6 @@ public class ItemServiceImpl implements ItemService {
             itemDtoForOwnersList.add(ItemMapper.toItemDtoForOwner(item, last, next, commentDtoOutList));
         }
         return itemDtoForOwnersList;
-
-
-
-
-
     }
 
     public List<ItemDtoShort> findItemByNameOrDescription(String query) {
@@ -181,7 +151,6 @@ public class ItemServiceImpl implements ItemService {
                 .map(element -> itemMapper.itemToItemShort(element))
                 .collect(Collectors.toList());
     }
-
 
     public List<ItemDtoShort> findItemsByUserId(Long userId) {
         List<Item> allItems = itemRepository.findAll();
@@ -198,11 +167,6 @@ public class ItemServiceImpl implements ItemService {
             throw new NotFoundException(" Не найдены вещи у пользователя с номером " + userId);
         }
     }
-
-
-
-
-
 }
 
 

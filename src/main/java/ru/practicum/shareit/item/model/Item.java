@@ -32,6 +32,4 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "id_owner", referencedColumnName = "id", nullable = false)
     private User owner;
-
-
 }

@@ -28,9 +28,6 @@ public class ErrorHandler {
     }
 
 
-
-
-
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse objectWrongEnterExeption(final EmailWrongException e) {

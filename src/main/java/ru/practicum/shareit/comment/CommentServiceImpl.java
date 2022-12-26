@@ -10,6 +10,7 @@ import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -35,8 +36,9 @@ public class CommentServiceImpl implements CommentService {
         comment.setItem(item);
         comment.setCreated(LocalDateTime.now());
 
-        if(item.getOwner().equals(user.getId())){throw new BadRequestException("Пользователь не может комментировать собственную вещь");
-       }
+        if (item.getOwner().equals(user.getId())) {
+            throw new BadRequestException("Пользователь не может комментировать собственную вещь");
+        }
 
         if (comment.getText().isBlank()) {
             throw new BadRequestException("Коментарий не может быть пустым");
@@ -52,13 +54,9 @@ public class CommentServiceImpl implements CommentService {
                     " который брал вещи, после завершения оренды");
         }
         commentRepository.save(comment);
-        return  commentMapper.toCommentDt0FromComment(comment);
-    }
-
-
-
-    @Override
-    public Optional<Comment> getCommentsByIetmId(Long itemId){
-      return   commentRepository.findById(itemId);
+        return commentMapper.toCommentDt0FromComment(comment);
     }
 }
+
+
+

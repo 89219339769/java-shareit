@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class ItemDtoShort extends ItemDtoAbstract{
+public class ItemDtoShort extends ItemDtoAbstract {
     private Long id;
 
     private String name;
@@ -18,7 +18,4 @@ public class ItemDtoShort extends ItemDtoAbstract{
     private String description;
 
     private Boolean available;
-
-
-
 }

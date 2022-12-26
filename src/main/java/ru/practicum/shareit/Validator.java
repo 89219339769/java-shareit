@@ -14,16 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Validator {
 
- //   private final InMemoryUserRepository userRepository;
-
-
-    public void validateDublicateEmail(List<User> users, String eMail) {
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getEmail().equals(eMail))
-                throw new EmailWrongException("адрес указанной электронной почты уже сущетсвует ");
-        }
-    }
-
     public void validateIncorrectEmail(User user) {
         EmailValidator validator = EmailValidator.getInstance();
         if (!validator.isValid(user.getEmail())) {
@@ -55,18 +45,4 @@ public class Validator {
             throw new NoAvailableException("нужно указать состояние");
         }
     }
-
-
-    public void validateUserNotFound(long userId) {
-//        boolean userExist = false;
-//
-//        for (int i = 0; i < userRepository.getUsers().size(); i++) {
-//            if (userRepository.getUsers().get(i).getId() == userId)
-//                userExist = true;
-//        }
-//        if (userExist == false) throw new NotFoundException("юзера с таким номером нет");
-   }
-
-
-
 }

@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService {
     private Validator validator;
     private final UserRepository repository;
 
-
     @Override
     public User saveUser(User user) {
         List<User> users = repository.findAll();
@@ -29,25 +28,20 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
     public List<User> getAllUsers() {
         return repository.findAll();
-
     }
 
-    //не работает нужно научится по номеру брать из userrepository
     public User get(Long id) {
         User user = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Не найден пользователь с id: " + id));
         return user;
     }
 
-
     public void delete(Long id) {
         repository.deleteById(id);
 
     }
-
 
     public User updateUser(Long id, User user) {
         user.setId(id);
@@ -76,17 +70,4 @@ public class UserServiceImpl implements UserService {
         }
         throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
     }
-
-
-
-//    private long getId() {
-//        List<User> users = repository.findAll();
-//        long lastId = users.stream()
-//                .mapToLong(User::getId)
-//                .max()
-//                .orElse(0);
-//        return lastId + 1;
-//    }
-
-
 }

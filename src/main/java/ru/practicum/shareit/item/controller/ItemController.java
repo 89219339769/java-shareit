@@ -14,22 +14,19 @@ import ru.practicum.shareit.item.model.ItemDtoShort;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * TODO Sprint add-controllers.
- */
+
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemServiceImpl itemService;
-    private final CommentService  commentService;
+    private final CommentService commentService;
+
     @PostMapping
     public ItemDtoShort add(@RequestHeader("X-Sharer-User-Id") Long userId,
-                    @RequestBody Item item) {
-     return     itemService.save(userId, item);
-
+                            @RequestBody Item item) {
+        return itemService.save(userId, item);
     }
-
 
     @GetMapping("/{id}")
     public ItemDtoAbstract getById(@PathVariable Long id, @RequestHeader("X-Sharer-User-Id") Long userId) {
@@ -41,39 +38,23 @@ public class ItemController {
                     @RequestHeader("X-Sharer-User-Id") Long userId,
                     @RequestBody Item item) {
         return itemService.updateItem(itemId, userId, item);
-
     }
 
     @GetMapping
     public Collection<ItemDtoForOwner> getItemsByUser(@RequestHeader("X-Sharer-User-Id") Long userId) {
-      return itemService.getAllItems(userId);
+        return itemService.getAllItems(userId);
     }
-
 
     @GetMapping("search")
     public List<ItemDtoShort> findFilmsBySearch(@RequestParam(name = "text") String query) {
 
         return itemService.findItemByNameOrDescription(query);
-
     }
-
-
-
-
 
     @PostMapping("/{itemId}/comment")
     public CommentDtoOut add(@RequestHeader("X-Sharer-User-Id") Long userId,
                              @PathVariable Long itemId,
                              @RequestBody Comment comment) {
-        return     commentService.addComment(userId, itemId, comment );
-
+        return commentService.addComment(userId, itemId, comment);
     }
-
-
-
-
-
-
-
-
 }

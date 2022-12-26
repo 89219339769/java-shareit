@@ -2,13 +2,11 @@ package ru.practicum.shareit.item.model;
 
 
 import lombok.*;
-import ru.practicum.shareit.comment.Comment;
 import ru.practicum.shareit.comment.CommentDtoOut;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+
 
 @ToString
 @Setter

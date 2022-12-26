@@ -3,6 +3,7 @@ package ru.practicum.shareit.item.model;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.comment.Comment;
+import ru.practicum.shareit.comment.CommentDtoOut;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.model.ItemDtoShort;
 import ru.practicum.shareit.item.model.ItemDtoVeryShort;
@@ -40,7 +41,7 @@ public class ItemMapper {
 
 
 
-    public static ItemDtoForOwner toItemDtoForOwner(Item item, Booking last, Booking next, Collection<Comment>comments) {
+    public static ItemDtoForOwner toItemDtoForOwner(Item item, Booking last, Booking next, Collection<CommentDtoOut>comments) {
         ItemDtoForOwner itemDtoForOwner = new ItemDtoForOwner();
         itemDtoForOwner.setId(item.getId());
         itemDtoForOwner.setName(item.getName());
@@ -73,7 +74,7 @@ public class ItemMapper {
     }
 
 
-    public static ItemDtoForBooker toItemDtoForBooker(Item item, Collection<Comment>comments) {
+    public static ItemDtoForBooker toItemDtoForBooker(Item item, Collection<CommentDtoOut>comments) {
         ItemDtoForBooker itemDtoForBooker = new ItemDtoForBooker();
         itemDtoForBooker.setId(item.getId());
         itemDtoForBooker.setName(item.getName());

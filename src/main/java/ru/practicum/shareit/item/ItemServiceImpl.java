@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.Validator;
 import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.booking.model.Booking;
-import ru.practicum.shareit.comment.Comment;
-import ru.practicum.shareit.comment.CommentRepository;
-import ru.practicum.shareit.comment.CommentService;
+import ru.practicum.shareit.comment.*;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.*;
 import ru.practicum.shareit.user.UserRepository;
@@ -30,6 +28,8 @@ public class ItemServiceImpl implements ItemService  {
     private final CommentService commentService;
     private final CommentRepository commentRepository;
     private final Validator validator;
+
+    private final CommentMapper commentMapper;
 
 
     public ItemDtoShort save(long userId, Item item) {
@@ -95,10 +95,10 @@ public class ItemServiceImpl implements ItemService  {
         }
 
         Collection<Comment> commentList = commentRepository.findAllByItemIdIs(id);
-        Collection<Comment> commentDtoOutList = new ArrayList<>();
+        Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
         for (Comment comment : commentList) {
            // User author = validateUser(comment.getAuthorID());
-            commentDtoOutList.add(comment);
+            commentDtoOutList.add(commentMapper.toCommentDt0FromComment(comment));
         }
 
 
@@ -127,7 +127,7 @@ public class ItemServiceImpl implements ItemService  {
            Item itemFromDb1 = itemFromDb.get();
 
 
-            ItemDtoForOwner itemDtoForOwner = itemMapper.toItemDtoForOwner(itemFromDb1, last, next, commentDtoOutList);
+            ItemDtoForOwner itemDtoForOwner = itemMapper.toItemDtoForOwner(itemFromDb1, last, next,  commentDtoOutList);
 
 
 //            for (int i = 0; i < coments.size(); i++) {
@@ -139,7 +139,7 @@ public class ItemServiceImpl implements ItemService  {
             return itemDtoForOwner;
         } else {
 
-            ItemDtoForBooker itemDtoForBooker = ItemMapper.toItemDtoForBooker(itemFromDb.get(), commentDtoOutList);
+            ItemDtoForBooker itemDtoForBooker = ItemMapper.toItemDtoForBooker(itemFromDb.get(),commentDtoOutList);
 
 //            for (int i = 0; i < coments.size(); i++) {
 //                if(coments.get(i).getItemId()==(id)) {

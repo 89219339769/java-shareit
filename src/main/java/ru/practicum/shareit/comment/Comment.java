@@ -6,6 +6,7 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -17,18 +18,20 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class Comment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(name = "text_comment")
+    @Column(length = 1000, nullable = false)
     private String text;
 
-    @Column(name = "item_id", nullable = false)
-    private long itemId;
+    @ManyToOne
+    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
+    private Item item;
 
-    @Column(name = "author_ID", nullable = false)
-    private long authorID;
+    @ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
+    private User author;
 
+    private LocalDateTime created;
 }

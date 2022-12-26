@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode
 @RequiredArgsConstructor
+@Builder
 public class CommentDtoOut {
     private long id;
     private String text;
     private String authorName;
- //   private LocalDateTime created;
+    private LocalDateTime created;
 }

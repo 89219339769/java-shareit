@@ -31,8 +31,9 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("не найден пользователь с id: " + userId));
 
-        comment.setAuthorID(userId);
-        comment.setItemId(itemId);
+        comment.setAuthor(user);
+        comment.setItem(item);
+        comment.setCreated(LocalDateTime.now());
 
         if(item.getOwner().equals(user.getId())){throw new BadRequestException("Пользователь не может комментировать собственную вещь");
        }
@@ -51,7 +52,7 @@ public class CommentServiceImpl implements CommentService {
                     " который брал вещи, после завершения оренды");
         }
         commentRepository.save(comment);
-        return  commentMapper.toCommentDt0FromComment(comment,user);
+        return  commentMapper.toCommentDt0FromComment(comment);
     }
 
 

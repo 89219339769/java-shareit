@@ -12,10 +12,7 @@ import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -97,7 +94,7 @@ public class ItemServiceImpl implements ItemService {
         } else {
             next = nextBooking.get();
         }
-        if (itemFromDb.get().getOwner().getId() == ownerId) {
+        if (Objects.equals(itemFromDb.get().getOwner().getId(), ownerId)) {
             Item itemFromDb1 = itemFromDb.get();
             ItemDtoForOwner itemDtoForOwner = itemMapper.toItemDtoForOwner(itemFromDb1, last, next, commentDtoOutList);
             return itemDtoForOwner;

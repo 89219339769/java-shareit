@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setItem(item);
         comment.setCreated(LocalDateTime.now());
 
-        if (item.getOwner().equals(user.getId())) {
+        if (item.getOwner().getId().equals(user.getId())) {
             throw new BadRequestException("Пользователь не может комментировать собственную вещь");
         }
 

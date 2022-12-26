@@ -43,14 +43,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public Item updateItem(Long itemId, Long userId, Item item) {
-        boolean ItemExist = false;
+        boolean itemExist = false;
         List<ItemDtoShort> items = findItemsByUserId(userId);
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getId().equals(itemId)) {
-                ItemExist = true;
+                itemExist = true;
             }
         }
-        if (!ItemExist) {
+        if (!itemExist) {
             throw new NotFoundException("Невозможно обновить вещь - " +
                     "у пользователя с id: " + userId + "нет такой вещи");
         }

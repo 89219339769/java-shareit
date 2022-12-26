@@ -1,7 +1,6 @@
 package ru.practicum.shareit.user;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exceptions.EmailWrongException;
 import ru.practicum.shareit.exceptions.NotFoundException;
@@ -9,7 +8,7 @@ import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.Validator;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor

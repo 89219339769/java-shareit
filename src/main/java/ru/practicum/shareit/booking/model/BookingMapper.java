@@ -2,7 +2,7 @@ package ru.practicum.shareit.booking.model;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.practicum.shareit.item.model.ItemMapper;
+
 
 @AllArgsConstructor
 @Component

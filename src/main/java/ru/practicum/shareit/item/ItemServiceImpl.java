@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ItemServiceImpl implements ItemService  {
+public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository repository;
     private final BookingRepository bookingRepository;
@@ -43,9 +43,6 @@ public class ItemServiceImpl implements ItemService  {
         validator.validateItemWithOutEvailable(item);
         itemRepository.save(item);
         ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
-
-
-
 
 
         return temDtoShort;
@@ -89,7 +86,7 @@ public class ItemServiceImpl implements ItemService  {
     @Override
     public ItemDtoAbstract findItemById(Long id, Long ownerId) {
         Optional<Item> itemFromDb = itemRepository.findById(id);
-      //  List<Comment>coments = commentRepository.findAll();
+        //  List<Comment>coments = commentRepository.findAll();
         if (itemFromDb.isEmpty()) {
             throw new NotFoundException("Вещи с ID = " + id + " не существует.");
         }
@@ -97,15 +94,9 @@ public class ItemServiceImpl implements ItemService  {
         Collection<Comment> commentList = commentRepository.findAllByItemIdIs(id);
         Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
         for (Comment comment : commentList) {
-           // User author = validateUser(comment.getAuthorID());
+            // User author = validateUser(comment.getAuthorID());
             commentDtoOutList.add(commentMapper.toCommentDt0FromComment(comment));
         }
-
-
-
-
-
-
 
 
         Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem(id, LocalDateTime.now());
@@ -124,10 +115,10 @@ public class ItemServiceImpl implements ItemService  {
         }
         if (itemFromDb.get().getOwner().getId() == ownerId) {
 
-           Item itemFromDb1 = itemFromDb.get();
+            Item itemFromDb1 = itemFromDb.get();
 
 
-            ItemDtoForOwner itemDtoForOwner = itemMapper.toItemDtoForOwner(itemFromDb1, last, next,  commentDtoOutList);
+            ItemDtoForOwner itemDtoForOwner = itemMapper.toItemDtoForOwner(itemFromDb1, last, next, commentDtoOutList);
 
 
 //            for (int i = 0; i < coments.size(); i++) {
@@ -139,7 +130,7 @@ public class ItemServiceImpl implements ItemService  {
             return itemDtoForOwner;
         } else {
 
-            ItemDtoForBooker itemDtoForBooker = ItemMapper.toItemDtoForBooker(itemFromDb.get(),commentDtoOutList);
+            ItemDtoForBooker itemDtoForBooker = ItemMapper.toItemDtoForBooker(itemFromDb.get(), commentDtoOutList);
 
 //            for (int i = 0; i < coments.size(); i++) {
 //                if(coments.get(i).getItemId()==(id)) {
@@ -161,6 +152,12 @@ public class ItemServiceImpl implements ItemService  {
         Collection<ItemDtoForOwner> itemDtoForOwnersList = new ArrayList<>();
         Collection<Item> itemsList = itemRepository.findAllByOwnerIdIsOrderById(ownerId);
         for (Item item : itemsList) {
+            Collection<Comment> commentList = commentRepository.findAllByItemIdIs(item.getId());
+            Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
+            for (Comment comment : commentList) {
+              //  User author = validateUser(comment.getAuthorID());
+                commentDtoOutList.add(commentMapper.toCommentDt0FromComment(comment));
+            }
             lastBooking = bookingRepository.findLastBookingByItem(item.getId(), LocalDateTime.now());
             nextBooking = bookingRepository.findNextBookingByItem(item.getId(), LocalDateTime.now());
             Booking last;
@@ -175,11 +172,15 @@ public class ItemServiceImpl implements ItemService  {
             } else {
                 next = nextBooking.get();
             }
-          //  itemDtoForOwnersList.add(ItemMapper.toItemDtoForOwner(item, last, next));
+            itemDtoForOwnersList.add(ItemMapper.toItemDtoForOwner(item, last, next, commentDtoOutList));
         }
         return itemDtoForOwnersList;
-    }
 
+
+
+
+
+    }
 
     public List<ItemDtoShort> findItemByNameOrDescription(String query) {
         if (query.isBlank()) {

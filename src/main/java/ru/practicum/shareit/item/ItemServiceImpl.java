@@ -86,7 +86,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDtoAbstract findItemById(Long id, Long ownerId) {
         Optional<Item> itemFromDb = itemRepository.findById(id);
-        //  List<Comment>coments = commentRepository.findAll();
         if (itemFromDb.isEmpty()) {
             throw new NotFoundException("Вещи с ID = " + id + " не существует.");
         }
@@ -94,7 +93,7 @@ public class ItemServiceImpl implements ItemService {
         Collection<Comment> commentList = commentRepository.findAllByItemIdIs(id);
         Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
         for (Comment comment : commentList) {
-            // User author = validateUser(comment.getAuthorID());
+
             commentDtoOutList.add(commentMapper.toCommentDt0FromComment(comment));
         }
 
@@ -121,22 +120,12 @@ public class ItemServiceImpl implements ItemService {
             ItemDtoForOwner itemDtoForOwner = itemMapper.toItemDtoForOwner(itemFromDb1, last, next, commentDtoOutList);
 
 
-//            for (int i = 0; i < coments.size(); i++) {
-//              if(coments.get(i).getItemId()==(id)) {
-//                  itemDtoForOwner.setComents(commentService.getCommentsByIetmId(coments.get(i).getAuthorID()));
-//
-//              }
-//            }
             return itemDtoForOwner;
         } else {
 
             ItemDtoForBooker itemDtoForBooker = ItemMapper.toItemDtoForBooker(itemFromDb.get(), commentDtoOutList);
 
-//            for (int i = 0; i < coments.size(); i++) {
-//                if(coments.get(i).getItemId()==(id)) {
-//                    itemDtoForBooker.setComents(commentService.getCommentsByIetmId(coments.get(i).getAuthorID()));
-//                }
-//            }
+
 
             return itemDtoForBooker;
         }

@@ -171,10 +171,9 @@ public class BookingServiceImpl implements BookingService {
                         LocalDateTime.now()));
                 break;
            case "FUTURE":
-               log.info(LocalDateTime.now().toString()+"время создания запроса!!!!!!!!!");
+               log.info(LocalDateTime.now()+"время создания запроса!");
                log.info(bookingRepository.findAll().toString());
-               List<Booking> allBookingsNaw = bookingRepository.findAll();
-               allBookings.addAll(bookingRepository.getFutureUsersItemsBookings(userId, LocalDateTime.now()));
+               allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId));
 
                log.info(LocalDateTime.now().toString());
                 break;

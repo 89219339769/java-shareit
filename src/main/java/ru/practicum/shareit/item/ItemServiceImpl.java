@@ -47,7 +47,7 @@ public class ItemServiceImpl implements ItemService {
         Item uptadeItem = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Вещи с номером - " + itemId +
                 " не существует"));
 
-        if (uptadeItem.getOwner().getId()!=userId) {
+        if (!Objects.equals(uptadeItem.getOwner().getId(), userId)) {
             throw new NotFoundException("Невозможно обновить вещь - " +
                     "у пользователя с id: " + userId + "нет такой вещи");
         }

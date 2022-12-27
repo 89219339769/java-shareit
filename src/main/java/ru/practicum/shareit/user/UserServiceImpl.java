@@ -19,8 +19,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        List<User> users = repository.findAll();
-        String userEmail = user.getEmail();
         validator.validateNoEmail(user);
         validator.validateIncorrectEmail(user);
         repository.save(user);

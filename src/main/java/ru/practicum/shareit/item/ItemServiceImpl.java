@@ -40,20 +40,18 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public Item updateItem(Long itemId, Long userId, Item item) {
-        boolean itemExist = false;
-        List<ItemDtoShort> items = findItemsByUserId(userId);
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId().equals(itemId)) {
-                itemExist = true;
-            }
-        }
-        if (!itemExist) {
+        User owner = repository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
+                        "не найден пользователь с id: " + userId));
+        item.setOwner(owner);
+        Item uptadeItem = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Вещи с номером - " + itemId +
+                " не существует"));
+
+        if (uptadeItem.getOwner().getId()!=userId) {
             throw new NotFoundException("Невозможно обновить вещь - " +
                     "у пользователя с id: " + userId + "нет такой вещи");
         }
 
-        Item uptadeItem = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Вещи с номером - " + itemId +
-                " не существует"));
         if (item.getName() != null && item.getName() != uptadeItem.getName()) {
             uptadeItem.setName(item.getName());
         }
@@ -147,22 +145,6 @@ public class ItemServiceImpl implements ItemService {
         return items.stream()
                 .map(element -> itemMapper.itemToItemShort(element))
                 .collect(Collectors.toList());
-    }
-
-    public List<ItemDtoShort> findItemsByUserId(Long userId) {
-        List<Item> allItems = itemRepository.findAll();
-        List<ItemDtoShort> itemsByUserId = new ArrayList<>();
-        boolean itemExist = false;
-        for (int i = 0; i < allItems.size(); i++) {
-            if (allItems.get(i).getOwner().getId().equals(userId)) {
-                itemsByUserId.add(itemMapper.itemToItemShort(allItems.get(i)));
-                itemExist = true;
-            }
-        }
-        if (itemExist) return itemsByUserId;
-        else {
-            throw new NotFoundException(" Не найдены вещи у пользователя с номером " + userId);
-        }
     }
 }
 

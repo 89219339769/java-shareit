@@ -30,9 +30,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public User get(Long id) {
-        User user = repository.findById(id)
+        return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Не найден пользователь с id: " + id));
-        return user;
     }
 
     public void delete(Long id) {
@@ -42,29 +41,20 @@ public class UserServiceImpl implements UserService {
 
     public User updateUser(Long id, User user) {
         user.setId(id);
-        for (int j = 0; j < repository.findAll().size(); j++) {
-            if (repository.findAll().get(j).getEmail().equals(user.getEmail()))
-                throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
+        User updateUser = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Не найден пользователь с id: " + id));
+        if (updateUser.getEmail().equals(user.getEmail())) {
+            throw new EmailWrongException("адрес указанной обновляемой электронной почты уже сущетсвует ");
         }
-
-        List<User> users = repository.findAll();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId().equals(id)) {
-                User updateUser = users.get(i);
-                if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
-                    validator.validateNoEmail(user);
-                    validator.validateIncorrectEmail(user);
-                    updateUser.setEmail(user.getEmail());
-                }
-                if (user.getName() != null && user.getName() != updateUser.getName()) {
-                    updateUser.setName(user.getName());
-                }
-
-
-                repository.save(updateUser);
-                return updateUser;
-            }
+        if (user.getEmail() != null && user.getEmail() != updateUser.getEmail()) {
+            validator.validateNoEmail(user);
+            validator.validateIncorrectEmail(user);
+            updateUser.setEmail(user.getEmail());
         }
-        throw new NotFoundException("невозможно обновить, т.к. пользователя с этим номером не существует ");
+        if (user.getName() != null && user.getName() != updateUser.getName()) {
+            updateUser.setName(user.getName());
+        }
+        repository.save(updateUser);
+        return updateUser;
     }
 }

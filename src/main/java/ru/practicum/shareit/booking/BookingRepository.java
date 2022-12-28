@@ -52,4 +52,32 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     Optional<Booking> findBookingByItemIdAndBookerIdAndEndIsBefore(long itemId, long userId, LocalDateTime time);
 
+
+
+
+    @Query(value = "select  b.ID ,\n" +
+            "           b.START_DATE,\n" +
+            "           b.END_DATE,\n" +
+            "           b.BOOKER_ID as ddd,\n" +
+            "b.STATUS as s,\n" +
+            "b.ITEM_ID as bIID,\n" +
+            "i.NAME,\n" +
+            "i.DESCRIPTION,\n" +
+            "i.IS_AVAILABLE,\n" +
+            "i.ID_OWNER as iidO,\n" +
+            "left join Items  i on b.item_id   = i.id   " +
+            "where i.id in ?1" +
+            " and b.status = 'APPROVED' " +
+            "order by b.START_DATE",
+            nativeQuery = true)
+    List<Booking> findBookingsByItemsId(List<Long> itemsIdList);
+
+
+
+
+
+
+
+
+
 }

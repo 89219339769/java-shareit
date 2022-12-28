@@ -17,15 +17,12 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 
 
-        @Query("select c.id,\n" +
-                "    c.author.id,\n" +
-                "    c.created,\n" +
-                "    c.item.id,\n" +
-                "    c.text\n" +
-                "    from Comment as c\n" +
-                "    inner join Item as i on i.id = c.item.id\n" +
-                "    inner join User as u on u.id = i.owner.id\n" +
-                "    where u.id = ?1")
+        @Query(value = "select *" +
+                "    from Comments as c\n" +
+                "    inner join Items as i on i.id = c.item_id\n" +
+                "    inner join Users as u on u.id = i.id_owner\n" +
+                "    where u.id = ?1",
+         nativeQuery = true)
     List<Comment> getAllCommentsByUserId(Long UserId);
 
 

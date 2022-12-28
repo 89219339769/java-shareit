@@ -103,6 +103,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
+
+
+
+
+
+
     public Collection<ItemDtoForOwner> getAllItems(long ownerId) {
         repository.findById(ownerId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
@@ -111,12 +117,32 @@ public class ItemServiceImpl implements ItemService {
         Optional<Booking> nextBooking;
         Collection<ItemDtoForOwner> itemDtoForOwnersList = new ArrayList<>();
         Collection<Item> itemsList = itemRepository.findAllByOwnerIdIsOrderById(ownerId);
+
+
+
+        List<Comment> commentListbyUser =  commentRepository.getAllCommentsByUserId(ownerId);
+
+
+
         for (Item item : itemsList) {
-            Collection<Comment> commentList = commentRepository.findAllByItemIdIs(item.getId());
+           // Collection<Comment> commentList = commentRepository.findAllByItemIdIs(item.getId());
+
             Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
-            for (Comment comment : commentList) {
-                commentDtoOutList.add(commentMapper.toCommentDt0FromComment(comment));
-            }
+
+            commentDtoOutList = commentListbyUser.stream()
+                    .filter(comment->comment.getItem().equals(item.getId()))
+                    .map(CommentMapper::toCommentDt0FromComment)
+                    .collect(Collectors.toList());
+
+
+        //    Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
+     //       for (Comment comment : commentList) {
+        //        commentDtoOutList.add(commentMapper.toCommentDt0FromComment(comment));
+       //     }
+
+
+
+
             lastBooking = bookingRepository.findLastBookingByItem(item.getId(), LocalDateTime.now());
             nextBooking = bookingRepository.findNextBookingByItem(item.getId(), LocalDateTime.now());
             Booking last;
@@ -146,6 +172,14 @@ public class ItemServiceImpl implements ItemService {
                 .map(element -> itemMapper.itemToItemShort(element))
                 .collect(Collectors.toList());
     }
+
+
+
+  //  List<Comment> findAllByItemIdFromCommentListbyUser (Long itemId){
+
+
+  //
+   // }
 }
 
 

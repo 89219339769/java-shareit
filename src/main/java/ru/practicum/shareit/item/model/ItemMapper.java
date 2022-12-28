@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.model;
 
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.booking.model.BookingForItem;
 import ru.practicum.shareit.comment.CommentDtoOut;
 import java.util.Collection;
 
@@ -26,7 +27,7 @@ public class ItemMapper {
         itemDtoForOwner.setComments(comments);
         if (last != null) {
             itemDtoForOwner.setLastBooking(
-                    new ItemDtoForOwner.BookingInfo(
+                    new BookingForItem(
                             last.getId(),
                             last.getBooker().getId(),
                             last.getStart(),
@@ -36,7 +37,7 @@ public class ItemMapper {
         }
         if (next != null) {
             itemDtoForOwner.setNextBooking(
-                    new ItemDtoForOwner.BookingInfo(
+                    new BookingForItem(
                             next.getId(),
                             next.getBooker().getId(),
                             next.getStart(),

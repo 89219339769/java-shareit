@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.model;
 
 
 import lombok.*;
+import ru.practicum.shareit.booking.model.BookingForItem;
 import ru.practicum.shareit.comment.CommentDtoOut;
 
 import java.time.LocalDateTime;
@@ -23,20 +24,10 @@ public class ItemDtoForOwner extends ItemDtoAbstract {
     private Boolean available;
     private long ownerId;
     private long requestId;
-    private BookingInfo lastBooking;
-    private BookingInfo nextBooking;
+    private BookingForItem lastBooking;
+    private  BookingForItem nextBooking;
     private Collection<CommentDtoOut> comments;
 
-    @ToString
-    @Setter
-    @Getter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class BookingInfo {
-        private long id;
-        private long bookerId;
-        private LocalDateTime start;
-        private LocalDateTime end;
-    }
+
 
 }

@@ -120,7 +120,7 @@ public class ItemServiceImpl implements ItemService {
             Collection<CommentDtoOut> commentDtoOutList;
 
             commentDtoOutList = commentListbyUser.stream()
-                    .filter(comment -> comment.getItem().equals(item.getId()))
+                    .filter(comment -> comment.getItem().getId().equals(item.getId()))
                     .map(CommentMapper::toCommentDt0FromComment)
                     .collect(Collectors.toList());
 

@@ -133,9 +133,14 @@ public class ItemServiceImpl implements ItemService {
                     })
                     .reduce((a, b) -> b).orElse(null);
 
+
+            //этот метод проверить
             Booking nextBooking = bookingListbyUserOwner.stream()
                     .filter(booking -> booking.getItem().getId().equals(item.getId()) &&
                             booking.getStart().isAfter(LocalDateTime.now()))
+                    .sorted((o2, o1) -> {
+                        int result = o1.getStart().compareTo(o2.getStart());
+                        return result * -1;})
                     .findFirst().orElse(null);
 
             itemDtoForOwnersList.add(ItemMapper.toItemDtoForOwner(item, lastBooking, nextBooking, commentDtoOutList));

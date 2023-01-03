@@ -109,6 +109,7 @@ public class ItemServiceImpl implements ItemService {
                         "не найден пользователь с id: " + ownerId));
 
         Collection<ItemDtoForOwner> itemDtoForOwnersList = new ArrayList<>();
+
         Collection<Item> itemsList = itemRepository.findAllByOwnerIdIsOrderById(ownerId);
 
         List<Comment> commentListbyUser = commentRepository.getAllCommentsByUserId(ownerId);
@@ -116,14 +117,16 @@ public class ItemServiceImpl implements ItemService {
         List<Booking> bookingListbyUserOwner;
         bookingListbyUserOwner = bookingRepository.getAllUsersItemsBookings(ownerId);
 
+        //Поиск в массиве в худшем случае выполняется за длину массива.
+        // Поэтому временная сложность такого решения квадратичная.
+        // Чтобы уменьшить сложность, можно сделать группировку комментариев и сделать мапу<id,
+        // массив комментариев для этого id>. И тогда поиск нужных комментариев для вещи будет занимать O(1).
         for (Item item : itemsList) {
             Collection<CommentDtoOut> commentDtoOutList;
-
             commentDtoOutList = commentListbyUser.stream()
                     .filter(comment -> comment.getItem().getId().equals(item.getId()))
                     .map(CommentMapper::toCommentDt0FromComment)
                     .collect(Collectors.toList());
-
             Booking lastBooking = bookingListbyUserOwner.stream()
                     .filter(booking -> booking.getItem().getId().equals(item.getId()) &&
                             booking.getEnd().isBefore(LocalDateTime.now()))
@@ -132,9 +135,6 @@ public class ItemServiceImpl implements ItemService {
                         return result * -1;
                     })
                     .reduce((a, b) -> b).orElse(null);
-
-
-            //этот метод проверить
             Booking nextBooking = bookingListbyUserOwner.stream()
                     .filter(booking -> booking.getItem().getId().equals(item.getId()) &&
                             booking.getStart().isAfter(LocalDateTime.now()))

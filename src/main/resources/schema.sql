@@ -66,3 +66,21 @@ create table   IF NOT EXISTS comments
 );
 
 ALTER TABLE comments ALTER COLUMN ID RESTART WITH 1;
+
+
+
+
+DELETE  FROM REQUESTS;
+create table IF NOT EXISTS REQUESTS
+(
+    ID           BIGINT auto_increment,
+    DESCRIPTION  CHARACTER VARYING(1000) not null,
+    REQUESTOR_ID BIGINT
+        references USERS
+            on delete cascade,
+    CREATED      TIMESTAMP,
+    constraint PK_REQUEST
+        primary key (ID)
+);
+
+ALTER TABLE REQUESTS ALTER COLUMN ID RESTART WITH 1;

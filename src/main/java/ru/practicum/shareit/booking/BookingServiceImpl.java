@@ -4,22 +4,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.model.Booking;
-import ru.practicum.shareit.booking.model.BookingDtoShort;
 import ru.practicum.shareit.booking.model.BookingMapper;
 import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
-import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ItemUnvailableException;
+import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.booking.model.BookingDtoShort;
+import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.BadRequestException;
 import ru.practicum.shareit.item.ItemRepository;
-import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.user.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static ru.practicum.shareit.booking.BookingStatus.*;
 
 @Slf4j
 @Service
@@ -67,7 +65,7 @@ public class BookingServiceImpl implements BookingService {
             throw new BadRequestException("ошибка с датами бронирования");
         }
 
-        booking.setStatus(WAITING);
+        booking.setStatus(BookingStatus.WAITING);
         bookingRepository.save(booking);
         return bookingMapper.bookingToBookingDtoShort(booking);
     }

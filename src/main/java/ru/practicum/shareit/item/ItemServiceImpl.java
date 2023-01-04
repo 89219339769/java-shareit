@@ -2,14 +2,20 @@ package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.comment.CommentDtoOut;
+import ru.practicum.shareit.comment.CommentMapper;
+import ru.practicum.shareit.comment.CommentRepository;
+import ru.practicum.shareit.item.model.*;
 import ru.practicum.shareit.Validator;
 import ru.practicum.shareit.booking.BookingRepository;
-import ru.practicum.shareit.booking.model.Booking;
-import ru.practicum.shareit.comment.*;
+
+import ru.practicum.shareit.comment.Comment;
 import ru.practicum.shareit.exceptions.NotFoundException;
-import ru.practicum.shareit.item.model.*;
-import ru.practicum.shareit.user.UserRepository;
+
+//import ru.practicum.shareit.shareit.item.model.*;
 import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.user.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.*;

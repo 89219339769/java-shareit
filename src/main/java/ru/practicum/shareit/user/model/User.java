@@ -1,7 +1,10 @@
 package ru.practicum.shareit.user.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 
 import javax.persistence.*;
@@ -10,8 +13,9 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "users", schema = "public")
-
-public class User {
+@AllArgsConstructor
+public
+class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +26,9 @@ public class User {
 
     @Column(unique = true, length = 100, nullable = false)
     private String email;
+
+
+    public User() {
+
+    }
 }

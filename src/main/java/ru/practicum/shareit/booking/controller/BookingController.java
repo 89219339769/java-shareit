@@ -4,9 +4,10 @@ package ru.practicum.shareit.booking.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
 import ru.practicum.shareit.booking.BookingService;
 import ru.practicum.shareit.booking.model.BookingDtoShort;
-import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
+
 import java.util.List;
 
 

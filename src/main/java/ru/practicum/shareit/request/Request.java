@@ -32,4 +32,7 @@ public class Request {
     private User requestor;
 
     private LocalDateTime created;
+
+    public Request(long l, String description, User user) {
+    }
 }

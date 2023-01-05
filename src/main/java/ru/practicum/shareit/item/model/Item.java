@@ -28,6 +28,8 @@ public class Item {
     @Column(name = "is_available")
     private Boolean available;
 
+    @Column(name = "request_id", nullable = false)
+    private Long requestId;
 
     @ManyToOne
     @JoinColumn(name = "id_owner", referencedColumnName = "id", nullable = false)

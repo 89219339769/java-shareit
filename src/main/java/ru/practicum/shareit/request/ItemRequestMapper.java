@@ -1,14 +1,21 @@
 package ru.practicum.shareit.request;
 
+import ru.practicum.shareit.item.model.ItemDtoForRequest;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemRequestMapper {
 
 
 
-    public static ItemRequestDto toItemRequestDto(Request itemRequest) {
-        return ItemRequestDto.builder()
-                .id(itemRequest.getId())
-                .description(itemRequest.getDescription())
-                .created(itemRequest.getCreated())
+    public static RequestDto toItemRequestDto(Request request) {
+        List<ItemDtoForRequest> itemsForRequest = new ArrayList<>();
+        return  RequestDto.builder()
+                .id(request.getId())
+                .description(request.getDescription())
+                .created(request.getCreated())
+                .items(itemsForRequest)
                 .build();
     }
 

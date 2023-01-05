@@ -59,4 +59,15 @@ public class ItemMapper {
         itemDtoForBooker.setComments(comments);
         return itemDtoForBooker;
     }
+
+    public static ItemDtoForRequest itemToItemForRequest(Item item) {
+        return ItemDtoForRequest.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .ownerId(item.getOwner().getId())
+                .build();
+    }
+
+
+
 }

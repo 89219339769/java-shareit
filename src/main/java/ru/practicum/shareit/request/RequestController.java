@@ -2,6 +2,9 @@ package ru.practicum.shareit.request;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.user.model.User;
+
+import java.util.List;
 
 
 @RestController
@@ -19,6 +22,15 @@ public class RequestController {
 
         return requestService.addRequest(userId, request);
     }
+
+
+    @GetMapping
+    public List<RequestDto> getAll(@RequestHeader("X-Sharer-User-Id") Long userId) {
+        return requestService.getAllRequests(userId);
+    }
+
+
+
 
 
 }

@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 
 //import ru.practicum.controllerTests.RequestControllerTestConfig;
 //import ru.practicum.shareit.config.WebConfig;
-import ru.practicum.shareit.controllerTests.HeaderKey;
 import ru.practicum.shareit.request.Request;
 import ru.practicum.shareit.request.RequestController;
 import ru.practicum.shareit.request.RequestService;
@@ -26,7 +24,6 @@ import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -114,10 +111,9 @@ public class RequestControllerTests {
                 .when(requestService.addRequest(Mockito.anyLong(), Mockito.any()))
           .thenReturn(request);
 
-        mvc.perform(post("/requests")
+        mvc.perform(post("/requests").header("X-Sharer-User-Id", 1L)
                         .content(mapper.writeValueAsString(request))
                         .characterEncoding(StandardCharsets.UTF_8)
-                         .header(HeaderKey.USER_KEY, 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                  .andExpect(status().isOk())

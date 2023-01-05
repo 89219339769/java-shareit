@@ -33,6 +33,8 @@ public class Request {
 
     private LocalDateTime created;
 
-    public Request(long l, String description, User user) {
-    }
+//    public Request(long l, String description, User user) {
+//    }
+
+
 }

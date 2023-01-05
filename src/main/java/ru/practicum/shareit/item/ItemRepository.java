@@ -16,6 +16,16 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> search(String text);
 
 
+    @Query(" select i from Item i " +
+            "where i.requestId =  ?1")
+
+    List<Item> findItemByRequestId(Long RequestId);
+
+
     Collection<Item> findAllByOwnerIdIsOrderById(Long userId);
+
+
+    //Collection<Item> findAllItemsWhereRequestId();
+
 
 }

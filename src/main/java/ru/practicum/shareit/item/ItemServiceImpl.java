@@ -14,6 +14,8 @@ import ru.practicum.shareit.comment.Comment;
 import ru.practicum.shareit.exceptions.NotFoundException;
 
 //import ru.practicum.shareit.shareit.item.model.*;
+import ru.practicum.shareit.request.Request;
+import ru.practicum.shareit.request.RequestRepository;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.UserRepository;
 
@@ -29,6 +31,8 @@ public class ItemServiceImpl implements ItemService {
     private final BookingRepository bookingRepository;
     private final ItemMapper itemMapper;
     private final CommentRepository commentRepository;
+
+    private final RequestRepository requestRepository;
     private final Validator validator;
     private final CommentMapper commentMapper;
 
@@ -40,7 +44,16 @@ public class ItemServiceImpl implements ItemService {
         validator.validateItemEmptyDescription(item);
         validator.validateItemEmptyName(item);
         validator.validateItemWithOutEvailable(item);
+
+
+        if(item.getRequestId()!=null) {
+            requestRepository.findById(item.getRequestId())
+                    .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
+                            "не найден апрос с id: " + item.getRequestId()));
+        }
+
         itemRepository.save(item);
+
         ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
         return temDtoShort;
     }

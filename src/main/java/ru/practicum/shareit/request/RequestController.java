@@ -33,7 +33,7 @@ public class RequestController {
 
     @GetMapping()
     public List<RequestDto> getAll(@RequestHeader("X-Sharer-User-Id") Long userId) {
-        return requestService.getAllRequests(userId);
+        return requestService.getAllRequestsByUser(userId);
     }
 
 

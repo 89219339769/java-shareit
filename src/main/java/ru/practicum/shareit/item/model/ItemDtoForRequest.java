@@ -12,7 +12,11 @@ public class ItemDtoForRequest {
 
     private String name;
 
-    private long ownerId;
+    private String description;
+
+    private Boolean available;
+
+    private long requestId;
 
 
 }

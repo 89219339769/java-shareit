@@ -21,13 +21,19 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
 
 
+    List<Request> findAllByRequestorIdOrderByCreatedAsc(Long userId);
+
 
     @Query(" select r from Request  r " +
             "where r.requestor.id = ?1 " +
             "order by r.created desc ")
-    List<Request> getAllByUserId(Long UserId, PageRequest pageRequest);
+   List<Request> getAllByUserId(Long UserId, PageRequest pageRequest);
 
   //  Page<Request> findAllByRequestorIsNot(User user, Pageable pageable);
 
-
+    @Query(" select r from Request  r " +
+            "where r.requestor.id = ?1 " +
+            "order by r.created desc ")
+        //  List<Request> getAllByUserId(Long UserId, PageRequest pageRequest);
+    List<Request> getAllByUserIdNoPage(Long UserId);
 }

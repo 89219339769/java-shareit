@@ -65,7 +65,9 @@ public class ItemMapper {
         return ItemDtoForRequest.builder()
                 .id(item.getId())
                 .name(item.getName())
-                .ownerId(item.getOwner().getId())
+                .description(item.getDescription())
+                .available(item.getAvailable())
+                .requestId(item.getRequestId())
                 .build();
     }
 

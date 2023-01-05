@@ -49,7 +49,7 @@ public class RequestServiceImpl implements RequestService {
 
 
     @Override
-    public List<RequestDto> getAllRequests(long userId, int from, int size) {
+    public List<RequestDto> getAllRequestsWithItems(long userId, int from, int size) {
         User user = repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
                         "не найден пользователь с id: " + userId));
@@ -75,6 +75,22 @@ public class RequestServiceImpl implements RequestService {
         }
         return requestsDtos;
 
+    }
+
+    @Override
+    public List<RequestDto> getAllRequests(Long userId) {
+        User user = repository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
+                        "не найден пользователь с id: " + userId));
+
+        List<Request> requests = requestRepository.findAll();
+
+        List<RequestDto> requestsDtos = new ArrayList<>();
+
+        for (Request request: requests) {
+            requestsDtos.add(ItemRequestMapper.toItemRequestDto(request));
+        }
+        return requestsDtos;
     }
 
 

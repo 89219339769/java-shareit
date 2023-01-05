@@ -25,13 +25,17 @@ public class RequestController {
 
 
     @GetMapping("/all")
-    public List<RequestDto> getAll(@RequestHeader("X-Sharer-User-Id") Long userId,
+    public List<RequestDto> getAllWithItems(@RequestHeader("X-Sharer-User-Id") Long userId,
                                    @RequestParam(defaultValue = "0") int from,
                                    @RequestParam(defaultValue = "10") int size) {
-        return requestService.getAllRequests(userId,from,size);
+        return requestService.getAllRequestsWithItems(userId,from,size);
     }
 
-
+    @GetMapping()
+    public List<RequestDto> getAll(@RequestHeader("X-Sharer-User-Id") Long userId
+    ) {
+        return requestService.getAllRequests(userId);
+    }
 
 
 

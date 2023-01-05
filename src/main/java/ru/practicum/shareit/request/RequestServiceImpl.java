@@ -1,6 +1,8 @@
 package ru.practicum.shareit.request;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.comment.CommentMapper;
 import ru.practicum.shareit.exceptions.BadRequestException;
@@ -12,6 +14,7 @@ import ru.practicum.shareit.item.model.ItemMapper;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,12 +49,13 @@ public class RequestServiceImpl implements RequestService {
 
 
     @Override
-    public List<RequestDto> getAllRequests(long userId) {
+    public List<RequestDto> getAllRequests(long userId, int from, int size) {
         User user = repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
                         "не найден пользователь с id: " + userId));
 
-        List<Request> requests = requestRepository.getAllByUserId(userId);
+        List<Request> requests = requestRepository.getAllByUserId(userId, PageRequest.of
+                (from,size, Sort.by(Sort.Direction.DESC, "created")));
         List<RequestDto> requestsDtos = new ArrayList<>();
 
 
@@ -59,14 +63,11 @@ public class RequestServiceImpl implements RequestService {
         Collection<Item> itemsList = itemRepository.findAll();
 
         for (Request request : requests) {
-
             List<ItemDtoForRequest> itemsListAnswers = new ArrayList<>();
-
             itemsListAnswers = itemsList.stream()
                     .filter(item -> item.getRequestId().equals(request.getId()))
                     .map(ItemMapper::itemToItemForRequest)
                     .collect(Collectors.toList());
-
             RequestDto requestDto = ItemRequestMapper.toItemRequestDto(request);
             requestDto.setItems(itemsListAnswers);
             requestsDtos.add(requestDto);

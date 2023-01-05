@@ -24,9 +24,11 @@ public class RequestController {
     }
 
 
-    @GetMapping
-    public List<RequestDto> getAll(@RequestHeader("X-Sharer-User-Id") Long userId) {
-        return requestService.getAllRequests(userId);
+    @GetMapping("/all")
+    public List<RequestDto> getAll(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                   @RequestParam(defaultValue = "0") int from,
+                                   @RequestParam(defaultValue = "10") int size) {
+        return requestService.getAllRequests(userId,from,size);
     }
 
 

@@ -16,4 +16,6 @@ public class ItemDtoShort extends ItemDtoAbstract {
     private String description;
 
     private Boolean available;
+
+    private Long requestId;
 }

@@ -55,7 +55,7 @@ public class RequestServiceImpl implements RequestService {
                         "не найден пользователь с id: " + userId));
 
         List<Request> requests = requestRepository.getAllByUserId(userId, PageRequest.of
-                (from,size, Sort.by(Sort.Direction.DESC, "created")));
+                (from, size, Sort.by(Sort.Direction.DESC, "created")));
         List<RequestDto> requestsDtos = new ArrayList<>();
 
 
@@ -87,10 +87,23 @@ public class RequestServiceImpl implements RequestService {
 
         List<RequestDto> requestsDtos = new ArrayList<>();
 
-        for (Request request: requests) {
+        for (Request request : requests) {
             requestsDtos.add(ItemRequestMapper.toItemRequestDto(request));
         }
         return requestsDtos;
+    }
+
+    @Override
+    public RequestDto getRequestById(Long userId, Long requestId) {
+        User user = repository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
+                        "не найден пользователь с id: " + userId));
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
+                        "не найден запрос с id: " + requestId));
+
+       return  ItemRequestMapper.toItemRequestDto(request);
+
     }
 
 

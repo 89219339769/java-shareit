@@ -32,11 +32,17 @@ public class RequestController {
     }
 
     @GetMapping()
-    public List<RequestDto> getAll(@RequestHeader("X-Sharer-User-Id") Long userId
-    ) {
+    public List<RequestDto> getAll(@RequestHeader("X-Sharer-User-Id") Long userId) {
         return requestService.getAllRequests(userId);
     }
 
+
+    @GetMapping("/{RequestId}")
+    public RequestDto getRequestById(@RequestHeader("X-Sharer-User-Id") Long userId,
+    @PathVariable Long RequestId) {
+
+        return requestService.getRequestById(userId,RequestId);
+    }
 
 
 }

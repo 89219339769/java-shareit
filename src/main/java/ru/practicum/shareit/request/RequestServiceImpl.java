@@ -55,7 +55,7 @@ public class RequestServiceImpl implements RequestService {
                 .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
                         "не найден пользователь с id: " + userId));
 
-        List<Request> requests = requestRepository.getAllByUserId(userId, PageRequest.of
+        List<Request> requests = requestRepository.getAllByUserIdNot(userId, PageRequest.of
                 (from, size, Sort.by(Sort.Direction.DESC, "created")));
         List<RequestDto> requestsDtos = new ArrayList<>();
 
@@ -63,18 +63,40 @@ public class RequestServiceImpl implements RequestService {
         Collection<Item> itemsList = itemRepository.findAll();
 
         for (Request request : requests) {
+
+            //if(request.getRequestor().getId()!=userId)
             List<ItemDtoForRequest> itemsListAnswers = new ArrayList<>();
             itemsListAnswers = itemsList.stream()
-                    .filter(item -> item.getRequestId().equals(request.getId()))
+                    // .filter(item -> !item.getRequestId().equals(null))
+                    // .filter(request1->!request1.getRequestId().equals(userId))
                     .map(ItemMapper::itemToItemForRequest)
                     .collect(Collectors.toList());
             RequestDto requestDto = ItemRequestMapper.toItemRequestDto(request);
-            requestDto.setItems(itemsListAnswers);
+
+            List<ItemDtoForRequest>fgfgf = new ArrayList<>();
+
+            for (ItemDtoForRequest itemDtoForRequest:itemsListAnswers)
+                if(itemDtoForRequest.getRequestId()!=0)
+                    fgfgf.add(itemDtoForRequest);
+            requestDto.setItems(fgfgf);
             requestsDtos.add(requestDto);
+
+
+
 
         }
         return requestsDtos;
-
+//
+//        List<Request> list = requestRepository.findByRequester_IdNot(
+//                userId,
+//                PageRequest.of(from, size, Sort.by("created").descending())
+//        );
+//        List<RequestDto> list1 = new ArrayList<>();
+//        for (int i = 0; i < list.size(); i++) {
+//
+//            list1.add(ItemRequestMapper.toItemRequestDto(list.get(i))) ;
+//        }
+//       return  list1;
     }
 
 

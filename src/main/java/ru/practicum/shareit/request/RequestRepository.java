@@ -23,6 +23,11 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     List<Request> findAllByRequestorIdOrderByCreatedAsc(Long userId);
 
+    @Query(" select r from Request  r " +
+            "join Item i on i.requestId = r.id " +
+            "where r.requestor.id <> ?1  and i.requestId <> 0"+
+            "order by r.created desc ")
+    List<Request> getAllByUserIdNot(Long UserId, PageRequest pageRequest);
 
     @Query(" select r from Request  r " +
             "where r.requestor.id = ?1 " +

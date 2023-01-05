@@ -62,6 +62,7 @@ public class ItemMapper {
     }
 
     public static ItemDtoForRequest itemToItemForRequest(Item item) {
+       if(item.getRequestId()!=null){
         return ItemDtoForRequest.builder()
                 .id(item.getId())
                 .name(item.getName())
@@ -71,6 +72,13 @@ public class ItemMapper {
                 .build();
     }
 
+        return ItemDtoForRequest.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .description(item.getDescription())
+                .available(item.getAvailable())
+                .build();
+    }
 
 
 }

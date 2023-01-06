@@ -52,8 +52,7 @@ public class RequestServiceImpl implements RequestService {
         repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
                         "не найден пользователь с id: " + userId));
-        List<Request> requests = requestRepository.getAllByUserIdNot(userId, PageRequest.of
-                (from, size, Sort.by(Sort.Direction.DESC, "created")));
+        List<Request> requests = requestRepository.getAllByUserIdNot(userId, PageRequest.of(from, size, Sort.by(Sort.Direction.DESC, "created")));
         List<RequestDto> requestsDtos = new ArrayList<>();
 
         Collection<Item> itemsList = itemRepository.findAll();

@@ -102,18 +102,24 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public RequestDto getRequestById(Long userId, Long requestId) {
-        User user = repository.findById(userId)
+        repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
                         "не найден пользователь с id: " + userId));
         Request request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
                         "не найден запрос с id: " + requestId));
 
-        return ItemRequestMapper.toItemRequestDto(request);
+        Collection<Item> itemsList = itemRepository.findAllwithRequestId();
 
+        List<ItemDtoForRequest> itemsListAnswers = itemsList.stream()
+                .filter(item -> item.getRequestId().equals(request.getId()))
+                .map(ItemMapper::itemToItemForRequest)
+                .collect(Collectors.toList());
+        RequestDto requestDto = ItemRequestMapper.toItemRequestDto(request);
+        requestDto.setItems(itemsListAnswers);
+        return requestDto;
     }
 
 
-    //найти итемы по номеру запроса
 
 }

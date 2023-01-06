@@ -1,4 +1,4 @@
-package ru.practicum.shareit;
+package ru.practicum.shareit.requestTests;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = RequestController.class)
 
-public class RequestControllerTests {
+public class RequestControllerTestsMockMvc {
     @Autowired
     ObjectMapper mapper;
 
@@ -63,7 +63,6 @@ public class RequestControllerTests {
 
     }
 
-
     @Test
     void test1_createNewRequest() throws Exception {
         Mockito
@@ -80,7 +79,6 @@ public class RequestControllerTests {
                 .andExpect(jsonPath("$.description", is(request.getDescription()), String.class));
     }
 
-
     @Test
     void test2_gettAll() throws Exception {
         Mockito
@@ -94,7 +92,6 @@ public class RequestControllerTests {
                 .andExpect(jsonPath("$[0].description", is(request.getDescription())));
     }
 
-
     @Test
     void test3_gettAllByUser() throws Exception {
         Mockito
@@ -107,7 +104,6 @@ public class RequestControllerTests {
                 .andExpect(jsonPath("$[0].id", is(request.getId()), Long.class))
                 .andExpect(jsonPath("$[0].description", is(request.getDescription())));
     }
-
 
     @Test
     void test4_getById() throws Exception {

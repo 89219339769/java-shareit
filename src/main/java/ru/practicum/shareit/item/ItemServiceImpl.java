@@ -13,9 +13,6 @@ import ru.practicum.shareit.booking.BookingRepository;
 
 import ru.practicum.shareit.comment.Comment;
 import ru.practicum.shareit.exceptions.NotFoundException;
-
-//import ru.practicum.shareit.shareit.item.model.*;
-import ru.practicum.shareit.request.Request;
 import ru.practicum.shareit.request.RequestRepository;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.UserRepository;
@@ -124,10 +121,6 @@ public class ItemServiceImpl implements ItemService {
 
 
     public Collection<ItemDtoForOwner> getAllItems(long ownerId) {
-
-
-
-
         repository.findById(ownerId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
                         "не найден пользователь с id: " + ownerId));
@@ -139,12 +132,8 @@ public class ItemServiceImpl implements ItemService {
         List<Comment> commentListbyUser = commentRepository.getAllCommentsByUserId(ownerId);
 
         List<Booking> bookingListbyUserOwner;
-        bookingListbyUserOwner = bookingRepository.getAllUsersItemsBookings1(ownerId);
+        bookingListbyUserOwner = bookingRepository.getAllUsersItemsBookingsList(ownerId);
 
-        //Поиск в массиве в худшем случае выполняется за длину массива.
-        // Поэтому временная сложность такого решения квадратичная.
-        // Чтобы уменьшить сложность, можно сделать группировку комментариев и сделать мапу<id,
-        // массив комментариев для этого id>. И тогда поиск нужных комментариев для вещи будет занимать O(1).
         for (Item item : itemsList) {
             Collection<CommentDtoOut> commentDtoOutList;
             commentDtoOutList = commentListbyUser.stream()

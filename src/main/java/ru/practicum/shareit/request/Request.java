@@ -10,8 +10,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
-
-
 @Data
 @Entity
 @Table(name = "requests")
@@ -32,9 +30,5 @@ public class Request {
     private User requestor;
 
     private LocalDateTime created;
-
-//    public Request(long l, String description, User user) {
-//    }
-
 
 }

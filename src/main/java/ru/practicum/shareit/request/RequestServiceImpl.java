@@ -119,7 +119,4 @@ public class RequestServiceImpl implements RequestService {
         requestDto.setItems(itemsListAnswers);
         return requestDto;
     }
-
-
-
 }

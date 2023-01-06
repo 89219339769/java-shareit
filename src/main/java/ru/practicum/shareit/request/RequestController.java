@@ -2,7 +2,6 @@ package ru.practicum.shareit.request;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
 
@@ -26,9 +25,9 @@ public class RequestController {
 
     @GetMapping("/all")
     public List<RequestDto> getAllWithItems(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                   @RequestParam(defaultValue = "0") int from,
-                                   @RequestParam(defaultValue = "10") int size) {
-        return requestService.getAllRequestsWithItems(userId,from,size);
+                                            @RequestParam(defaultValue = "0") int from,
+                                            @RequestParam(defaultValue = "10") int size) {
+        return requestService.getAllRequestsWithItems(userId, from, size);
     }
 
     @GetMapping()
@@ -39,10 +38,8 @@ public class RequestController {
 
     @GetMapping("/{RequestId}")
     public RequestDto getRequestById(@RequestHeader("X-Sharer-User-Id") Long userId,
-    @PathVariable Long RequestId) {
+                                     @PathVariable Long RequestId) {
 
-        return requestService.getRequestById(userId,RequestId);
+        return requestService.getRequestById(userId, RequestId);
     }
-
-
 }

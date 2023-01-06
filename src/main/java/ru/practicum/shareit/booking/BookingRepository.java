@@ -13,15 +13,15 @@ import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    Page<Booking> findAllByBookerIdOrderByStartDesc(Long userId,Pageable pageable);
+    Page<Booking> findAllByBookerIdOrderByStartDesc(Long userId, Pageable pageable);
 
-    Page<Booking> findAllByBookerAndStartBeforeAndEndAfter(User booker, LocalDateTime start, LocalDateTime end,Pageable pageable);
+    Page<Booking> findAllByBookerAndStartBeforeAndEndAfter(User booker, LocalDateTime start, LocalDateTime end, Pageable pageable);
 
-    Page<Booking> findAllByBookerAndEndBefore(User booker, LocalDateTime end,Pageable pageable);
+    Page<Booking> findAllByBookerAndEndBefore(User booker, LocalDateTime end, Pageable pageable);
 
-    Page<Booking> findAllByBookerIdAndStartIsAfterOrderByStartDesc(Long userId, LocalDateTime start,Pageable pageable);
+    Page<Booking> findAllByBookerIdAndStartIsAfterOrderByStartDesc(Long userId, LocalDateTime start, Pageable pageable);
 
-    Page<Booking> findAllByBookerAndStatusEquals(User booker, BookingStatus status,Pageable pageable);
+    Page<Booking> findAllByBookerAndStatusEquals(User booker, BookingStatus status, Pageable pageable);
 
     @Query("select b from Booking b Inner join Item i on b.item.id = i.id where i.owner.id = ?1 " +
             "order by b.start desc")
@@ -29,7 +29,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query("select b from Booking b Inner join Item i on b.item.id = i.id where i.owner.id = ?1 " +
             "order by b.start desc")
-   List<Booking> getAllUsersItemsBookings1(Long userId);
+    List<Booking> getAllUsersItemsBookingsList(Long userId);
 
 
     @Query("select b from Booking b Inner join Item i on b.item.id = i.id where i.owner.id = ?1 " +
@@ -59,9 +59,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     Optional<Booking> findBookingByItemIdAndBookerIdAndEndIsBefore(long itemId, long userId, LocalDateTime time);
 
-
-
-
     @Query(value = "select  b.ID ,\n" +
             "           b.START_DATE,\n" +
             "           b.END_DATE,\n" +
@@ -78,13 +75,4 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "order by b.START_DATE",
             nativeQuery = true)
     List<Booking> findBookingsByItemsId(List<Long> itemsIdList);
-
-
-
-
-
-
-
-
-
 }

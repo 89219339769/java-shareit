@@ -7,8 +7,6 @@ import java.util.List;
 
 public class ItemRequestMapper {
 
-
-
     public static RequestDto toItemRequestDto(Request request) {
         List<ItemDtoForRequest> itemsForRequest = new ArrayList<>();
         return  RequestDto.builder()
@@ -18,9 +16,4 @@ public class ItemRequestMapper {
                 .items(itemsForRequest)
                 .build();
     }
-
-
-
-
-
 }

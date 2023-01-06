@@ -15,13 +15,13 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     Page<Booking> findAllByBookerIdOrderByStartDesc(Long userId,Pageable pageable);
 
-    List<Booking> findAllByBookerAndStartBeforeAndEndAfter(User booker, LocalDateTime start, LocalDateTime end);
+    Page<Booking> findAllByBookerAndStartBeforeAndEndAfter(User booker, LocalDateTime start, LocalDateTime end,Pageable pageable);
 
-    List<Booking> findAllByBookerAndEndBefore(User booker, LocalDateTime end);
+    Page<Booking> findAllByBookerAndEndBefore(User booker, LocalDateTime end,Pageable pageable);
 
     Page<Booking> findAllByBookerIdAndStartIsAfterOrderByStartDesc(Long userId, LocalDateTime start,Pageable pageable);
 
-    List<Booking> findAllByBookerAndStatusEquals(User booker, BookingStatus status);
+    Page<Booking> findAllByBookerAndStatusEquals(User booker, BookingStatus status,Pageable pageable);
 
     @Query("select b from Booking b Inner join Item i on b.item.id = i.id where i.owner.id = ?1 " +
             "order by b.start desc")

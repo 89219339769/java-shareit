@@ -123,21 +123,21 @@ public class BookingServiceImpl implements BookingService {
                 break;
             case "CURRENT":
                 allBookings.addAll(bookingRepository.findAllByBookerAndStartBeforeAndEndAfter(user,
-                        LocalDateTime.now(), LocalDateTime.now()));
+                        LocalDateTime.now(), LocalDateTime.now(),pageRequest).toList());
                 break;
             case "PAST":
                 allBookings.addAll(bookingRepository.findAllByBookerAndEndBefore(user,
-                        LocalDateTime.now()));
+                        LocalDateTime.now(),pageRequest).toList());
                 break;
             case "FUTURE":
                 allBookings.addAll(bookingRepository.findAllByBookerIdAndStartIsAfterOrderByStartDesc(userId,
                         LocalDateTime.now(),pageRequest).toList());
                 break;
             case "WAITING":
-                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.WAITING));
+                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.WAITING,pageRequest).toList());
                 break;
             case "REJECTED":
-                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED));
+                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED,pageRequest).toList());
                 break;
             default:
                 throw new BadRequestException("Unknown state: UNSUPPORTED_STATUS");

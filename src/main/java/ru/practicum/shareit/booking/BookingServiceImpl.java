@@ -154,7 +154,6 @@ public class BookingServiceImpl implements BookingService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
         List<Booking> allBookings = new ArrayList<>();
-
         PageRequest pageRequest = PageRequest.of(from / size, size);
         switch (state) {
             case "ALL":

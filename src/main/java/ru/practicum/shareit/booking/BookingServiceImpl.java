@@ -109,13 +109,17 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> getAllBokingsSortByState(Long userId, String state) {
+    public List<Booking> getAllBokingsSortByState(Long userId, String state, int from, int size) {
+        if (from < 0||size<0) {
+            throw new BadRequestException(" араметры from и size не могут быть отрицательными ");
+        }
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
         List<Booking> allBookings = new ArrayList<>();
+        PageRequest pageRequest = PageRequest.of(from / size, size);
         switch (state) {
             case "ALL":
-                allBookings.addAll(bookingRepository.findAllByBookerIdOrderByStartDesc(userId));
+                allBookings.addAll(bookingRepository.findAllByBookerIdOrderByStartDesc(userId, pageRequest).toList());
                 break;
             case "CURRENT":
                 allBookings.addAll(bookingRepository.findAllByBookerAndStartBeforeAndEndAfter(user,
@@ -126,7 +130,8 @@ public class BookingServiceImpl implements BookingService {
                         LocalDateTime.now()));
                 break;
             case "FUTURE":
-                allBookings.addAll(bookingRepository.findAllByBookerIdAndStartIsAfterOrderByStartDesc(userId, LocalDateTime.now()));
+                allBookings.addAll(bookingRepository.findAllByBookerIdAndStartIsAfterOrderByStartDesc(userId,
+                        LocalDateTime.now(),pageRequest).toList());
                 break;
             case "WAITING":
                 allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.WAITING));
@@ -144,12 +149,21 @@ public class BookingServiceImpl implements BookingService {
 
 
 
-    @Override
-    public List<Booking> getAllBokingsByOwnerSortByState(Long userId, String state,int from, int size) {
 
+
+
+
+
+
+    @Override
+    public List<Booking> getAllBokingsByOwnerSortByState(Long userId, String state, int from, int size) {
+        if (from < 0) {
+            throw new BadRequestException(" араметр from не может быть отрицательным ");
+        }
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
         List<Booking> allBookings = new ArrayList<>();
+
         PageRequest pageRequest = PageRequest.of(from / size, size);
         switch (state) {
             case "ALL":

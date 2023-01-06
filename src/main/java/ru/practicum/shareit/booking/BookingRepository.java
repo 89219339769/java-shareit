@@ -13,13 +13,13 @@ import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    List<Booking> findAllByBookerIdOrderByStartDesc(Long userId);
+    Page<Booking> findAllByBookerIdOrderByStartDesc(Long userId,Pageable pageable);
 
     List<Booking> findAllByBookerAndStartBeforeAndEndAfter(User booker, LocalDateTime start, LocalDateTime end);
 
     List<Booking> findAllByBookerAndEndBefore(User booker, LocalDateTime end);
 
-    List<Booking> findAllByBookerIdAndStartIsAfterOrderByStartDesc(Long userId, LocalDateTime start);
+    Page<Booking> findAllByBookerIdAndStartIsAfterOrderByStartDesc(Long userId, LocalDateTime start,Pageable pageable);
 
     List<Booking> findAllByBookerAndStatusEquals(User booker, BookingStatus status);
 

@@ -14,7 +14,7 @@ public interface BookingService {
 
     BookingDtoShort approve(Long bookingId, Long userId, Boolean approved);
 
-    List<Booking> getAllBokingsSortByState(Long userId, String state);
+    List<Booking> getAllBokingsSortByState(Long userId, String state,int from, int size);
 
     List<Booking> getAllBokingsByOwnerSortByState(Long userId, String state,int from, int size);
 }

@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.comment.CommentMapper;
 import ru.practicum.shareit.exceptions.BadRequestException;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.ItemRepository;
@@ -15,7 +14,6 @@ import ru.practicum.shareit.item.model.ItemMapper;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,80 +49,44 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<RequestDto> getAllRequestsWithItems(long userId, int from, int size) {
-        User user = repository.findById(userId)
+        repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
                         "не найден пользователь с id: " + userId));
-
         List<Request> requests = requestRepository.getAllByUserIdNot(userId, PageRequest.of
                 (from, size, Sort.by(Sort.Direction.DESC, "created")));
         List<RequestDto> requestsDtos = new ArrayList<>();
 
-
         Collection<Item> itemsList = itemRepository.findAll();
-
         for (Request request : requests) {
-
-            //if(request.getRequestor().getId()!=userId)
-            List<ItemDtoForRequest> itemsListAnswers = new ArrayList<>();
-            itemsListAnswers = itemsList.stream()
-                    // .filter(item -> !item.getRequestId().equals(null))
-                    // .filter(request1->!request1.getRequestId().equals(userId))
+            List<ItemDtoForRequest> itemsListAnswers = itemsList.stream()
                     .map(ItemMapper::itemToItemForRequest)
                     .collect(Collectors.toList());
             RequestDto requestDto = ItemRequestMapper.toItemRequestDto(request);
 
-            List<ItemDtoForRequest>fgfgf = new ArrayList<>();
-
-            for (ItemDtoForRequest itemDtoForRequest:itemsListAnswers)
-                if(itemDtoForRequest.getRequestId()!=0)
-                    fgfgf.add(itemDtoForRequest);
-            requestDto.setItems(fgfgf);
+            List<ItemDtoForRequest> listWithAnswers = new ArrayList<>();
+            for (ItemDtoForRequest itemDtoForRequest : itemsListAnswers)
+                if (itemDtoForRequest.getRequestId() != 0)
+                    listWithAnswers.add(itemDtoForRequest);
+            requestDto.setItems(listWithAnswers);
             requestsDtos.add(requestDto);
-
-
-
-
         }
         return requestsDtos;
-//
-//        List<Request> list = requestRepository.findByRequester_IdNot(
-//                userId,
-//                PageRequest.of(from, size, Sort.by("created").descending())
-//        );
-//        List<RequestDto> list1 = new ArrayList<>();
-//        for (int i = 0; i < list.size(); i++) {
-//
-//            list1.add(ItemRequestMapper.toItemRequestDto(list.get(i))) ;
-//        }
-//       return  list1;
     }
-
-
-
 
 
     @Override
     public List<RequestDto> getAllRequestsByUser(Long userId) {
-        User user = repository.findById(userId)
+        repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
                         "не найден пользователь с id: " + userId));
 
         List<Request> requests = requestRepository.getAllByUserIdNoPage(userId);
-
-
         List<RequestDto> requestsDtos = new ArrayList<>();
 
-
-        //тобрать сюда только с requestId итемы
         Collection<Item> itemsList = itemRepository.findAllwithRequestId();
 
         for (Request request : requests) {
-            List<ItemDtoForRequest> itemsListAnswers = new ArrayList<>();
-
-
-
-          //  if(itemsList.contains(Item))
-
+            List<ItemDtoForRequest> itemsListAnswers;
             itemsListAnswers = itemsList.stream()
                     .filter(item -> item.getRequestId().equals(request.getId()))
                     .map(ItemMapper::itemToItemForRequest)
@@ -135,47 +97,7 @@ public class RequestServiceImpl implements RequestService {
 
         }
         return requestsDtos;
-//        User user = repository.findById(userId)
-//                .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
-//                        "не найден пользователь с id: " + userId));
-//
-//        List<Request> requests = requestRepository.findAll();
-//
-//        List<RequestDto> requestsDtos = new ArrayList<>();
-//        Collection<Item> itemsList = itemRepository.findAll();
-//
-//        for (Request request : requests) {
-//            List<ItemDtoForRequest> itemsListAnswers = new ArrayList<>();
-//            itemsListAnswers = itemsList.stream()
-//                   // .filter(item -> item.getRequestId().equals(request.getId()))
-//                    .map(ItemMapper::itemToItemForRequest)
-//                    .collect(Collectors.toList());
-//            RequestDto requestDto = ItemRequestMapper.toItemRequestDto(request);
-//            requestDto.setItems(itemsListAnswers);
-//            requestsDtos.add(requestDto);
-//        }
-//        return requestsDtos;
-
-
-
-//            User user = repository.findById(userId)
-//                    .orElseThrow(() -> new NotFoundException("Невозможно найти запросы пользователя - " +
-//                            "не найден пользователь с id " + userId));
-//            return requestRepository.findAllByRequestorIdOrderByCreatedAsc(userId)
-//                    .stream()
-//                    .map(ItemRequestMapper::toItemRequestDto)
-//                    //.map(this::s)
-//                    .collect(Collectors.toList());
-        }
-
-
-
-
-
-
-
-
-
+    }
 
 
     @Override
@@ -187,7 +109,7 @@ public class RequestServiceImpl implements RequestService {
                 .orElseThrow(() -> new NotFoundException("Невозможно создать запрос - " +
                         "не найден запрос с id: " + requestId));
 
-       return  ItemRequestMapper.toItemRequestDto(request);
+        return ItemRequestMapper.toItemRequestDto(request);
 
     }
 

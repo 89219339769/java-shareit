@@ -1,11 +1,7 @@
 package ru.practicum.shareit.user.model;
 
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import org.springframework.stereotype.Component;
-
 
 import javax.persistence.*;
 

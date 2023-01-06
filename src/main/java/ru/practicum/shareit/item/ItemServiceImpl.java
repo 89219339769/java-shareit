@@ -20,6 +20,7 @@ import ru.practicum.shareit.user.UserRepository;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class ItemServiceImpl implements ItemService {
         validator.validateItemWithOutEvailable(item);
 
 
-        if(item.getRequestId()!=null) {
+        if (item.getRequestId() != null) {
             requestRepository.findById(item.getRequestId())
                     .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
                             "не найден апрос с id: " + item.getRequestId()));
@@ -153,7 +154,8 @@ public class ItemServiceImpl implements ItemService {
                             booking.getStart().isAfter(LocalDateTime.now()))
                     .sorted((o2, o1) -> {
                         int result = o1.getStart().compareTo(o2.getStart());
-                        return result * -1;})
+                        return result * -1;
+                    })
                     .findFirst().orElse(null);
 
             itemDtoForOwnersList.add(ItemMapper.toItemDtoForOwner(item, lastBooking, nextBooking, commentDtoOutList));

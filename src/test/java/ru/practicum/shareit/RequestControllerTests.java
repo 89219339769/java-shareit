@@ -10,8 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-//import ru.practicum.controllerTests.RequestControllerTestConfig;
-//import ru.practicum.shareit.config.WebConfig;
 import ru.practicum.shareit.request.Request;
 import ru.practicum.shareit.request.RequestController;
 import ru.practicum.shareit.request.RequestService;
@@ -23,55 +21,9 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-
-
-
-//
-//@SpringJUnitWebConfig( { Request.class,  RequestService.class, RequestControllerTests.class})
-//
-//@WebMvcTest
-//public class RequestControllerTests {
-//    @Autowired
-//    ObjectMapper mapper;
-//    @MockBean
-//    RequestService requestService;
-//    @Autowired
-//    MockMvc mvc;
-//    Request request ;
-//    @BeforeEach
-//
-//
-//    void setUp() {
-//        request =  Request.builder()
-//                .id(1L)
-//                .description("test")
-//                .created(LocalDateTime.now())
-//                .build();
-//    }
-//
-//    @Test
-//    void test1_createNewRequest() throws Exception {
-//        Mockito
-//                .when(requestService.addRequest(1, request))
-//                .thenReturn(request);
-//
-//        mvc.perform(post("/requests")
-//                        .content(mapper.writeValueAsString(request))
-//                        .characterEncoding(StandardCharsets.UTF_8)
-//                        .header(HeaderKey.USER_KEY, 1L)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id", is(request.getId()), Long.class))
-//                .andExpect(jsonPath("$.description", is(request.getDescription()), String.class));
-//    }
-//}
 
 
 @WebMvcTest(controllers = RequestController.class)
@@ -81,7 +33,7 @@ public class RequestControllerTests {
     ObjectMapper mapper;
 
     @MockBean
-  RequestService requestService;
+    RequestService requestService;
 
     @Autowired
     MockMvc mvc;
@@ -94,7 +46,7 @@ public class RequestControllerTests {
     @BeforeEach
     void setUp() {
 
-       User user = new User();
+        User user = new User();
         user.setId(1L);
 
         request = Request.builder()
@@ -109,26 +61,17 @@ public class RequestControllerTests {
     void test1_createNewRequest() throws Exception {
         Mockito
                 .when(requestService.addRequest(Mockito.anyLong(), Mockito.any()))
-          .thenReturn(request);
+                .thenReturn(request);
 
         mvc.perform(post("/requests").header("X-Sharer-User-Id", 1L)
                         .content(mapper.writeValueAsString(request))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                 .andExpect(status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(request.getId()), Long.class))
                 .andExpect(jsonPath("$.description", is(request.getDescription()), String.class));
     }
-
-
-
-
-
-
-
-
-
 }
 
 

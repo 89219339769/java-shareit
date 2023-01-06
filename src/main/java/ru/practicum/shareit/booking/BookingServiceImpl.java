@@ -110,7 +110,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> getAllBokingsSortByState(Long userId, String state, int from, int size) {
-        if (from < 0||size<0) {
+        if (from < 0 || size < 0) {
             throw new BadRequestException(" араметры from и size не могут быть отрицательными ");
         }
         User user = userRepository.findById(userId)
@@ -123,36 +123,27 @@ public class BookingServiceImpl implements BookingService {
                 break;
             case "CURRENT":
                 allBookings.addAll(bookingRepository.findAllByBookerAndStartBeforeAndEndAfter(user,
-                        LocalDateTime.now(), LocalDateTime.now(),pageRequest).toList());
+                        LocalDateTime.now(), LocalDateTime.now(), pageRequest).toList());
                 break;
             case "PAST":
                 allBookings.addAll(bookingRepository.findAllByBookerAndEndBefore(user,
-                        LocalDateTime.now(),pageRequest).toList());
+                        LocalDateTime.now(), pageRequest).toList());
                 break;
             case "FUTURE":
                 allBookings.addAll(bookingRepository.findAllByBookerIdAndStartIsAfterOrderByStartDesc(userId,
-                        LocalDateTime.now(),pageRequest).toList());
+                        LocalDateTime.now(), pageRequest).toList());
                 break;
             case "WAITING":
-                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.WAITING,pageRequest).toList());
+                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.WAITING, pageRequest).toList());
                 break;
             case "REJECTED":
-                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED,pageRequest).toList());
+                allBookings.addAll(bookingRepository.findAllByBookerAndStatusEquals(user, BookingStatus.REJECTED, pageRequest).toList());
                 break;
             default:
                 throw new BadRequestException("Unknown state: UNSUPPORTED_STATUS");
         }
         return allBookings;
     }
-
-
-
-
-
-
-
-
-
 
 
     @Override

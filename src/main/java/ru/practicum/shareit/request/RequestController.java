@@ -36,10 +36,10 @@ public class RequestController {
     }
 
 
-    @GetMapping("/{RequestId}")
+    @GetMapping("/{requestId}")
     public RequestDto getRequestById(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                     @PathVariable Long RequestId) {
+                                     @PathVariable Long requestId) {
 
-        return requestService.getRequestById(userId, RequestId);
+        return requestService.getRequestById(userId, requestId);
     }
 }

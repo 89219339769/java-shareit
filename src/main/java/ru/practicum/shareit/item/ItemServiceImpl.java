@@ -139,7 +139,7 @@ public class ItemServiceImpl implements ItemService {
         List<Comment> commentListbyUser = commentRepository.getAllCommentsByUserId(ownerId);
 
         List<Booking> bookingListbyUserOwner;
-        bookingListbyUserOwner = bookingRepository.getAllUsersItemsBookings(ownerId);
+        bookingListbyUserOwner = bookingRepository.getAllUsersItemsBookings1(ownerId);
 
         //Поиск в массиве в худшем случае выполняется за длину массива.
         // Поэтому временная сложность такого решения квадратичная.

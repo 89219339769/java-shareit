@@ -2,6 +2,7 @@ package ru.practicum.shareit.booking;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingMapper;
@@ -139,15 +140,20 @@ public class BookingServiceImpl implements BookingService {
         return allBookings;
     }
 
+
+
+
+
     @Override
-    public List<Booking> getAllBokingsByOwnerSortByState(Long userId, String state) {
+    public List<Booking> getAllBokingsByOwnerSortByState(Long userId, String state,int from, int size) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));
         List<Booking> allBookings = new ArrayList<>();
+        PageRequest pageRequest = PageRequest.of(from / size, size);
         switch (state) {
             case "ALL":
-                allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId));
+                allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId, pageRequest).toList());
                 break;
             case "CURRENT":
                 allBookings.addAll(bookingRepository.findAllByItemOwnerAndStartBeforeAndEndAfter(user,
@@ -160,7 +166,7 @@ public class BookingServiceImpl implements BookingService {
             case "FUTURE":
                 log.info(LocalDateTime.now() + "время создания запроса!");
                 log.info(bookingRepository.findAll().toString());
-                allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId));
+                allBookings.addAll(bookingRepository.getAllUsersItemsBookings(userId, pageRequest).toList());
 
                 log.info(LocalDateTime.now().toString());
                 break;

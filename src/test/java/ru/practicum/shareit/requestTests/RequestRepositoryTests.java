@@ -1,0 +1,100 @@
+package ru.practicum.shareit.requestTests;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
+import ru.practicum.shareit.ShareItApp;
+import ru.practicum.shareit.item.ItemRepository;
+import ru.practicum.shareit.item.ItemService;
+import ru.practicum.shareit.item.controller.ItemController;
+import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.request.Request;
+import ru.practicum.shareit.request.RequestRepository;
+
+import ru.practicum.shareit.user.UserRepository;
+import ru.practicum.shareit.user.model.User;
+import java.time.LocalDateTime;
+import java.util.List;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+//@DataJpaTest
+@SpringBootTest(classes = ShareItApp.class)
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+class RequestRepositoryTests {
+    @Autowired
+    private RequestRepository itemRequestRepository;
+    @Autowired
+    private ItemRepository itemRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    void findAllByRequestorIdOrderByCreatedAscTest() {
+        User user = new User();
+        user.setName("name");
+        user.setEmail("email@email.com");
+
+        userRepository.save(user);
+        itemRequestRepository.save(Request.builder().description("description").requestor(user)
+                .created(LocalDateTime.now()).build());
+        List<Request> items = itemRequestRepository.getAllByUserIdNoPage(user.getId());
+        assertThat(items.size(), equalTo(1));
+    }
+
+
+    @Test
+    void findAllusersRequestIdOrder() {
+        User user = new User();
+        user.setName("name");
+        user.setEmail("email@email.com");
+
+        User user2 = new User();
+        user2.setName("name");
+        user2.setEmail("email@email.com2");
+
+        User user3 = new User();
+        user3.setName("name");
+        user3.setEmail("email@email.com3");
+
+
+        userRepository.save(user);
+        userRepository.save(user2);
+        userRepository.save(user3);
+
+        Request request = Request.builder().description("description").requestor(user)
+                .created(LocalDateTime.now()).build();
+        Request request2 = (Request.builder().description("description2").requestor(user2)
+                .created(LocalDateTime.now()).build());
+        Request request3 =  Request.builder().description("description3").requestor(user3)
+                .created(LocalDateTime.now()).build();
+
+        itemRequestRepository.save( request);
+        itemRequestRepository.save(request2);
+        itemRequestRepository.save(request3);
+
+        Item item = new Item(1l,"test","test",true,2L,user);
+        Item item2 = new Item(2l,"test2","test2",true,3L,user);
+        itemRepository.save(item);
+        itemRepository.save(item2);
+
+        List<Request> items = itemRequestRepository.getAllByUserIdNot(1L, PageRequest.of(0, 20));
+        List<Request> itemsExp = List.of(request2,request3);
+        assertEquals(items.size(),itemsExp.size());
+    }
+
+
+
+
+
+}

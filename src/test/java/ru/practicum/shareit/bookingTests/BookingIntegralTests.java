@@ -7,14 +7,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import ru.practicum.shareit.booking.BookingStatus;
 import ru.practicum.shareit.booking.controller.BookingController;
+import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingDtoShort;
 import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
 import ru.practicum.shareit.item.controller.ItemController;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.request.Request;
 import ru.practicum.shareit.user.controller.UserController;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -131,20 +134,92 @@ class BookingIntegralTests {
     }
 
     @Test
-    void GetAllUsersBooking() {
+    void GetAllUsersBookingWithStatusAll() {
         userController.create(user);
         User user2 = new User();
         user2.setName("test2");
         user2.setEmail("test@mail2.ru");
+        Item item2 = new Item(2l, "test", "test", true, null, user2);
 
         userController.create(user);
         userController.create(user2);
+
         itemController.add(1L, item);
+        itemController.add(2L, item2);
 
+        BookingShortDtoWithItemId bokingShortDtoWithItemId2 = BookingShortDtoWithItemId.builder()
+                .start(LocalDateTime.of(2023, 12, 10, 10, 20, 10))
+                .end(LocalDateTime.of(2024, 12, 20, 10, 20, 10))
+                .itemId(2l)
+                .bookerId(1L)
+                .build();
 
+        bookingController.add(2L, bookingShortDtoWithItemId);
+        bookingController.add(1L, bokingShortDtoWithItemId2);
 
-
-
-
+        List<Booking> bookings = bookingController.getAllByUser(2L, "ALL", 0, 30);
+        String status = String.valueOf(bookings.get(0).getStatus());
+        assertEquals(status, "WAITING");
     }
+
+    @Test
+    void GetAllUsersBookingWithStatusRegected() {
+        userController.create(user);
+        User user2 = new User();
+        user2.setName("test2");
+        user2.setEmail("test@mail2.ru");
+        Item item2 = new Item(2l, "test", "test", true, null, user2);
+
+        userController.create(user);
+        userController.create(user2);
+
+        itemController.add(1L, item);
+        itemController.add(2L, item2);
+
+        BookingShortDtoWithItemId bokingShortDtoWithItemId2 = BookingShortDtoWithItemId.builder()
+                .start(LocalDateTime.of(2023, 12, 10, 10, 20, 10))
+                .end(LocalDateTime.of(2024, 12, 20, 10, 20, 10))
+                .itemId(2l)
+                .bookerId(1L)
+                .build();
+
+        bookingController.add(2L, bookingShortDtoWithItemId);
+        bookingController.add(1L, bokingShortDtoWithItemId2);
+        bookingController.approve(2L, 2l, false);
+        List<Booking> bookings = bookingController.getAllByUser(1L, "REJECTED", 0, 30);
+        String statusTest = String.valueOf(bookings.get(0).getStatus());
+        assertEquals(statusTest, "REJECTED");
+    }
+
+
+    @Test
+    void GetOwnerBookingWithStatusWaiting() {
+
+        userController.create(user);
+        User user2 = new User();
+        user2.setName("test2");
+        user2.setEmail("test@mail2.ru");
+        Item item2 = new Item(2l, "test", "test", true, null, user2);
+
+        userController.create(user);
+        userController.create(user2);
+
+        itemController.add(1L, item);
+        itemController.add(2L, item2);
+
+        BookingShortDtoWithItemId bokingShortDtoWithItemId2 = BookingShortDtoWithItemId.builder()
+                .start(LocalDateTime.of(2023, 12, 10, 10, 20, 10))
+                .end(LocalDateTime.of(2024, 12, 20, 10, 20, 10))
+                .itemId(2l)
+                .bookerId(1L)
+                .build();
+
+        bookingController.add(2L, bookingShortDtoWithItemId);
+        bookingController.add(1L, bokingShortDtoWithItemId2);
+
+        List<Booking> bookings = bookingController.getAllByOwner(1L, "WAITING", 0, 30);
+        String statusTest = String.valueOf(bookings.get(0).getStatus());
+        assertEquals(statusTest, "WAITING");
+    }
+
 }

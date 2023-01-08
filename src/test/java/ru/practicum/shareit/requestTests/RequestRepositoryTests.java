@@ -28,9 +28,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DataJpaTest
-//@SpringBootTest(classes = ShareItApp.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+//@DataJpaTest
+@SpringBootTest(classes = ShareItApp.class)
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class RequestRepositoryTests {
     @Autowired
     private RequestRepository itemRequestRepository;

@@ -97,7 +97,6 @@ public class BookingServiceImpl implements BookingService {
             throw new BadRequestException("Невозможно подтвердить бронирование - " +
                     "бронирование уже подтверждено или отклонено");
         }
-
         if (approved) {
             booking.setStatus(BookingStatus.APPROVED);
         } else {

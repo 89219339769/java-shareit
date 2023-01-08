@@ -8,6 +8,7 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 
 @Getter
@@ -27,7 +28,28 @@ public class BookingDtoShort {
 
     private Item item;
 
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        BookingDtoShort otherBookingDtoShort = (BookingDtoShort) obj;
+        return Objects.equals(id, otherBookingDtoShort.id) &&
+                Objects.equals(start, otherBookingDtoShort.start) &&
+                Objects.equals(end, otherBookingDtoShort.end) &&
+                Objects.equals(status, otherBookingDtoShort.status);
+
+
+    }
+
+
+
+
 }
+
+
 
 
 

@@ -32,9 +32,6 @@ class BookingIntegralTests {
     private UserController userController;
 
 
-
-
-
     private BookingDtoShort bookingDtoShort;
 
     User user;
@@ -112,7 +109,42 @@ class BookingIntegralTests {
                 .build();
 
         BookingDtoShort bookingDtoShorttest = bookingController.findBookingById(1L, 2L);
-        assertEquals( bookingDtoShort, bookingDtoShorttest);
+        assertEquals(bookingDtoShort, bookingDtoShorttest);
+    }
+
+    @Test
+    void ApproveBooking() {
+        userController.create(user);
+        User user2 = new User();
+        user2.setName("test2");
+        user2.setEmail("test@mail2.ru");
+
+        userController.create(user);
+        userController.create(user2);
+        itemController.add(1L, item);
+        bookingController.add(2L, bookingShortDtoWithItemId);
+        bookingController.approve(1L, 1l, true);
+        bookingDtoShort.setBooker(user2);
+        bookingDtoShort.setStatus(BookingStatus.APPROVED);
+        BookingDtoShort bookingDtoShorttest = bookingController.findBookingById(1L, 2L);
+        assertEquals(bookingDtoShort, bookingDtoShorttest);
+    }
+
+    @Test
+    void GetAllUsersBooking() {
+        userController.create(user);
+        User user2 = new User();
+        user2.setName("test2");
+        user2.setEmail("test@mail2.ru");
+
+        userController.create(user);
+        userController.create(user2);
+        itemController.add(1L, item);
+
+
+
+
+
 
     }
 }

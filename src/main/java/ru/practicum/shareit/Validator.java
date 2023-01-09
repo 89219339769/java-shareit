@@ -44,7 +44,7 @@ public class Validator {
 
     public void validateItemWithOutEvailable(Item item) {
         if (item.getAvailable() == null) {
-            throw new NoAvailableException("нужно указать состояние");
+            throw new NoAvailableException("необходимо указать состояние");
         }
     }
 }

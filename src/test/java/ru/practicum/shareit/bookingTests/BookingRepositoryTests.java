@@ -61,7 +61,7 @@ class BookingRepositoryTests {
         user.setEmail("test@mail.ru");
 
 
-        item = new Item(1l, "test", "test", true, null, user);
+        item = new Item(1L, "test", "test", true, null, user);
 
         bookingDtoShort = BookingDtoShort.builder()
                 .id(1L)

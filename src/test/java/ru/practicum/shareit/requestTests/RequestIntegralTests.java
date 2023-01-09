@@ -62,11 +62,11 @@ class RequestIntegralTests {
         userController.create(user);
         itemRequestController.add(user.getId(), request);
         RequestDto requestDto = ItemRequestMapper.toItemRequestDto(request);
-        RequestDtoForTest RequestDtoForTest = ItemRequestMapper.toItemRequestDtoForTest(requestDto);
+        RequestDtoForTest requestDtoForTest = ItemRequestMapper.toItemRequestDtoForTest(requestDto);
 
         RequestDto requestDtoTest = itemRequestController.getRequestById(1L, 1L);
-        RequestDtoForTest RequestDtoForTestTest = ItemRequestMapper.toItemRequestDtoForTest(requestDtoTest);
-        assertEquals(RequestDtoForTest, RequestDtoForTestTest);
+        RequestDtoForTest requestDtoForTestTest = ItemRequestMapper.toItemRequestDtoForTest(requestDtoTest);
+        assertEquals(requestDtoForTest, requestDtoForTestTest);
 
     }
 
@@ -91,8 +91,8 @@ class RequestIntegralTests {
         }
 
         RequestDto requestDto = ItemRequestMapper.toItemRequestDto(request);
-        RequestDtoForTest RequestDtoForTest = ItemRequestMapper.toItemRequestDtoForTest(requestDto);
-        List<RequestDtoForTest> requestDtoTestsTest = List.of(RequestDtoForTest);
+        RequestDtoForTest requestDtoForTest = ItemRequestMapper.toItemRequestDtoForTest(requestDto);
+        List<RequestDtoForTest> requestDtoTestsTest = List.of(requestDtoForTest);
 
 
         assertEquals(requestDtoTestsTest, requestDtoTestsFortest);
@@ -117,8 +117,8 @@ class RequestIntegralTests {
         }
 
         RequestDto requestDto = ItemRequestMapper.toItemRequestDto(request);
-        RequestDtoForTest RequestDtoForTest = ItemRequestMapper.toItemRequestDtoForTest(requestDto);
-        List<RequestDtoForTest> requestDtoTeststest = List.of(RequestDtoForTest);
+        RequestDtoForTest requestDtoForTest = ItemRequestMapper.toItemRequestDtoForTest(requestDto);
+        List<RequestDtoForTest> requestDtoTeststest = List.of(requestDtoForTest);
 
         assertEquals(requestDtoTeststest.get(0).getId(), requestDtoTestsForTest.get(0).getId());
     }

@@ -114,7 +114,7 @@ class ItemIntegralTests {
                 .build();
 
         itemController.add(1L, item2);
-        assertEquals( itemDtoForBooker, itemController.getById(1L, 2L));
+        assertEquals(itemDtoForBooker, itemController.getById(1L, 2L));
     }
 
 

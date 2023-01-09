@@ -67,7 +67,7 @@ class BookingIntegralTests {
                 .id(1L)
                 .start(LocalDateTime.of(2023, 12, 10, 10, 20, 10))
                 .end(LocalDateTime.of(2024, 12, 20, 10, 20, 10))
-                .itemId(1l)
+                .itemId(1L)
                 .bookerId(2L)
                 .build();
 

@@ -48,7 +48,7 @@ public class BookingControllerTestsMockMvc {
         user.setEmail("test@mail.ru");
 
 
-        Item item = new Item(1l, "test", "test", true, 2L, user);
+        Item item = new Item(1L, "test", "test", true, 2L, user);
 
         bookingDtoShort = BookingDtoShort.builder()
                 .id(1L)

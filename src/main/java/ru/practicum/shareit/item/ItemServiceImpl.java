@@ -34,8 +34,7 @@ public class ItemServiceImpl implements ItemService {
     private final RequestRepository requestRepository;
     private final Validator validator;
     private final CommentMapper commentMapper;
-
-    @Override
+@Override
     public ItemDtoShort save(long userId, Item item) {
         User user = repository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Невозможно создать вещь - " +
@@ -57,7 +56,6 @@ public class ItemServiceImpl implements ItemService {
         ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
         return temDtoShort;
     }
-
     @Override
     public Item updateItem(Long itemId, Long userId, Item item) {
         User owner = repository.findById(userId)
@@ -164,7 +162,6 @@ public class ItemServiceImpl implements ItemService {
         }
         return itemDtoForOwnersList;
     }
-
     @Override
     public List<ItemDtoShort> findItemByNameOrDescription(String query) {
         if (query.isBlank()) {

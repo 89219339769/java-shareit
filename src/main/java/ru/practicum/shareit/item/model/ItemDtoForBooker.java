@@ -1,11 +1,6 @@
 package ru.practicum.shareit.item.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import ru.practicum.shareit.comment.CommentDtoOut;
 
 import java.util.Collection;
@@ -17,6 +12,7 @@ import java.util.Collection;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ItemDtoForBooker extends ItemDtoAbstract {
     private long id;
     private String name;

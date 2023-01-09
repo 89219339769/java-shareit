@@ -1,7 +1,6 @@
 package ru.practicum.shareit.userTests;
 
 
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
@@ -12,26 +11,26 @@ import ru.practicum.shareit.item.model.Item;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-    @JsonTest
-    class JsonItemTest {
-        @Autowired
-        JacksonTester<Item> json;
+@JsonTest
+class JsonItemTest {
+    @Autowired
+    JacksonTester<Item> json;
 
-        @Test
-        void testItemDto() throws Exception {
-            Item item = Item
-                    .builder()
-                    .id(1L)
-                    .name("item")
-                    .available(true)
-                    .description("descriptionOfItem")
-                    .build();
+    @Test
+    void testItemDto() throws Exception {
+        Item item = Item
+                .builder()
+                .id(1L)
+                .name("item")
+                .available(true)
+                .description("descriptionOfItem")
+                .build();
 
-            JsonContent<Item> result = json.write(item);
+        JsonContent<Item> result = json.write(item);
 
-            assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
-            assertThat(result).extractingJsonPathStringValue("$.name").isEqualTo("item");
-            assertThat(result).extractingJsonPathStringValue("$.description").isEqualTo("descriptionOfItem");
-            assertThat(result).extractingJsonPathBooleanValue("$.available").isTrue();
-        }
+        assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
+        assertThat(result).extractingJsonPathStringValue("$.name").isEqualTo("item");
+        assertThat(result).extractingJsonPathStringValue("$.description").isEqualTo("descriptionOfItem");
+        assertThat(result).extractingJsonPathBooleanValue("$.available").isTrue();
     }
+}

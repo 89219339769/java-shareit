@@ -1,12 +1,9 @@
-package ru.practicum.shareit.bookingtests;
+package ru.practicum.shareit.bookingTests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.test.annotation.DirtiesContext;
 import ru.practicum.shareit.ShareItApp;
 import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.booking.BookingStatus;
@@ -14,30 +11,19 @@ import ru.practicum.shareit.booking.controller.BookingController;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingDtoShort;
 import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
-
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.controller.ItemController;
 import ru.practicum.shareit.item.model.Item;
-
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.controller.UserController;
 import ru.practicum.shareit.user.model.User;
-
-
 import java.time.LocalDateTime;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ru.practicum.shareit.booking.BookingStatus.APPROVED;
+
 import static ru.practicum.shareit.booking.BookingStatus.WAITING;
 
-//@DataJpaTest
-//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 
 
-
-//Доделать
 @SpringBootTest(classes = ShareItApp.class)
 class BookingRepositoryTests {
     @Autowired

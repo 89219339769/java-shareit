@@ -23,7 +23,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -40,7 +39,6 @@ public class BookingControllerTestsMockMvc {
 
     BookingDtoShort bookingDtoShort;
     Booking booking;
-
 
 
     @BeforeEach
@@ -161,11 +159,6 @@ public class BookingControllerTestsMockMvc {
                 .andExpect(content().json(mapper.writeValueAsString(List.of(booking))));
 
     }
-
-
-
-
-
 
 
 }

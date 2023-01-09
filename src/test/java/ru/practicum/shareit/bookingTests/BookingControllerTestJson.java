@@ -15,40 +15,40 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-    @JsonTest
-    class BookingControllerTestJson {
-        @Autowired
-        JacksonTester<BookingDtoShort> json;
+@JsonTest
+class BookingControllerTestJson {
+    @Autowired
+    JacksonTester<BookingDtoShort> json;
 
-        @Test
-        void testBookingDtoShort() throws Exception {
-            User user = new User();
-            user.setId(1L);
-            user.setName("test");
-            user.setEmail("test@mail.ru");
+    @Test
+    void testBookingDtoShort() throws Exception {
+        User user = new User();
+        user.setId(1L);
+        user.setName("test");
+        user.setEmail("test@mail.ru");
 
 
-            Item item = new Item(1l, "test", "test", true, 2L, user);
+        Item item = new Item(1l, "test", "test", true, 2L, user);
 
-            BookingDtoShort     bookingDtoShort = BookingDtoShort.builder()
-                    .id(1L)
-                    .start(LocalDateTime.of(2022, 12, 10, 10, 20, 10))
-                    .end(LocalDateTime.of(2022, 12, 20, 10, 20, 10))
-                    .status(BookingStatus.WAITING)
-                    .booker(user)
-                    .item(item)
-                    .build();
+        BookingDtoShort bookingDtoShort = BookingDtoShort.builder()
+                .id(1L)
+                .start(LocalDateTime.of(2022, 12, 10, 10, 20, 10))
+                .end(LocalDateTime.of(2022, 12, 20, 10, 20, 10))
+                .status(BookingStatus.WAITING)
+                .booker(user)
+                .item(item)
+                .build();
 
-            JsonContent<BookingDtoShort> result = json.write( bookingDtoShort);
+        JsonContent<BookingDtoShort> result = json.write(bookingDtoShort);
 
-            assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
-            assertThat(result).extractingJsonPathStringValue("$.status").isEqualTo("WAITING");
-            assertThat(result).extractingJsonPathStringValue("$.start")
-                    .isEqualTo(LocalDateTime.of(2022, 12, 10, 10, 20, 10).toString());
-            assertThat(result).extractingJsonPathStringValue("$.end")
-                    .isEqualTo(LocalDateTime.of(2022, 12, 20, 10, 20, 10).toString());
-        }
+        assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
+        assertThat(result).extractingJsonPathStringValue("$.status").isEqualTo("WAITING");
+        assertThat(result).extractingJsonPathStringValue("$.start")
+                .isEqualTo(LocalDateTime.of(2022, 12, 10, 10, 20, 10).toString());
+        assertThat(result).extractingJsonPathStringValue("$.end")
+                .isEqualTo(LocalDateTime.of(2022, 12, 20, 10, 20, 10).toString());
     }
+}
 
 
 

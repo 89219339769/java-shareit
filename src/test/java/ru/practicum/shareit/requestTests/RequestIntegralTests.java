@@ -103,7 +103,7 @@ class RequestIntegralTests {
         User user2 = new User();
         user2.setName("name2");
         user2.setEmail("user@email2.com");
-        Item item = new Item(1l,"test","test",true,1L,user2);
+        Item item = new Item(1l, "test", "test", true, 1L, user2);
 
         userController.create(user);
         userController.create(user2);

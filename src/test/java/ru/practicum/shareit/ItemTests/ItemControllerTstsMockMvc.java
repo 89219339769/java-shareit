@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,7 +50,7 @@ class ItemControllerTstsMockMvc {
     @BeforeEach
     void init() {
 
-        commentDtoOut=CommentDtoOut.builder()
+        commentDtoOut = CommentDtoOut.builder()
                 .id(1L)
                 .text("test")
                 .authorName("name")
@@ -157,7 +156,7 @@ class ItemControllerTstsMockMvc {
 
 
     @Test
-    void  findItemsBySearch() throws Exception {
+    void findItemsBySearch() throws Exception {
         Mockito
                 .when(itemService.findItemByNameOrDescription(Mockito.anyString()))
                 .thenReturn(List.of(itemDtoShort));
@@ -173,9 +172,9 @@ class ItemControllerTstsMockMvc {
     }
 
     @Test
-    void  addCommentToItems() throws Exception {
+    void addCommentToItems() throws Exception {
         Mockito
-                .when(commentService.addComment(Mockito.anyLong(),Mockito.anyLong(),any()))
+                .when(commentService.addComment(Mockito.anyLong(), Mockito.anyLong(), any()))
                 .thenReturn(commentDtoOut);
 
 

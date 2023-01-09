@@ -12,13 +12,12 @@ import ru.practicum.shareit.booking.model.BookingDtoShort;
 import ru.practicum.shareit.booking.model.BookingShortDtoWithItemId;
 import ru.practicum.shareit.item.controller.ItemController;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.request.Request;
 import ru.practicum.shareit.user.controller.UserController;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

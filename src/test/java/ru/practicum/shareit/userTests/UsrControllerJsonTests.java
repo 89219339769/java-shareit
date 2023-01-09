@@ -11,22 +11,22 @@ import ru.practicum.shareit.user.model.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-    @JsonTest
-    class UsrControllerJsonTests {
-        @Autowired
-        JacksonTester<User> json;
+@JsonTest
+class UsrControllerJsonTests {
+    @Autowired
+    JacksonTester<User> json;
 
-        @Test
-        void testUserDto() throws Exception {
-           User user = new User(1L,"name","user@mail.ru");
+    @Test
+    void testUserDto() throws Exception {
+        User user = new User(1L, "name", "user@mail.ru");
 
-            JsonContent<User> result = json.write(user);
+        JsonContent<User> result = json.write(user);
 
-            assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
-            assertThat(result).extractingJsonPathStringValue("$.name").isEqualTo("name");
-            assertThat(result).extractingJsonPathStringValue("$.email").isEqualTo("user@mail.ru");
-        }
+        assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
+        assertThat(result).extractingJsonPathStringValue("$.name").isEqualTo("name");
+        assertThat(result).extractingJsonPathStringValue("$.email").isEqualTo("user@mail.ru");
     }
+}
 
 
 

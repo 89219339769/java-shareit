@@ -19,7 +19,7 @@ public class Validator {
     public void validateIncorrectEmail(User user) {
         EmailValidator validator = EmailValidator.getInstance();
         if (!validator.isValid(user.getEmail())) {
-            throw new IncorrectEmailException("ошибка в написании электронной поты");
+            throw new IncorrectEmailException("ошибка в написании электронной почты");
         }
     }
 

@@ -28,7 +28,7 @@ class BookingControllerTestJson {
         user.setEmail("test@mail.ru");
 
 
-        Item item = new Item(1L, "test", "test", true, 2L, user);
+        Item item = new Item(1l, "test", "test", true, 2L, user);
 
         BookingDtoShort bookingDtoShort = BookingDtoShort.builder()
                 .id(1L)

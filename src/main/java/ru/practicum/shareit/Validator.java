@@ -37,7 +37,7 @@ public class Validator {
 
     public void validateItemEmptyName(Item item) {
         if (item.getName().isBlank()) {
-            throw new NoItemNameException("необходимо указать имя");
+            throw new NoItemNameException("необходимо указать имя итема");
         }
     }
 

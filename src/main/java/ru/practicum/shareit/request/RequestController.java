@@ -7,8 +7,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/requests")
 @RequiredArgsConstructor
+@RequestMapping("/requests")
 public class RequestController {
 
     private final RequestService requestService;

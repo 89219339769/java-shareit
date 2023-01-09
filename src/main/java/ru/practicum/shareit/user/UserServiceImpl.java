@@ -1,6 +1,7 @@
 package ru.practicum.shareit.user;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exceptions.EmailWrongException;
 import ru.practicum.shareit.exceptions.NotFoundException;
@@ -9,12 +10,12 @@ import ru.practicum.shareit.Validator;
 
 import java.util.List;
 
-
+@Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 
 public class UserServiceImpl implements UserService {
-    private Validator validator;
+    private final Validator validator;
     private final UserRepository repository;
 
     @Override
@@ -25,20 +26,24 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
     public List<User> getAllUsers() {
         return repository.findAll();
     }
 
+    @Override
     public User get(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Не найден пользователь с id: " + id));
     }
 
+    @Override
     public void delete(Long id) {
         repository.deleteById(id);
 
     }
 
+    @Override
     public User updateUser(Long id, User user) {
         user.setId(id);
         User updateUser = repository.findById(id)

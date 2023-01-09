@@ -34,6 +34,10 @@ import static ru.practicum.shareit.booking.BookingStatus.WAITING;
 
 //@DataJpaTest
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
+
+
+//Доделать
 @SpringBootTest(classes = ShareItApp.class)
 class BookingRepositoryTests {
     @Autowired
@@ -99,7 +103,6 @@ class BookingRepositoryTests {
                 .status(WAITING)
                 .build();
     }
-
 
     @Test
     void ApproveBooking() {

@@ -1,8 +1,10 @@
 package ru.practicum.shareit.item.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.comment.CommentService;
+import ru.practicum.shareit.item.ItemService;
 import ru.practicum.shareit.item.model.ItemDtoAbstract;
 import ru.practicum.shareit.item.model.ItemDtoForOwner;
 import ru.practicum.shareit.comment.Comment;
@@ -19,8 +21,9 @@ import java.util.List;
 @RequestMapping("/items")
 @RequiredArgsConstructor
 public class ItemController {
-    private final ItemServiceImpl itemService;
+
     private final CommentService commentService;
+    private final ItemService itemService;
 
     @PostMapping
     public ItemDtoShort add(@RequestHeader("X-Sharer-User-Id") Long userId,
@@ -46,7 +49,7 @@ public class ItemController {
     }
 
     @GetMapping("search")
-    public List<ItemDtoShort> findFilmsBySearch(@RequestParam(name = "text") String query) {
+    public List<ItemDtoShort> findItemsBySearch(@RequestParam(name = "text") String query) {
 
         return itemService.findItemByNameOrDescription(query);
     }

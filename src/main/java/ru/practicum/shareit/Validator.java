@@ -31,7 +31,7 @@ public class Validator {
 
     public void validateItemEmptyDescription(Item item) {
         if (item.getDescription() == null) {
-            throw new NoItemNameException("нужно указать описание желаемой вещи");
+            throw new NoItemNameException("нужно указать необходимой желаемой вещи");
         }
     }
 

@@ -58,7 +58,7 @@ class RequestIntegralTests {
     }
 
     @Test
-    void GetByIdRequestTest() {
+    void getByIdRequestTest() {
         userController.create(user);
         itemRequestController.add(user.getId(), request);
         RequestDto requestDto = ItemRequestMapper.toItemRequestDto(request);
@@ -71,7 +71,7 @@ class RequestIntegralTests {
     }
 
     @Test
-    void GetByWrongIdRequestTest() {
+    void getByWrongIdRequestTest() {
         userController.create(user);
         itemRequestController.add(user.getId(), request);
         assertThrows(NotFoundException.class, () -> itemRequestController.getRequestById(2L, user.getId()));
@@ -80,7 +80,7 @@ class RequestIntegralTests {
 
 
     @Test
-    void GetAllRequestByOwnerTest() {
+    void getAllRequestByOwnerTest() {
         userController.create(user);
         itemRequestController.add(user.getId(), request);
 
@@ -99,11 +99,11 @@ class RequestIntegralTests {
     }
 
     @Test
-    void GetAllRequestByOtherTest() {
+    void getAllRequestByOtherTest() {
         User user2 = new User();
         user2.setName("name2");
         user2.setEmail("user@email2.com");
-        Item item = new Item(1l, "test", "test", true, 1L, user2);
+        Item item = new Item(1L, "test", "test", true, 1L, user2);
 
         userController.create(user);
         userController.create(user2);

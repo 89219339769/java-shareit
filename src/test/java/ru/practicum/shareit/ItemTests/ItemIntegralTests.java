@@ -104,28 +104,28 @@ class ItemIntegralTests {
 
         userController.create(user);
         userController.create(user2);
-        requestController.add(1l, request);
+        requestController.add(1L, request);
 
         Item item2 = Item.builder()
                 .name("name")
                 .description("description")
                 .available(true)
-                .requestId(1l)
+                .requestId(1L)
                 .build();
 
         itemController.add(1L, item2);
-        assertEquals( itemDtoForBooker, itemController.getById(1l, 2L));
+        assertEquals( itemDtoForBooker, itemController.getById(1L, 2L));
     }
 
 
     @Test
     void getItemTestWithWrongId() {
-        assertThrows(NotFoundException.class, () -> itemController.getById(99l, 2L));
+        assertThrows(NotFoundException.class, () -> itemController.getById(99L, 2L));
     }
 
     @Test
     void getItemTestWithWrongUserId() {
-        assertThrows(NotFoundException.class, () -> itemController.getById(1l, 99L));
+        assertThrows(NotFoundException.class, () -> itemController.getById(1L, 99L));
     }
 
     @Test
@@ -136,22 +136,22 @@ class ItemIntegralTests {
 
         userController.create(user);
         userController.create(user2);
-        requestController.add(1l, request);
+        requestController.add(1L, request);
 
         Item item2 = Item.builder()
                 .name("name")
                 .description("description")
                 .available(true)
-                .requestId(1l)
+                .requestId(1L)
                 .build();
 
         itemController.add(1L, item2);
 
-        Collection<ItemDtoForOwner> items =itemController.getItemsByUser(1l);
+        Collection<ItemDtoForOwner> items = itemController.getItemsByUser(1L);
 
         ItemDtoForOwner[] itemsArrey = items.toArray(new ItemDtoForOwner[items.size()]);
 
-        assertEquals( itemDtoForOwner, itemsArrey[0]);
+        assertEquals(itemDtoForOwner, itemsArrey[0]);
 
 
     }

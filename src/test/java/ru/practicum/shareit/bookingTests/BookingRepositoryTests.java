@@ -77,7 +77,7 @@ class BookingRepositoryTests {
                 .id(1L)
                 .start(LocalDateTime.of(2023, 12, 10, 10, 20, 10))
                 .end(LocalDateTime.of(2024, 12, 20, 10, 20, 10))
-                .itemId(1l)
+                .itemId(1L)
                 .bookerId(2L)
                 .build();
 
@@ -91,7 +91,7 @@ class BookingRepositoryTests {
     }
 
     @Test
-    void ApproveBooking() {
+    void approveBooking() {
         userRepository.save(user);
         User user2 = new User();
         user2.setName("test2");
@@ -101,8 +101,8 @@ class BookingRepositoryTests {
 
         itemRepository.save(item);
         booking.setBooker(user);
-        bookingRepository.save( booking);
-        bookingController.approve(1L, 1l, true);
+        bookingRepository.save(booking);
+        bookingController.approve(1L, 1L, true);
         bookingDtoShort.setBooker(user);
         bookingDtoShort.setStatus(BookingStatus.APPROVED);
 

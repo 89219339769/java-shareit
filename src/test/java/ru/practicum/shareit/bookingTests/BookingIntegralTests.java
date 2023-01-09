@@ -51,7 +51,7 @@ class BookingIntegralTests {
         user.setEmail("test@mail.ru");
 
 
-        item = new Item(1l, "test", "test", true, null, user);
+        item = new Item(1L, "test", "test", true, null, user);
 
         bookingDtoShort = BookingDtoShort.builder()
                 .id(1L)
@@ -91,7 +91,7 @@ class BookingIntegralTests {
 
 
     @Test
-    void FindBookingById() {
+    void findBookingById() {
         userController.create(user);
         User user2 = new User();
         user2.setName("test2");
@@ -115,7 +115,7 @@ class BookingIntegralTests {
     }
 
     @Test
-    void ApproveBooking() {
+    void approveBooking() {
         userController.create(user);
         User user2 = new User();
         user2.setName("test2");
@@ -125,7 +125,7 @@ class BookingIntegralTests {
         userController.create(user2);
         itemController.add(1L, item);
         bookingController.add(2L, bookingShortDtoWithItemId);
-        bookingController.approve(1L, 1l, true);
+        bookingController.approve(1L, 1L, true);
         bookingDtoShort.setBooker(user2);
         bookingDtoShort.setStatus(BookingStatus.APPROVED);
         BookingDtoShort bookingDtoShorttest = bookingController.findBookingById(1L, 2L);
@@ -133,12 +133,12 @@ class BookingIntegralTests {
     }
 
     @Test
-    void GetAllUsersBookingWithStatusAll() {
+    void getAllUsersBookingWithStatusAll() {
         userController.create(user);
         User user2 = new User();
         user2.setName("test2");
         user2.setEmail("test@mail2.ru");
-        Item item2 = new Item(2l, "test", "test", true, null, user2);
+        Item item2 = new Item(2L, "test", "test", true, null, user2);
 
         userController.create(user);
         userController.create(user2);
@@ -149,7 +149,7 @@ class BookingIntegralTests {
         BookingShortDtoWithItemId bokingShortDtoWithItemId2 = BookingShortDtoWithItemId.builder()
                 .start(LocalDateTime.of(2023, 12, 10, 10, 20, 10))
                 .end(LocalDateTime.of(2024, 12, 20, 10, 20, 10))
-                .itemId(2l)
+                .itemId(2L)
                 .bookerId(1L)
                 .build();
 
@@ -162,12 +162,12 @@ class BookingIntegralTests {
     }
 
     @Test
-    void GetAllUsersBookingWithStatusRegected() {
+    void getAllUsersBookingWithStatusRegected() {
         userController.create(user);
         User user2 = new User();
         user2.setName("test2");
         user2.setEmail("test@mail2.ru");
-        Item item2 = new Item(2l, "test", "test", true, null, user2);
+        Item item2 = new Item(2L, "test", "test", true, null, user2);
 
         userController.create(user);
         userController.create(user2);
@@ -178,13 +178,13 @@ class BookingIntegralTests {
         BookingShortDtoWithItemId bokingShortDtoWithItemId2 = BookingShortDtoWithItemId.builder()
                 .start(LocalDateTime.of(2023, 12, 10, 10, 20, 10))
                 .end(LocalDateTime.of(2024, 12, 20, 10, 20, 10))
-                .itemId(2l)
+                .itemId(2L)
                 .bookerId(1L)
                 .build();
 
         bookingController.add(2L, bookingShortDtoWithItemId);
         bookingController.add(1L, bokingShortDtoWithItemId2);
-        bookingController.approve(2L, 2l, false);
+        bookingController.approve(2L, 2L, false);
         List<Booking> bookings = bookingController.getAllByUser(1L, "REJECTED", 0, 30);
         String statusTest = String.valueOf(bookings.get(0).getStatus());
         assertEquals(statusTest, "REJECTED");
@@ -192,13 +192,13 @@ class BookingIntegralTests {
 
 
     @Test
-    void GetOwnerBookingWithStatusWaiting() {
+    void getOwnerBookingWithStatusWaiting() {
 
         userController.create(user);
         User user2 = new User();
         user2.setName("test2");
         user2.setEmail("test@mail2.ru");
-        Item item2 = new Item(2l, "test", "test", true, null, user2);
+        Item item2 = new Item(2L, "test", "test", true, null, user2);
 
         userController.create(user);
         userController.create(user2);
@@ -209,7 +209,7 @@ class BookingIntegralTests {
         BookingShortDtoWithItemId bokingShortDtoWithItemId2 = BookingShortDtoWithItemId.builder()
                 .start(LocalDateTime.of(2023, 12, 10, 10, 20, 10))
                 .end(LocalDateTime.of(2024, 12, 20, 10, 20, 10))
-                .itemId(2l)
+                .itemId(2L)
                 .bookerId(1L)
                 .build();
 

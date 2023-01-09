@@ -78,8 +78,8 @@ class RequestRepositoryTests {
         itemRequestRepository.save(request2);
         itemRequestRepository.save(request3);
 
-        Item item = new Item(1l, "test", "test", true, 2L, user);
-        Item item2 = new Item(2l, "test2", "test2", true, 3L, user);
+        Item item = new Item(1L, "test", "test", true, 2L, user);
+        Item item2 = new Item(2L, "test2", "test2", true, 3L, user);
         itemRepository.save(item);
         itemRepository.save(item2);
 
@@ -87,6 +87,4 @@ class RequestRepositoryTests {
         List<Request> itemsExp = List.of(request2, request3);
         assertEquals(items.size(), itemsExp.size());
     }
-
-
 }

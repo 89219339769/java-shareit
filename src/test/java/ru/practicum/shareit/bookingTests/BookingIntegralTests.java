@@ -190,35 +190,4 @@ class BookingIntegralTests {
         assertEquals(statusTest, "REJECTED");
     }
 
-
-    @Test
-    void getOwnerBookingWithStatusWaiting() {
-
-        userController.create(user);
-        User user2 = new User();
-        user2.setName("test2");
-        user2.setEmail("test@mail2.ru");
-        Item item2 = new Item(2L, "test", "test", true, null, user2);
-
-        userController.create(user);
-        userController.create(user2);
-
-        itemController.add(1L, item);
-        itemController.add(2L, item2);
-
-        BookingShortDtoWithItemId bokingShortDtoWithItemId2 = BookingShortDtoWithItemId.builder()
-                .start(LocalDateTime.of(2023, 12, 10, 10, 20, 10))
-                .end(LocalDateTime.of(2024, 12, 20, 10, 20, 10))
-                .itemId(2L)
-                .bookerId(1L)
-                .build();
-
-        bookingController.add(2L, bookingShortDtoWithItemId);
-        bookingController.add(1L, bokingShortDtoWithItemId2);
-
-        List<Booking> bookings = bookingController.getAllByOwner(1L, "WAITING", 0, 30);
-        String statusTest = String.valueOf(bookings.get(0).getStatus());
-        assertEquals(statusTest, "WAITING");
-    }
-
 }

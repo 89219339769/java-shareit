@@ -44,7 +44,10 @@ public class BookingDtoShort {
 
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, start, end, status, booker, item);
+    }
 
 
 }

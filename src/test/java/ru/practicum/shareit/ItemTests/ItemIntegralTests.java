@@ -19,8 +19,9 @@ import ru.practicum.shareit.user.model.User;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.assertThrows;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)

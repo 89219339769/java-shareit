@@ -51,16 +51,19 @@ class RequestRepositoryTests {
     @Test
     void findAllusersRequestIdOrder() {
         User user = new User();
-        user.setName("name");
-        user.setEmail("email@email.com");
+        user.setId(1L);
+        user.setName("name1");
+        user.setEmail("email@email1.com");
 
         User user2 = new User();
-        user2.setName("name");
-        user2.setEmail("email@email.com2");
+        user2.setId(2L);
+        user2.setName("name2");
+        user2.setEmail("email@email2.com2");
 
         User user3 = new User();
-        user3.setName("name");
-        user3.setEmail("email@email.com3");
+        user3.setId(3L);
+        user3.setName("name3");
+        user3.setEmail("email@email3.com3");
 
 
         userRepository.save(user);

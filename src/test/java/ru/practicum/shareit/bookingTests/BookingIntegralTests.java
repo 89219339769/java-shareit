@@ -165,8 +165,9 @@ class BookingIntegralTests {
     void getAllUsersBookingWithStatusRegected() {
         userController.create(user);
         User user2 = new User();
-        user2.setName("test2");
-        user2.setEmail("test@mail2.ru");
+        user2.setId(2L);
+        user2.setName("test21");
+        user2.setEmail("test@mail112.ru");
         Item item2 = new Item(2L, "test", "test", true, null, user2);
 
         userController.create(user);

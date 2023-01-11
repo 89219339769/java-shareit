@@ -1,4 +1,4 @@
-package ru.practicum.shareit.requestTests;
+package ru.practicum.shareit.request;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -12,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ru.practicum.shareit.request.*;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.UserService;
 import ru.practicum.shareit.user.model.User;
@@ -64,7 +63,7 @@ public class RequestControllerTestsMockMvc {
     }
 
     @Test
-    void test1_createNewRequest() throws Exception {
+    void createNewRequest() throws Exception {
         Mockito
                 .when(requestService.addRequest(Mockito.anyLong(), Mockito.any()))
                 .thenReturn(request);
@@ -80,7 +79,7 @@ public class RequestControllerTestsMockMvc {
     }
 
     @Test
-    void test2_gettAll() throws Exception {
+    void gettAll() throws Exception {
         Mockito
                 .when(requestService.getAllRequestsWithItems(Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt()))
                 .thenReturn(listDtos);
@@ -93,7 +92,7 @@ public class RequestControllerTestsMockMvc {
     }
 
     @Test
-    void test3_gettAllByUser() throws Exception {
+    void gettAllByUser() throws Exception {
         Mockito
                 .when(requestService.getAllRequestsByUser(Mockito.anyLong()))
                 .thenReturn(listDtos);
@@ -106,7 +105,7 @@ public class RequestControllerTestsMockMvc {
     }
 
     @Test
-    void test4_getById() throws Exception {
+    void getById() throws Exception {
         Mockito
                 .when(requestService.getRequestById(Mockito.anyLong(), Mockito.anyLong()))
                 .thenReturn(ItemRequestMapper.toItemRequestDto(request));

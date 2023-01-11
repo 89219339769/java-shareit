@@ -1,4 +1,4 @@
-package ru.practicum.shareit.userTests;
+package ru.practicum.shareit.user;
 
 
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import ru.practicum.shareit.user.model.User;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
-class UsrControllerJsonTests {
+class UserControllerJsonTests {
     @Autowired
     JacksonTester<User> json;
 

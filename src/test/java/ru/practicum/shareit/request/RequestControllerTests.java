@@ -1,4 +1,4 @@
-package ru.practicum.shareit.requestTests;
+package ru.practicum.shareit.request;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.controller.ItemController;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.request.*;
 
 import ru.practicum.shareit.user.controller.UserController;
 import ru.practicum.shareit.user.model.User;
@@ -24,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class RequestIntegralTests {
+class RequestControllerTests {
     @Autowired
     private RequestController itemRequestController;
 

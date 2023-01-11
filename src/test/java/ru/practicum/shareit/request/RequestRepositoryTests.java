@@ -1,4 +1,4 @@
-package ru.practicum.shareit.requestTests;
+package ru.practicum.shareit.request;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +13,6 @@ import ru.practicum.shareit.item.ItemRepository;
 
 
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.request.Request;
-import ru.practicum.shareit.request.RequestRepository;
 
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;

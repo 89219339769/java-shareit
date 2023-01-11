@@ -1,4 +1,4 @@
-package ru.practicum.shareit.ItemTests;
+package ru.practicum.shareit.item;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.comment.CommentDtoOut;
 import ru.practicum.shareit.comment.CommentService;
-import ru.practicum.shareit.item.ItemService;
 import ru.practicum.shareit.item.controller.ItemController;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.model.ItemDtoForOwner;

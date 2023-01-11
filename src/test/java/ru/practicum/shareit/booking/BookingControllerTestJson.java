@@ -1,11 +1,10 @@
-package ru.practicum.shareit.bookingTests;
+package ru.practicum.shareit.booking;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
-import ru.practicum.shareit.booking.BookingStatus;
 import ru.practicum.shareit.booking.model.BookingDtoShort;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;

@@ -1,4 +1,4 @@
-package ru.practicum.shareit.ItemTests;
+package ru.practicum.shareit.item;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class ItemIntegralTests {
+class ItemControllerTests {
 
 
     @Autowired

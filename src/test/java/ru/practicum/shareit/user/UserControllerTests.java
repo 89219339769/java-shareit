@@ -56,7 +56,7 @@ class UserControllerTests {
 
     @Test
     void getByWrongIdTest() {
-        assertThrows(NotFoundException.class, () -> userController.findUserById(1L));
+        assertThrows(NotFoundException.class, () -> userController.findUserById(99L));
     }
 }
 

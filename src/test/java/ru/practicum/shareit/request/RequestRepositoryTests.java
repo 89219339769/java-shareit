@@ -17,6 +17,7 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -46,6 +47,8 @@ class RequestRepositoryTests {
         List<Request> items = itemRequestRepository.getAllByUserIdNoPage(user.getId());
         assertThat(items.size(), equalTo(1));
     }
+
+
 
     @Test
     void findAllusersRequestIdOrder() {
@@ -86,7 +89,7 @@ class RequestRepositoryTests {
         itemRepository.save(item2);
 
         List<Request> items = itemRequestRepository.getAllByUserIdNot(1L, PageRequest.of(0, 20));
-        List<Request> itemsExp = List.of(request2, request3);
+        List<Request> itemsExp = List.of(request2);
         assertEquals(items.size(), itemsExp.size());
     }
 

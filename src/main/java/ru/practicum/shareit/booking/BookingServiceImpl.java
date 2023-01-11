@@ -147,8 +147,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> getAllBokingsByOwnerSortByState(Long userId, String state, int from, int size) {
-        if (from < 0) {
-            throw new BadRequestException(" араметр from не может быть отрицательным ");
+        if (from < 0 || size < 0) {
+            throw new BadRequestException(" параметр from и size не может быть отрицательным ");
         }
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Не найден бронирующий с номером: " + userId));

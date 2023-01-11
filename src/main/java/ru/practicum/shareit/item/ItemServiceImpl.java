@@ -54,8 +54,8 @@ public class ItemServiceImpl implements ItemService {
 
         itemRepository.save(item);
 
-        ItemDtoShort temDtoShort = itemMapper.itemToItemShort(item);
-        return temDtoShort;
+        return  itemMapper.itemToItemShort(item);
+
     }
 
 
@@ -96,7 +96,7 @@ public class ItemServiceImpl implements ItemService {
         Collection<CommentDtoOut> commentDtoOutList = new ArrayList<>();
         for (Comment comment : commentList) {
 
-            commentDtoOutList.add(commentMapper.toCommentDt0FromComment(comment));
+            commentDtoOutList.add(CommentMapper.toCommentDt0FromComment(comment));
         }
 
         Optional<Booking> lastBooking = bookingRepository.findLastBookingByItem(id, LocalDateTime.now());
@@ -170,8 +170,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemDtoShort> findItemByNameOrDescription(String query) {
         if (query.isBlank()) {
-            List<ItemDtoShort> itemsShort = new ArrayList<>();
-            return itemsShort;
+            return  new ArrayList<>();
         }
         List<Item> items = itemRepository.search(query);
         return items.stream()

@@ -63,7 +63,6 @@ class ItemIntegralTests {
                 .comments(List.of())
                 .build();
 
-     //   ItemDtoForBooker(id=1, name=name, description=description, available=true, ownerId=2, requestId=0, lastBooking=null, nextBooking=null, comments=[])
         itemDtoForBooker = ItemDtoForBooker.builder()
                 .id(1)
                 .name("name")

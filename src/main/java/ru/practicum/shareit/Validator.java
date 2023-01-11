@@ -3,7 +3,6 @@ package ru.practicum.shareit;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Component;
-//import ru.practicum.shareit.exceptions.*;
 import ru.practicum.shareit.exceptions.NoEmailException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.exceptions.IncorrectEmailException;
